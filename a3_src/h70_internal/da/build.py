@@ -107,6 +107,7 @@ def main(cfg):
     build_process = _build_process(cfg, error_handler)
     build_data    = None
 
+    # Pass design documents through the build process.
     for build_element in build_inputs:
         build_monitor.send(build_element)
         build_data = build_process.send(build_element)
@@ -122,13 +123,9 @@ def main(cfg):
         da.cms.register(cfg)
 
     error_handler.send('BUILD_END')
+    build_monitor.send('BUILD_END')
     logging.debug('Build process ran to completion')
 
-    os.sync()
-    start_time = cfg['timestamp']['datetime_utc']
-    end_time   = datetime.datetime.utcnow()
-    delta_secs = (end_time - start_time).total_seconds()
-    _msg('Completed in:', '{secs:0.0f}s.'.format(secs = delta_secs))
     return da.constants.BUILD_COMPLETED
 
 
@@ -489,25 +486,37 @@ def _build_monitor(cfg):
 
     with click.progressbar(length = est_num_elem,
                            label = _pad_key('Progress:')) as progressbar:
+
         ielement = 0
         for ielement in itertools.count(0):
+
             progressbar.update(1)
             build_element = (yield)
-            relpath       = build_element['relpath']
+            if build_element == 'BUILD_END':
+                break
 
+            relpath = build_element['relpath']
             with open(filepath_build_report, 'at') as file_build_report:
                 file_build_report.write(relpath + '<br>\n')
             os.sync()
 
+    # Finalise
     with open(filepath_build_report, 'at') as file_build_report:
         file_build_report.write('</body>\n')
         file_build_report.write('</html>\n')
-
     if ielement > est_num_elem:
         raise RuntimeError(
             'Est. num. build elem. {est} < {act} (actual)'.format(
-                                                        est = est_num_elem,
-                                                        act = ielement))
+                                                est = est_num_elem,
+                                                act = ielement))
+    os.sync()
+    start_time = cfg['timestamp']['datetime_utc']
+    end_time   = datetime.datetime.utcnow()
+    delta_secs = (end_time - start_time).total_seconds()
+    _msg('Completed in:', '{secs:0.0f}s.'.format(secs = delta_secs))
+
+    # Suppress StopIteration...
+    _ = (yield)
 
 
 # -----------------------------------------------------------------------------

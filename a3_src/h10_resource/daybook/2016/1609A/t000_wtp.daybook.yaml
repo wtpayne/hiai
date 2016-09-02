@@ -67,3 +67,9 @@ chronicle:
     - j0000038_integrate_pycco:
       - "Tidy up where reports and logs get put."
       - "More refactoring."
+
+    - j0000034_create_default_sdp_document:
+      - "Gradually fill in details on process and tools."
+      - "As we have been bootstrapping the build system, we are gradually
+        adding various capabilities which need to be described in our
+        default project documentation"

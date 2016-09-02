@@ -294,7 +294,8 @@ general_requirements:
           those selected, remaining viable alternatives, and restrictions,
           as applicable, associated with their use.
         _txt: >
-          TBD
+          Open source software may be used if its' license is compatible
+          with commercial objectives.
 
       developing_reusable_software_products:
         _num: "4.2.4.2"
@@ -303,7 +304,28 @@ general_requirements:
           identifying, evaluating, and reporting opportunities for
           developing reusable software products.
         _txt: >
-          TBD
+          Design documents and other collateral are developed and organised
+          using a three-tier product line methodology.
+
+          The bottom tier consists of fundamental organisational capabilities.
+          These are built up over an extended period of time and provide the
+          foundation for various different product lines. Documents
+          pertaining to capabilities are filed under h20_capability.
+
+          The middle tier is composed of generic products which may be
+          grouped into one or more product lines. These products may be
+          sold unmodified as off-the-shelf items, or may be customised
+          in various ways for specific customers. Documents pertaining
+          to products are filed under h30_product.
+
+          The top tier is composed of specific projects which seek to make
+          use of one or more products and capabilities to deliver some outcome
+          or service to a counterparty. Documents pertaining to projects
+          are filed under h40_project.
+
+          In this way the organisation can meet immediate contractual needs
+          and carry out product development efforts whilst at the same time
+          building up an expanding set capabilities to exploit.
 
     assurance_of_critical_requirements:
       _num: "4.2.5"
