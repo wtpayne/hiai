@@ -1,0 +1,100 @@
+agenda:
+
+  j0000021_document_generation_for_reporting:
+    - "Add the ability to generate word documents from YAML data."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000022_build_native_libraries_using_autoconf:
+    - "Add the ability to build native libraries using autoconf."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+
+chronicle:
+
+  20160704:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Now that we have validation logic we can create documents
+        as YAML files with a known format and generate word documents
+        from them."
+
+  20160705:
+    - j0000022_build_native_libraries_using_autoconf:
+      - "Add the ability to build native libraries using autoconf."
+      - "To satisfy j0000021 we we want to use the python_docx and
+        python_dox_template libraries - but these depend on native
+        libraries that are not yet fully supported by our dependency
+        build system. This job is to add such support as is required
+        to get these libraries up and running."
+
+  20160706:
+    - j0000022_build_native_libraries_using_autoconf:
+      - "Add the ability to build native libraries using autoconf."
+      - "To satisfy j0000021 we we want to use the python_docx and
+        python_dox_template libraries - but these depend on native
+        libraries that are not yet fully supported by our dependency
+        build system. This job is to add such support as is required
+        to get these libraries up and running."
+
+  20160707:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Now that we have validation logic we can create documents
+        as YAML files with a known format and generate word documents
+        from them."
+
+  20160708:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Now that we have validation logic we can create documents
+        as YAML files with a known format and generate word documents
+        from them."
+
+  20160709:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Explore the use of python docx template."
+
+  20160710:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Explore the use of python docx template."
+
+  20160712:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Explore the use of python docx template."
+
+  20160713:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Explore the use of python docx template."
+
+  20160714:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Make table of contents for python docx template."
+
+  20160715:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Add core properties to python docx template and iterate
+        over data files in projects."
+
+  20160716:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Try to work out how to get a nice line number format."
+
+  20160717:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Try to work out how to get diagrams into the document."

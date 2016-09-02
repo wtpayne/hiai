@@ -1,0 +1,34 @@
+schedules_and_activity_network:
+  _num: "6"
+  _req: >
+    This section shall be divided into the following paragraphs:
+  _txt: >
+    ""
+
+  schedule:
+    _num: "6.1"
+    _req: >
+      This paragraph shall present schedule(s) identifying the
+      activities and showing initiation of each activity, availability
+      of draft and final deliverables, other milestones, and completion
+      of each activity.
+
+      This paragraph shall provide the detailed schedule activities for
+      each software item, and other software, for each build, and for
+      the entire software development lifecycle. See paragraph 7.2.1.4
+      below for inclusion of the rationale for the software cost and
+      schedule estimation, including software cost and schedule estimation
+      techniques, the input to those techniques (e.g., software size and
+      software cost driver parameters and scale factors), and any
+      assumptions made.
+    _txt: >
+      TBD
+
+  activity_network:
+    _num: "6.2"
+    _req: >
+      An activity network depicting sequential relationships and
+      dependencies among activities and identifying those activities
+      that impose the greatest time restrictions on the project.
+    _txt: >
+      TBD

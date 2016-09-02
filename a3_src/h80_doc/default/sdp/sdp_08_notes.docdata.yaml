@@ -1,0 +1,38 @@
+notes:
+  _num: "8"
+  _req: >
+    This section shall contain any general information that aids in
+    understanding this document (e.g., background information, glossary,
+    rationale). This section shall be divided into the following paragraphs.
+  _txt: >
+    ""
+
+  abbreviations_and_acronyms:
+    _num: "8.1"
+    _req: >
+      This paragraph shall include an alphabetical listing of all acronyms,
+      abbreviations, and their meanings as used in this document.
+    _txt: >
+      TBD
+
+  glossary:
+    _num: "8.2"
+    _req: >
+      This paragraph shall include a list of any terms and their definitions
+      needed to understand this document. Terms often used differently between
+      organizations (e.g., acquisition phase names, build, block, development
+      phase names, effectivity, evolution, increment, and iteration) shall be
+      defined to avoid confusion. If the terms used are exactly as defined in
+      the Software Development Standard (SDSMCS), they need not be redefined
+      here.
+    _txt: >
+      TBD
+
+  general_information:
+    _num: "8.3"
+    _req: >
+      This paragraph shall contain any other general information that
+      aids in understanding this document (e.g., background information,
+      rationale).
+    _txt: >
+      TBD

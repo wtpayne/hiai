@@ -1,0 +1,67 @@
+agenda:
+
+  j0000014_design_baseline_creation_logic:
+    - "We need to decide how the configuration management system handles the
+      creation and storage of baselines."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160215:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Walk the AST to get context to our data validation functions."
+
+  20160216:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Walk the AST to get context to our data validation functions."
+
+  20160217:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Walk the AST to get context to our data validation functions."
+
+  20160218:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Walk the AST to get context to our data validation functions."
+
+  20160219:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Walk the AST to get context to our data validation functions."
+
+  20160220:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Walk the AST to get context to our data validation functions."
+
+  20160223:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Walk the AST to get context to our data validation functions."
+
+  20160224:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "First cut data validation functionality."
+
+  20160225:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "First cut data validation functionality."
+
+  20160226:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "First cut data validation functionality."
+
+  20160228:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "First cut data validation functionality."

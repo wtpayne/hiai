@@ -1,0 +1,103 @@
+agenda:
+
+  j0000023_tighten_complexity_metrics:
+    - "Reduce complexity thresholds."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000024_setup_spacy_natural_language_processing:
+    - "Setup SpaCy natural language processing library."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000025_create_default_engineering_documents:
+    - "Create default engineering documents."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000027_upgrade_build_env_to_ubuntu_xenial:
+    - "Upgrade build environment to ubuntu xenial."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160801:
+    - j0000023_tighten_complexity_metrics:
+      - "Reduce complexity thresholds."
+      - "Reduce complexity thresholds and refactor as required."
+
+  20160802:
+    - j0000024_setup_spacy_natural_language_processing:
+      - "Setup SpaCy natural language processing library."
+      - "Install dependencies as required."
+
+  20160803:
+    - j0000024_setup_spacy_natural_language_processing:
+      - "Setup SpaCy natural language processing library."
+      - "Install dependencies as required."
+
+  20160805:
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Get a first cut document written."
+
+  20160807:
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Fix SDP data nonconformities."
+
+  20160808:
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Put TBD where we have missing text so we can
+        have common validation schema."
+
+  20160809:
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Improve the error messages that we get from
+        noncompliant document data."
+
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Make sure we are getting default content from
+        the right place."
+
+  20160810:
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Develop logic to compile the engineering
+        documents from various data sources."
+
+  20160811:
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Add default content for SDP documents."
+
+  20160812:
+    - j0000023_tighten_complexity_metrics:
+      - "Reduce complexity thresholds."
+      - "Reduce pylint thresholds."
+
+  20160813:
+    - j0000023_tighten_complexity_metrics:
+      - "Reduce complexity thresholds."
+      - "Reduce pylint thresholds."
+
+  20160814:
+    - j0000027_upgrade_build_env_to_ubuntu_xenial:
+      - "Upgrade build environment to ubuntu xenial."
+      - "Upgrade to xenial before it gets too difficult."

@@ -1,0 +1,134 @@
+agenda:
+
+  j0000001_fix_pep257_errors:
+    - "We have just introduced pep257 docstring linting. Work through all
+      pep257 errors one by one to bring the docstrings for all existing
+      functions up to par."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000012_refactor_build_to_reduce_number_of_passes_over_the_repository:
+    - "Right now, the build process proceeds phase by phase, with multiple
+      passes over the repository, each file potentially getting read several
+      times for indexing, tests, and by each of the various linting tools.
+      For efficiency, and to make it easier to design partial-rebuild logic,
+      I feel that we should refactor the build to pull any loops over all of
+      our source files up to the top level. Not only should this reduce the
+      number of unneccessary file accesses (Something I think will be a
+      significant performance factor as the repository gets larger), but it
+      will also make it possible for us to implement some common logic to
+      speed up incremental rebuilds (Only linting the files that have changed,
+      for example). Clearly this will only work for static analysis processes
+      where each file is treated independently."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000013_copy_build_outputs_to_configuration_management_location:
+    - "Currently build artifacts are left in the temporary directory where
+      they are built. We need to copy them to the configuration management
+      location when the build finishes."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160104:
+    - j0000001_fix_pep257_errors:
+      - "Fix pep257 D103 errors"
+      - "It will take some time to fix all of the problems raised by pep257,
+        so we will proceed on error at a time. We can start with missing
+        docstrings, as this is probably the most serious issue."
+    - j0000001_fix_pep257_errors:
+      - "Fix pep257 D400 and D204 errors"
+      - "It will take some time to fix all of the problems raised by pep257,
+        so we will proceed on error at a time."
+    - j0000001_fix_pep257_errors:
+      - "Fix D101, D102 and D202 errors"
+      - "It will take some time to fix all of the problems raised by pep257,
+        so we will proceed a handful of errors at a time. Saving  D200 for
+        last."
+
+  20160105:
+    - j0000001_fix_pep257_errors:
+      - "Fix pep257 D101, D102 and D202 errors"
+      - "It will take some time to fix all of the problems raised by pep257,
+        so we will proceed a handful of errors at a time. Saving  D200 for
+        last."
+    - j0000001_fix_pep257_errors:
+      - "Fix pep257 D200 errors"
+      - "Ignoring unit tests, these should be the last ones picked up by the
+        pep257 library. I'd hoped that it would pick up more issues. In
+        particular, I'd like to mandate that parameters be documented. Maybe
+        the Numpy docstring linter will have that capability?"
+    - j0000012_refactor_build_to_reduce_number_of_passes_over_the_repository:
+      - "Static analysis refactoring feasibility check"
+      - "Work out if this is going to require significant effort, or
+        if it is something that can still be done fairly easily."
+
+  20160106:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "Register build outputs with the CMS"
+      - "I think that this should be part of the build context
+        rather than the build proper - but some thought may be requried to
+        preempt the needs of Continuous Deployment & UAT testing of networked
+        system components."
+
+  20160107:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "Register build outputs with the CMS."
+      - "The current implementation makes this operation the responsibility
+        of the build context manager, along with staging to UAT and to
+        production for networked components under a Continuous Deployment
+        regime. I reason that once the build outputs have been registered,
+        the nature of the processes are more Ops than Dev, so the nature
+        of it changes somewhat, and shouldn't be handled in the same way.
+        I am still not 100% convinced, however, since I'm not sure of
+        how simulation runs fit in to the process (They are very Ops-like,
+        as they involve deploying built software to HPC nodes -- but they
+        are also very build-like, as the build may be invalidated as a
+        result of what the simulations find. Perhaps the simulations should
+        be viewed more as a sort of automated UAT test?"
+
+  20160111:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "Refactor build output CM logic."
+      - "Refactor the current implementation to move VCS interaction
+        logic to the vcs module."
+
+  20160112:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "Refactor build output CM logic."
+      - "Refactor the current implementation to move VCS interaction
+        logic to the vcs module."
+
+  20160113:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "Make sure CM expiration logic works."
+      - "Make sure that the CM system expires build artifacts correctly."
+
+  20160114:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "CM expiration logic for baseline builds."
+      - "Try to ensure that we can establish baselines with extended
+        expiration dates."
+
+  20160115:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "CM expiration logic for baseline builds."
+      - "Try to ensure that we can establish baselines with extended
+        expiration dates."
+
+  20160116:
+    - j0000013_copy_build_outputs_to_configuration_management_location:
+      - "CM expiration logic for baseline builds."
+      - "Try to ensure that we can establish baselines with extended
+        expiration dates."

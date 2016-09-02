@@ -1,0 +1,139 @@
+title:
+  "Build system requirements specification."
+
+i00027_optimise_the_decision_making_process:
+  - "The system SHOULD optimise design quality."
+  - notes: "Decision making is critical. Both the quality of the
+           completed product and the amount of effort required to
+           complete a project are strongly influenced by architectural
+           design decisions made early on in the product life-cycle.
+
+           A systematic approach to decision making is therefore required.
+
+           Defining the qualities that are required, let alone any
+           quantitative measures is going to be extremely challenging.
+           It might be possible to measure the side effects Defect rates and
+           development costs can be used, as can the results of peer
+           review and evaluation. For software libraries, the amount
+           of re-use versus the amount of effort required may also be
+           informative.
+
+           The quality management system can force us to carry out
+           reviews and retrospectives and to implement design rules
+           based on these lessons learned. We could also use statistical
+           techniques to learn design rules from various datasets.
+
+           The skill of the team should not be overlooked. We need to
+           develop the analytical and design skills of team members
+           and use our tools to encourage a culture that treats design
+           as a serious and worthy task."
+  - type:  guidance
+  - state: draft
+
+
+i00028_maximise_the_effectiveness_of_the_development_feedback_loop:
+  - "The system SHOULD maximise the effectiveness of the development
+    feedback loop."
+  - notes: "Making good design decisions requires both analysis
+           and exprimentation, guided by judgement and an intuitive
+           understanding of the problem domain. Improvements to the
+           experimental process will both prima facia improve the
+           rate of development, but will also build understanding and
+           teach the analytic skills required to make good design
+           decisions.
+
+           Optimising the experimental process will probably entail
+           maximising information transfer through the development
+           feedback loop by reducing cycle times and by presenting
+           feedback information in a rich, high impact format.
+
+           Controlling distractions in the working environment will
+           also help increase the rate at which data is absorbed, but
+           it's not clear how we can influence that in software."
+  - type: guidance
+  - state: draft
+
+
+i00029_minimize_latency_in_the_development_feedback_loop:
+  - "The system SHOULD be designed to minimise latency in the development
+    feedback loop."
+  - notes: "It is important to provide immediate feedback before the
+           attention of the developer has moved on to other topics.
+
+           A delay of less than 250ms should feel near-instantaneous, and
+           shouldn't break the train of thought, and is commensurate with
+           feedback mechanisms such as syntax-error-highlighting in an IDE.
+
+           A delay of less than 3000ms is commensurate with a deliberate
+           pause in work to check if something is correct.
+
+           Longer delays imply that concentration has already been broken,
+           so the trade-off may be different here."
+  - type: guidance
+  - state: draft
+
+
+i00030_prioritize_feedback_to_optimise_payoff:
+  - "The system SHOULD prioritize feedback such that the most important
+     items are fed back first."
+  - notes: "Payoff of feedback. Failing tests first. Tests most likely to
+           fail first"
+  - type: guidance
+  - state: draft
+
+
+i00033_halt_the_build_immediately_a_failure_is_detected:
+  - "The system SHOULD halt the build as soon as a failing test is detected."
+  - notes: "We are required to minimise the time elapsed between the
+           introduction of a regression or other error and the developer
+           responsible being made aware of it."
+  - type: guidance
+  - state: draft
+
+
+i00023_build_output_existence_check:
+  - "For some subset of build output types, the system SHOULD check
+    the actual outputs against a set of expected build outputs and
+    should fail if the sets differ."
+  - notes: "We want to ensure that we do not get some build outputs
+            that are simply missing, or others that are created when
+            we do not expect it. We can restrict this to a core set
+            of build output types, e.g. module binary files and
+            unit test outputs, if that makes it easier to
+            implement."
+  - type: guidance
+  - state: draft
+
+
+i00024_automated_deployment:
+  - "The system SHOULD automatically deploy build outputs to various
+    test environments."
+  - notes: "We want automatic deployment of software to UAT test
+           environments. The same process can be used for Continuous
+           Deployment (where appropriate) and for deployment to
+           runtime environments used by long running SIL/HIL or MIL
+           tests."
+  - type: guidance
+  - state: draft
+
+
+i00025_exclude_failing_builds_from_history:
+  - "The system SHOULD ensure that the source document version
+     history does not contain any builds that fail."
+  - notes: "We want to be confident that all builds in the source
+            document version history are good, for whatever
+            definition of good was prevalent at that time."
+  - type: guidance
+  - state: draft
+
+
+i00026_rollback_failing_builds:
+  - "The system SHOULD roll back from failing builds."
+  - notes: "We commit to VCS before we know if the build is OK. If
+           it is not OK then we should roll back that commit to
+           ensure that we don't get a failing build in the version
+           history."
+  - type: guidance
+  - state: draft
+  - ref:
+    - i00025_exclude_failing_builds_from_history

@@ -1,0 +1,81 @@
+agenda:
+
+  j0000021_document_generation_for_reporting:
+    - "Add the ability to generate xlsx documents from requirements."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160718:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Try to work out how to get diagrams into the document."
+
+  20160719:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Remove duplicate requirements ids."
+
+  20160720:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Refactor data validation."
+
+  20160721:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Refactor data validation."
+
+  20160722:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Add radon complexity checks."
+
+  20160723:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Generate AST nodes with annotations."
+
+  20160724:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Add radon complexity checks."
+
+  20160725:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Add radon complexity checks."
+
+  20160726:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Prioritise build order."
+
+  20160727:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Prioritise build order."
+
+  20160728:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Harmonise unit tests."
+
+  20160729:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Refactor and harmonise unit tests."
+
+  20160730:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Investigate using hypothesis."
+
+  20160731:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate xlsx documents from requirements."
+      - "Investigate using hypothesis."

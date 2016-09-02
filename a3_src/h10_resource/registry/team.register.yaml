@@ -1,0 +1,22 @@
+title:
+  "Team Register."
+
+
+introduction:
+  "This register holds a list of team members and the
+  project role that each is currently assigned to."
+
+
+register:
+
+  t000_wtp:
+    name:
+      William Payne
+    email:
+      t000_wtp@hiai-systems.com
+    alias:
+      - wtp
+    project:
+      p0000_da:
+        role:
+          - developer

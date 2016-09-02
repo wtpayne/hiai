@@ -1,0 +1,64 @@
+agenda:
+
+  j0000014_design_baseline_creation_logic:
+    - "We need to decide how the configuration management system handles the
+      creation and storage of baselines."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000026_fix_h5py_compilation_issue:
+    - "H5py cannot compile because it cannot find gcc. Try to add gcc to
+       the environment so we can compile modules with native components."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000016_speed_up_dependency_build:
+    - "Dependency build takes a long time. Try to check to see
+      if the dependency needs to be updated before building;
+      perhaps with the aid of a record."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000017_fix_coverage_nondeterminism:
+    - "Investigate and fix apparently nondeterministic behaviour in the
+       coverage metrics."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160410:
+    - j0000014_design_baseline_creation_logic:
+      - "Project specific CLI plugin."
+      - "Command line interface for project specific command line interfaces."
+
+  20160411:
+    - j0000014_design_baseline_creation_logic:
+      - "Project specific CLI plugin."
+      - "Command line interface for project specific command line interfaces."
+
+  20160414:
+    - j0000014_design_baseline_creation_logic:
+      - "Project specific CLI plugin."
+      - "Command line interface for project specific command line interfaces."
+
+  20160415:
+    - j0000014_design_baseline_creation_logic:
+      - "Project specific CLI plugin."
+      - "Command line interface for project specific command line interfaces."
+
+    - j0000014_design_baseline_creation_logic:
+      - "Fix nondeterminism in test coverage reporting."
+      - "Perhaps write a figleaf based pytest plugin."

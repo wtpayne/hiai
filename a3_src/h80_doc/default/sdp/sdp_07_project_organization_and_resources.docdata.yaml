@@ -1,0 +1,266 @@
+project_organization_and_resources:
+  _num: "7"
+  _req: >
+    This section shall be divided into the following paragraphs to
+    describe the project organization and resources.
+  _txt: >
+    ""
+
+  project_organization:
+    _num: "7.1"
+    _req: >
+      This paragraph shall be divided into the following subparagraphs
+      to describe the organizational structure to be used on the project,
+      including the organizations involved, their relationships to one
+      another, and the authority and responsibility of each organization
+      for carrying out required activities.
+
+      Note: COTS software suppliers are not included in this paragraph
+      and its subparagraphs.
+    _txt: >
+      TBD
+
+    software_team_members:
+      _num: "7.1.1"
+      _req: >
+        This paragraph shall identify each geographic site of each
+        software team member organization that is performing the
+        project-related effort for any software-related activities.
+        (See Section 3.1 of the body of (SDSMCS) for the definition
+        of software team member.) For each software team member
+        organization site this paragraph shall include all of the
+        following information:
+
+        a. Organization site name (e.g., XYZ Co. Div ABA, City, State);
+
+        b. Parent organization name (e.g., company);
+
+        c. Internal organization name, i.e., name of division or other
+           level (e.g., ground software development);
+
+        d. Organization site location, i.e., city, state, and country;
+
+        e. Software-related activities that the software team member is
+           expected to be performing at this site;
+
+        and
+
+        f. The internal structure of each software team member, showing
+           all software-related entities (e.g., software development
+           groups, test groups, software process organizations, software
+           quality assurance, software configuration management) and
+           how they relate to other project and organizational entities
+           (e.g., program management, systems engineering, system
+           integration and test, hardware engineering, quality assurance,
+           configuration management).
+
+           Note: References to supplied organization charts could provide
+           this information for item f.
+      _txt: >
+        TBD
+
+    full_set_of_project_software:
+      _num: "7.1.2"
+      _req: >
+        This paragraph shall identify the full set of software items
+        and other software for all categories of software for this
+        project.
+
+        This paragraph shall include for each software item and other
+        software:
+
+        a. Name of the software item or other software;
+
+        b. System, subsystem, and any other components to which the
+           software belongs;
+
+        c. Category of software;
+
+        d. For each software team member responsible for all or part of
+           the software item or other software, identify the:
+
+          (1) Responsible software team member;
+
+          (2) Organization site name, i.e., same as in 7.1.1.a;
+
+          (3) Part(s) of the software item or other software for
+              which the software team member is responsible;
+
+          (4) Source of software, i.e., new, reused as is, modified reuse,
+              COTS;
+
+          and
+
+          (5) If the software is of mixed source, then list the percentages
+              of each type of source.
+      _txt: >
+        TBD
+
+    software_team_receiver_giver_relationships:
+      _num: "7.1.3"
+      _req: >
+        This paragraph shall show the contractual and intracorporation
+        receiver-giver relationships among the software team members,
+        including the prime contractor.
+
+        An internal software team member receiver is the software team
+        member requiring and receiving a software item, or other software,
+        from one of the other software team members.
+
+        An internal software team member giver is the software team member
+        supplying or giving the required software item or other software
+        to the software team member that required the product.
+
+        This paragraph shall be organized by internal software team member
+        receiver with the prime contractor relationships first.
+
+        If a single software team member has multiple sites performing
+        software-related efforts on this project, then each organization
+        site shall be treated separately. For each internal receiver-giver
+        pair, this paragraph shall identify each software item, and other
+        software, produced by the internal giver for the internal receiver.
+
+        This paragraph shall include for each receiver-giver software team
+        member relationship:
+
+          a. Internal software team member receiver organization site name,
+          b. Internal software team member giver organization site name,
+
+          and
+
+          c. List of name(s) of each software item and other software to
+             be produced by the giver for the receiver.
+      _txt: >
+        TBD
+
+  project_resources:
+    _num: "7.2"
+    _req: >
+      This paragraph shall be divided into the following subparagraphs
+      to describe the resources to be applied to the project.
+    _txt: >
+      TBD
+
+    personnel_resources:
+      _num: "7.2.1"
+      _req: >
+        This paragraph shall provide the following items for the entire
+        software development lifecycle and for each software item, and other
+        software:
+      _txt: >
+        TBD
+
+      staff_hours_by_software_item:
+        _num: "7.2.1.1"
+        _req: >
+          The estimated staff-loading for the project i.e., number of
+          total personnel hours by month throughout the system development
+          lifecycle, broken out as follows:
+
+          a. For each software team member:
+              (1) For each software item and other software,
+              (2) For each other piece of software,
+              (3) For each build, and
+              (4) For the entire software development lifecycle;
+
+          and
+
+          b. For all software team members for the entire software
+             development effort.
+        _txt: >
+          TBD
+
+      staff_hours_by_responsibility:
+        _num: "7.2.1.2"
+        _req: >
+          The breakdown of the staff-loading for the project, i.e.,
+          number of total personnel hours by month throughout the system
+          development life cycle, broken out by responsibility (for
+          example, management, software engineering, software testing,
+          software configuration management, product evaluation, software
+          quality assurance):
+
+          a. For each software team member:
+              (1) For each software item,
+              (2) For each other piece of software,
+              (3) For each build, and
+              (4) For the entire software development lifecycle;
+
+          and
+
+          b. For all software team members for the entire software
+             development effort.
+        _txt: >
+          TBD
+
+      number_of_personnel_by_skill_level:
+        _num: "7.2.1.3"
+        _req: >
+          For each software team member, a breakdown of the number of
+          personnel by skill level of those personnel performing each
+          responsibility used in paragraph 7.2.1.2:
+
+          a. For each software team member:
+              (1) For each software item,
+              (2) For each other piece of software,
+              (3) For each build, and
+              (4) For the entire software development lifecycle;
+
+          and
+
+          b. For all software team members for the entire software
+             development effort.
+        _txt: >
+          TBD
+
+      rationale:
+        _num: "7.2.1.4"
+        _req: >
+          The rationale for the schedule estimates in paragraph 6.1 and
+          the effort and head count estimates in section 7.2, including
+          software cost and schedule estimation techniques, the input to
+          those techniques (e.g., software size and software cost driver
+          parameters and scale factors), and any assumptions made.
+        _txt: >
+          TBD
+
+      training:
+        _num: "7.2.1.5"
+        _req: >
+          Description of the training required for each software team
+          member organization site. Also a description of the training
+          required for each new staff member.
+        _txt: >
+          TBD
+
+    overview_of_developer_facilities:
+      _num: "7.2.2"
+      _req: >
+        For each organization site, this paragraph shall list the
+        development and test facilities, secure areas, and other site
+        features to be used, as applicable to the software development,
+        including which work will be performed at each facility, area,
+        or other site feature. This paragraph shall include a schedule
+        detailing when these items will be needed, developed or
+        acquired, and validated.
+      _txt: >
+        TBD
+
+    acquirer_furnished_equipment_and_information:
+      _num: "7.2.3"
+      _req: >
+        This paragraph shall list acquirer-furnished equipment, software,
+        services, documentation, data, and facilities, as applicable,
+        required for the software development effort. A schedule detailing
+        when these items will be needed shall also be included.
+      _txt: >
+        TBD
+
+    other_required_resources:
+      _num: "7.2.4"
+      _req: >
+        This paragraph shall list other required resources, including a plan
+        for obtaining the resources, dates needed, and availability of each
+        resource item.
+      _txt: >
+        TBD

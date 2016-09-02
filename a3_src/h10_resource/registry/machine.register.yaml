@@ -1,0 +1,14 @@
+title:
+  "Machine Register."
+
+
+introduction:
+  "This register holds a list of machines and the
+  role that each is currently assigned to."
+
+
+register:
+
+  z0000_atomic:
+    hostname:   "atomic"
+    desc:       "Dell XPS ultrabook 2015 workstation."

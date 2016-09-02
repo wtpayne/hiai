@@ -1,0 +1,152 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+The Development Automation System.
+
+This is the main entry point for Development Automation System commands.
+It bootstraps a configuration-controlled runtime environment and passes
+control to the da.cli module.
+
+We need to be confident that our build will be exactly reproduceable across
+all supported development and build environments, but we also want to place
+as few restrictions on these environments as possible, because we don't
+yet know what development tools we might need to interoperate with in future.
+
+Rather than using the host system's Python interpreter, which would force
+us to exert control over the version installed on all development and build
+machines, we instead launch our own (configuration controlled) interpreter,
+enabling us to be confident in the reproducibility of our results without
+running the risk of 'painting ourselves into a corner' by placing unnecessary
+restrictions on the host environment.
+
+At the time of writing, we use the embedded Python interpreter 'Pyrun' from
+eGenix for this purpose, although this may change in future.
+
+The amount of logic contained in this script is kept to a minimum, as it
+resides outside of the main source directory structure, not able to benefit
+from any of the organisational support available within. The lion's share
+of the logic required to handle development automation commands is delegated
+to the da.cli module.
+
+---
+copyright:
+    "Copyright 2015 High Integrity Artificial Intelligence Systems"
+
+license:
+    "Licensed under the Apache License, Version 2.0 (the License);
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an AS IS BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License."
+...
+"""
+
+import base64
+import os
+import subprocess
+import sys
+
+
+# -----------------------------------------------------------------------------
+def _main(argv):
+    """
+    Main entry point for Development Automation System commands
+
+    When we are first called, we will be running under the host system Python,
+    so we re-launch using our own (configuration controlled) Python to ensure
+    consistent and reproducible behaviour before we run the command specified
+    by the supplied input arguments.
+
+    """
+    _in_controlled_env = (2 <= len(argv)) and ('_in_controlled_env' == argv[1])
+
+    if not _in_controlled_env:
+        return _relaunch_in_controlled_env(argv)
+
+    else:
+        return _cmd(argv)
+
+
+# -----------------------------------------------------------------------------
+def _relaunch_in_controlled_env(argv):
+    """
+    Re-launch this script under a configuration controlled Python environment.
+
+    We use the first command-line parameter to indicate the environment in
+    which we are running, since platform.python_implementation returns CPython
+    under PyRun as well as under CPython.
+
+    """
+    relfilepath_self = __file__ if __file__ else argv[0]
+    cmd_argv         = argv[1:]
+    dirpath_cwd      = os.getcwd()
+    dirpath_lwc_root = os.path.dirname(os.path.realpath(relfilepath_self))
+    pid              = '{pid}'.format(pid = os.getpid())
+    cmd_b64          = base64.b64encode(' '.join(argv))
+    arglist          = ['-b', 'da', '_in_controlled_env',
+                        dirpath_lwc_root,
+                        dirpath_cwd,
+                        pid,
+                        cmd_b64] + cmd_argv
+    sys.path.insert(0, _dirpath_internal(dirpath_lwc_root))
+    import da.lwc.run
+    return da.lwc.run.python3(arglist, dirpath_lwc_root = dirpath_lwc_root)
+
+
+# -----------------------------------------------------------------------------
+def _cmd(argv):
+    """
+    Once this script (da) has been re-launched within a configuration
+    controlled Python interpreter, we can run the command logic proper.
+
+    """
+    dirpath_lwc_root = argv[2]
+    dirpath_cwd      = argv[3]
+    pid              = argv[4]
+    cmd_b64          = argv[5]
+    cmd_argv         = argv[6:]
+    outer_cmd        = base64.b64decode(cmd_b64).decode()
+
+    import click
+    import da.cli
+    da.cli.main(
+        args            = cmd_argv,
+        standalone_mode = True,
+        obj             = da.cli.CustomContextObject({
+                                        'dirpath_lwc_root': dirpath_lwc_root,
+                                        'dirpath_cwd':      dirpath_cwd,
+                                        'outer_cmd':        outer_cmd,
+                                        'pid':              pid,
+                                        'args':             cmd_argv }))
+
+
+# -----------------------------------------------------------------------------
+def _dirpath_internal(dirpath_lwc_root):
+    """
+    Return the directory path holding internal buildsystem python modules.
+
+    So that we may preserve the freedom to reorganise items within our
+    repository as we see fit, we try to minimise our use of hard-coded
+    relative paths and directory names, instead using the da.lwc.discover
+    module to look up local working copy paths from location-independent
+    keys. The hard-coded directory names below violate this rule because
+    they are required prior to the point in the bootstrap sequence at
+    which the da.lwc.discover module is made available.
+
+    """
+    _DIR_NAME_SRC      = 'a3_src'
+    _DIR_NAME_INTERNAL = 'h70_internal'
+    dirpath_src        = os.path.join(dirpath_lwc_root, _DIR_NAME_SRC)
+    dirpath_internal   = os.path.join(dirpath_src,      _DIR_NAME_INTERNAL)
+    return dirpath_internal
+
+
+# -----------------------------------------------------------------------------
+if __name__ == '__main__':
+    sys.exit(_main(sys.argv))

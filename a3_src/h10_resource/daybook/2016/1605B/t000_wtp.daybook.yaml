@@ -1,0 +1,50 @@
+agenda:
+
+  j0000019_initial_metabuild_capability:
+    - "Put a frameweork in place for metabuilds and automated optimisation."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+  20160516:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160517:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160518:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160519:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160520:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160523:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160524:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160525:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."

@@ -1,0 +1,40 @@
+entry_id:
+  def:  "Definition text."
+  alt:  ["alternative spellings"]
+  tag:  ["A list of classification tags - acronym / noun / verb / adjective"]
+  ref:  ["A list of external reference documents or URLs"]
+
+design_element:
+  def:  "A representation of a design decision."
+  alt:  ["Design element"]
+  tag:  ["noun"]
+  ref:  []
+
+design_document:
+  def:  "A document containing design elements."
+  alt:  ["Design document",
+         "Design file"]
+  tag:  ["noun"]
+  ref:  []
+
+specification_document:
+  def:  "A document containing requirements and tests."
+  alt:  ["Specification document",
+         "Specification file"]
+  tag:  ["noun"]
+  ref:  []
+
+build_element:
+  def:  "A design document and its specification document."
+  alt:  ["Build element"]
+  tag:  ["noun"]
+  ref:  []
+
+
+
+
+
+
+
+
+

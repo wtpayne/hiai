@@ -1,0 +1,12 @@
+appendices:
+  _num: "A"
+  _req: >
+    Appendices may be used to provide information published separately
+    for convenience in document maintenance (e.g., charts, classified
+    data). As applicable, each appendix shall be referenced in the main
+    body of the document where the data would normally have been provided.
+
+    Appendices may be bound as separate documents for ease in handling.
+    Appendices shall be lettered alphabetically (Appendix A, B, etc.).
+  _txt: >
+    TBD

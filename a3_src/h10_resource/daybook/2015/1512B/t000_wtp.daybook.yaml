@@ -1,0 +1,179 @@
+agenda:
+
+  j0000000_bootstrap_development_automation_system:
+    - "We need to bootstrap a simple build system - at least to the point
+      where we can enforce and ensure that commit messages have sufficient
+      information to infer trace relationships - minimising the quantity
+      of the system which is not subject to traceability."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000001_fix_pep257_errors:
+    - "We have just introduced pep257 docstring linting. Work through all
+      pep257 errors one by one to bring the docstrings for all existing
+      functions up to par."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20151215:
+    - j0000000_bootstrap_development_automation_system:
+      - "Bootstrap commit message generation."
+      - "Quite a lot of work has been done up to this point to get the
+        development automation system to a stage where commit messages
+        can be automatically generated from various bits of workflow data
+        that are under configuration control"
+
+  20151216:
+    - j0000000_bootstrap_development_automation_system:
+      - "Make sure that build errors are being handled."
+      - "How should we be handling exceptions raised during the build? How
+        and when should we attemt to open the editor?"
+    - j0000000_bootstrap_development_automation_system:
+      - "Requirement identifier handling."
+      - "We have already written quite a few requirements to get to where
+        we are now, but ensuring the uniqueness of requirements identifiers
+        is quickly becoming a burdensome chore. Today's job is to figure
+        out how we can collate/index/check our identifiers. Requirements
+        related identifiers particularly."
+
+  20151221:
+    - j0000000_bootstrap_development_automation_system:
+      - "Requirement identifier indexing."
+      - "So that we can handle requirement identifiers - we need to be able
+        to index identifiers of all types throughout the source tree. We
+        started doing this as a separate function, but it currently looks
+        like it will be better to do it as part of the build."
+
+  20151222:
+    - j0000000_bootstrap_development_automation_system:
+      - "Requirement identifier indexing."
+      - "Continuing to work on requirement identifier indexing. Right now
+        we are working on persistence of indexes. Getting some strange
+        problems at the moment."
+    - j0000000_bootstrap_development_automation_system:
+      - "Semantic identifier indexing."
+      - "Most of the problems seen previously now seem to be fixed. I've
+        made some progress also on indexing that understands the context
+        within which the identifier occurrs. I am now spendinig a little
+        while exploring how easy it will be to implement this as well,
+        while I am on the topic of identifier indexing."
+
+  20151224:
+    - j0000000_bootstrap_development_automation_system:
+      - "Coroutine based indexing."
+      - "Since we will be creating indexes of multiple types, we should
+        be able to create more than one at once, which means that the
+        locus of control should not be in the indexing routine itself,
+        but rather in the part of the data processing pipeline which
+        iterates over individual files (to avoid having to read files
+        multiple times)."
+
+  20151226:
+    - j0000000_bootstrap_development_automation_system:
+      - "Coroutine based indexing."
+      - "Continuing the work from before Christmas on coroutine based
+        indexing algorithms. Most of the hard work has been done and
+        we are just integrating it with the main system now. We will
+        be returning to contextual indexing soon (What was previously
+        called semantic identifier indexing)."
+
+  20151227:
+    - j0000000_bootstrap_development_automation_system:
+      - "Contextual indexing using coroutines."
+      - "Now that coroutine based indexing appears to work, we are
+        moving on to get contextual indexing working with this new
+        approach."
+
+  20151228:
+    - j0000000_bootstrap_development_automation_system:
+      - "Contextual indexing using coroutines."
+      - "Now that coroutine based indexing appears to work, we are
+        moving on to get contextual indexing working with this new
+        approach."
+
+  20151229:
+    - j0000000_bootstrap_development_automation_system:
+      - "Indexing comments in Python files."
+      - "We have changed terminology again. Context-free indexing becomes
+        line indexing, and contextual indexing betcomes both object
+        indexing and reference indexing. At the moment, this is only
+        working for YAML files, so the next step is to re-instate the
+        ability to look into comments (docstrings and regular comments)
+        in Python files also."
+    - j0000000_bootstrap_development_automation_system:
+      - "Remove failing unit tests."
+      - "The move to use the isolation area for the build really messed
+        up some unit test fixtures. The immediate plan is to remove the
+        failing tests then re-introduce them when coverage based quality
+        criteria are added."
+
+  20151230:
+    - j0000000_bootstrap_development_automation_system:
+      - "Remove failing unit tests."
+      - "The move to use the isolation area for the build really messed
+        up some unit test fixtures. The immediate plan is to remove the
+        failing tests then re-introduce them when coverage based quality
+        criteria are added."
+    - j0000000_bootstrap_development_automation_system:
+      - "Automatically squash automatic commits."
+      - "We are generating rather a lot of automatic commits (one per build)
+        so we should come up with a strategy to reduce this number by squashing
+        according to some sensible rule (e.g. squash commits for the same
+        task / message). Provision should be made for manually driving the
+        process also."
+    - j0000000_bootstrap_development_automation_system:
+      - "Reset git history to provide a new starting point"
+      - "We have a rather extended git history at this point, with lots and
+        lots of not-very-informative commits. This task is to reset the git
+        history so that we get a uniformly more meaningful log going
+        forwards."
+
+  20151231:
+    - j0000000_bootstrap_development_automation_system:
+      - "Development Automation Bootstrap"
+      - "We have a basic skeleton build-system in place and available. Some of
+        the basic infrastructure behind traceability (indexing) is in place.
+        We can generate commit messages automatically from our diary entries,
+        and can automatically squash similar commits together. Previous git
+        history has been erased to remove large numbers of spurious commits
+        and to ensure that the history may be processed in a fairly uniform
+        manner."
+
+  20160101:
+    - j0000000_bootstrap_development_automation_system:
+      - "Fix automatic squashing func"
+      - "Automatic squashing doesn't appear to work properly. This may just
+        be something to do with being close to the first commit in the
+        repository or it might be soemthing else. Investigate and fix."
+
+  20160102:
+    - j0000000_bootstrap_development_automation_system:
+      - "Fix automatic squashing function"
+      - "Automatic squashing doesn't appear to work properly. This may just
+        be something to do with being close to the first commit in the
+        repository or it might be soemthing else. Investigate and fix."
+    - j0000000_bootstrap_development_automation_system:
+      - "Add pep257 docstring syntax checking."
+      - "This should be a fairly small task, partly as a test to make sure
+        that automatic squashing is working OK, and partly because my
+        docstrings are not as good as I want them to be, so I need to force
+        myself to write better documentation with this build-time check."
+
+  20160103:
+    - j0000000_bootstrap_development_automation_system:
+      - "Add pep257 docstring syntax checking."
+      - "This is proving a little bit tricky - the build seems to be crashing
+        somehow. Investigating why. I hope we can still use this library."
+    - j0000001_fix_pep257_errors:
+      - "Fix pep257 D103 errors"
+      - "It will take some time to fix all of the problems raised by pep257,
+        so we will proceed on error at a time. We can start with missing
+        docstrings, as this is probably the most serious issue."

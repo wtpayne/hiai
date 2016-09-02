@@ -1,0 +1,17 @@
+# Git ignore file
+#
+# Our process involves automatically comitting changes to the repository, so
+# we use a whitelist-oriented .gitignore to ensure that inappropriate files
+# are not added to the repository by accident.
+#
+
+*
+!*/
+
+# -----------------------------------------------------------------------------
+# Blacklist
+
+# -----------------------------------------------------------------------------
+# Whitelist all data files in this directory
+
+!*

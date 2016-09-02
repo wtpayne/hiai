@@ -1,0 +1,34 @@
+title:
+  Build restriction configuration file for baseline builds.
+
+options:
+
+  clean_tmp_dir:                        True
+  auto_commit:                          True
+
+  enable_cms_registration:              True
+  enable_cms_delete_old_builds:         True
+  cms_expiration_days:                  1
+
+  # Set TRUE to limit design standards verification checks to files and
+  # modules which have changed. This is appropriate for testing scenarios
+  # where fast feedback is given priority over comprehensive test coverage.
+  # This parameter should be set TRUE for continuous development builds
+  # and FALSE for baseline and release builds.
+  check_changed_files_only:             False
+
+  # Set TRUE to make the build abort as soon as the first test failure
+  # is detected. This is appropriate for continuously running development
+  # testing where we need to surface failures as soon as we can.
+  errors_abort_immediately:             False
+
+  # Set TRUE to wait until the end of each phase before deciding whether or
+  # not the build should be aborted. This is appropriate for root cause
+  # analysis exercises where we are trying to surface sets of related
+  # test failures at the same time.
+  errors_abort_at_phase_end:            False
+
+steps:
+
+  # Set TRUE to enable build reports generation.
+  enable_report_generation:             True

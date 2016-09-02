@@ -1,0 +1,18 @@
+agenda:
+
+  j0000015_support_image_processing_models:
+    - "Add support for Python Pillow and OpenCV so that we can do
+      modelling in Python for image processing operations."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00034_shadow_enhancement_prototype
+
+chronicle:
+
+  20160320:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get py.test working, then test AST walking functionality, then make
+        sure that AST and embedded data interface is designed correctly."
+

@@ -1,0 +1,1433 @@
+plans_for_performing_detailed_software_development_activities:
+  _num: "5"
+  _req: >
+    The paragraphs below cover the plans for performing detailed
+    software development activities. Provisions corresponding to
+    nonrequired activities may be satisfied by the words 'Not applicable.'
+
+    If different builds or different software on the project require
+    different planning, these differences shall be noted in the
+    paragraphs.
+
+    If different planning is required for new development, modification,
+    reusable software products, reengineering, and maintenance, these
+    differences shall be described in the paragraphs.
+
+    The discussion of each activity shall include the approach, i.e.,
+    plans, processes, methods, procedures, tools, roles, and
+    responsibilities, to be applied to:
+
+    1) the analysis or other technical tasks involved,
+
+    2) the recording of results,
+
+    and
+
+    3) the preparation of associated deliverables, if applicable.
+
+    For each activity, include
+
+    a) entrance criteria,
+
+    b) inputs,
+
+    c) tasks to be accomplished,
+
+    d) products to be produced,
+
+    e) verifications to be used to ensure tasks are performed according to
+       their defined processes and products meet their requirements,
+
+    f) outputs,
+
+    and
+
+    g) exit criteria.
+
+    The discussion shall also identify applicable risks and uncertainties
+    and plans for dealing with them. Reference may be made to paragraph
+    4.2.1 if applicable methods are described there. This section shall
+    be divided into the following paragraphs.
+  _txt: >
+    A tailored lifecycle model incorporating aspects of the spiral model
+    and the once-through (waterfall) model shall be used. The emphasis
+    of the approach shall be on iterative refinement, where documents,
+    software and systems start out as simple and unrefined artifacts, and
+    get progressively elaborated and enriched as the project progresses.
+
+    Aspects of once-through development are required in the form of milestones
+    to facilitate coordination with the manufacturing process, but for the
+    majority of detailed design work, a time-boxed and feedback-driven
+    development approach shall be used, drawing heavily from the Agile
+    Scrum methodology.
+
+    A brief outline of the lifecycle is given below; detailed plans for
+    individual phases and supporting activities are contained in the
+    following subsections.
+
+    The lifecycle has 10 major phases, eight of which are brief and culminate
+    in milestones with well-defined pass/fail criteria. The remaining two
+    phases are significantly longer and occupy the bulk of the development
+    schedule. Both of these longer phases involve iterative feedback-guided
+    refinement of both the product and its requirements.
+
+
+    Milestones:
+      1.  Outline architecture and key requirements defined. (Kickoff)
+      2.  Tests exercise a Python model of the data pipeline (MIL).
+      3.  Tests exercise a C implementation of the data pipeline (SIL).
+      4.  Tests exercise the data pipeline running on a dev board (PIL).
+      5.  Tests exercise the data pipeline running on 'A' hardware (HIL).
+      6.  Feature complete minimum viable product (MVP).
+      7.  Design validation for the minimum viable product. (DV)
+      8.  Production validation for the minimum viable product. (PV)
+      9.  In service support (ISS).
+      10. End-of-life. (EOL)
+
+    Supporting activities:
+      1. Project planning and oversight.
+
+    The first five phases are intended force the creation of a fully
+    integrated but very minimally functional product as early in the
+    schedule as possible.
+
+    Beyond this point continuous integration practices maintain a fully
+    integrated system as performance is improved and features introduced.
+
+    ### Phase 1 (Kickoff)
+
+    This phase acts as the project Kick-off. It is intended to ensure that
+    minimum baseline documents for requirements and architecture are
+    available from the start of the project. This phase should not take
+    longer than one or two days, and the documents at this stage should
+    be in a largely incomplete and outline form.
+
+    ### Phase 2 (MIL)
+
+    This phase demonstrates data flowing through a Python model of our
+    proposed data processing pipeline. This phase should not take longer
+    than one time-box period, and no actual functionality is required
+    beyond simplistic placeholders for the most significant components
+    in the pipeline.
+
+    ### Phase 3 (SIL)
+
+    This phase demonstrates that we can get the same data flowing through
+    both a Python model of our processing pipeline and a compiled C version
+    and that we can compare the results at each stage to cross-validate
+    modules that we believe to be identical. This phase should also not take
+    longer than one time-box period, and should not focus on functionality
+    development beyond the bare minimum required for the demonstration.
+
+    ### Phase 4 (PIL)
+
+    This phase demonstrates that we can get the same data flowing through
+    our Python modelling environment, our compiled software running on
+    a workstation, and our compiled software running on embedded hardware,
+    and that we can compare all three to cross-check functionality.
+    Ideally, a development board for the proposed target processor shall
+    be used. If processor selection is incomplete, a simple substitute
+    such as a Raspberry Pi can be used. This phase should not take longer
+    than two or three time-box periods, and should not deliver any
+    functionality beyond the bare minimum required to bring up the board
+    for the demonstration.
+
+    ### Phase 5 (HIL)
+
+    Phase 5 (HIL) and 6 (MVP) are highly likely to overlap depending on
+    the delivery schedule for the initial 'A0' sample hardware.
+
+    Phase 5 incorporates board bring-up for the target hardware and
+    demonstrates that we have transitioned from PIL to HIL testing.
+
+    ### Phase 6 (MVP)
+
+    This phase is intended to support the team as they iteratively work
+    towards a minimum viable product. During this phase the requirements,
+    the architecture and the system are expanded and elaborated. The
+    majority of the requirements analysis; the detailed design effort and
+    the test implementation is carried out in this phase.
+
+    The emphasis should be on the steady accumulation of working and tested
+    software. Requirements specifications and design documents should be
+    produced and refined incrementally as the software is developed.
+
+    The beginning of this phase can start before the 'A0' sample hardware
+    is available.
+
+    A particular emphasis on continuous integration is important in phase
+    6. Integrated and working software shall be available at MIL and
+    SIL levels of integration continuously, and at a PIL or HIL level of
+    integration on a daily basis.
+
+    ### Phase 7 (DV)
+
+    This phase leads up to the design validation milestone. The emphasis
+    is on releasing the baseline MVP with support for production line
+    support functions such as factory calibration and end-of-line test
+    support.
+
+    ### Phase 8 (PV)
+
+    This phase leads up to the production validation milestone. The
+    emphasis is on enhancing the manufacturability of the product
+    and in preparing for the ramp-up to production and deployment.
+
+    ### Phase 9 (ISS)
+
+    The in service support phase is intended to allow the team to deliver
+    over the-air fixes and improvements to in-service systems. The emphasis
+    should be in responding quickly to customer feedback and any support
+    issues that arise.
+
+    ### Phase 10 (EOL)
+
+    The end of life phase is intended to force the project to plan for the
+    end-of-life of systems and supporting equipment: To consider how
+    systems may be transitioned to operate without access to back-end servers
+    and to consider the environmental impact and recyclability of the product
+    at the end of its' life.
+
+
+  project_planning_and_oversight:
+    _num: "5.1"
+    _req: >
+      See Section 5.1 and its subparagraphs in the body of the Software
+      Development Standard for Mission Critical Systems (SDSMCS) for the
+      activities and topics to be addressed in this paragraph on project
+      planning and oversight. This paragraph shall be divided into the
+      following subparagraphs to describe the approach to be followed for
+      project planning and oversight.
+    _txt: >
+      TBD
+
+    software_development_planning:
+      _num: "5.1.1"
+      _req: >
+        NONE
+      _txt: >
+        Top level milestones shall be planned in advance with well defined
+        but high-level exit criteria. Detailed planning shall be done on a
+        time-box by time-box basis only. Milestone dates shall be fixed
+        whilst scope shall be allowed to vary.
+
+    software_integration_and_test_planning:
+      _num: "5.1.2"
+      _req: >
+        Software integration and test planning
+      _txt: >
+        TBD
+
+      software_integration_planning:
+        _num: "5.1.2.1"
+        _req: >
+          Software integration planning
+        _txt: >
+          TBD
+
+      software_item_qualification_test_planning:
+        _num: "5.1.2.2"
+        _req: >
+          Software item qualification test planning
+        _txt: >
+          TBD
+
+    system_qualification_test_planning:
+      _num: "5.1.3"
+      _req: >
+        System qualification test planning
+      _txt: >
+        TBD
+
+    planning_for_software_transition_to_operations:
+      _num: "5.1.4"
+      _req: >
+        Planning for software transition to operations
+      _txt: >
+        TBD
+
+    planning_for_software_transition_to_maintenance:
+      _num: "5.1.5"
+      _req: >
+        Planning for software transition to maintenance
+      _txt: >
+        TBD
+
+    following_and_updating_plans:
+      _num: "5.1.6"
+      _req: >
+        Following and updating plans
+      _txt: >
+        TBD
+
+  establishing_a_software_development_environment:
+    _num: "5.2"
+    _req: >
+      The developer shall record the results of the software engineering
+      environment adequacy analysis in the SDP. The developer shall record
+      the results of the software integration and qualification test
+      environment adequacy analysis in the SDP.
+
+      See Section 5.2 and its subparagraphs in the body of (SDSMCS) for
+      the activities and topics to be addressed in this paragraph on
+      establishing and maintaining software development environments.
+
+      This paragraph shall be divided into the following subparagraphs
+      to describe the approach to be followed for establishing, controlling,
+      and maintaining a software development environment.
+    _txt: >
+      TBD
+
+    software_engineering_environment:
+      _num: "5.2.1"
+      _req: >
+        Software engineering environment.
+      _txt: >
+        TBD
+
+      software_engineering_environment_description:
+        _num: "5.2.1.1"
+        _req: >
+          Software engineering environment description.
+        _txt: >
+          TBD
+
+      software_engineering_environment_adequacy_analysis_reports:
+        _num: "5.2.1.2"
+        _req: >
+          Software engineering environment adequacy analysis reports.
+        _txt: >
+          TBD
+
+    software_integration_and_qualification_test_environment:
+      _num: "5.2.2"
+      _req: >
+        Software integration and qualification test environment.
+      _txt: >
+        TBD
+
+      software_integration_and_qualification_test_environment_description:
+        _num: "5.2.2.1"
+        _req: >
+          Software integration and qualification test environment
+          description.
+        _txt: >
+          TBD
+
+      software_integration_and_qualification_environment_adequacy_analysis:
+        _num: "5.2.2.2"
+        _req: >
+          Software integration and qualification test environment adequacy
+          analysis reports.
+        _txt: >
+          TBD
+
+    software_development_library:
+      _num: "5.2.3"
+      _req: >
+        Software development library.
+      _txt: >
+        TBD
+
+    software_development_files:
+      _num: "5.2.4"
+      _req: >
+        Software development files.
+      _txt: >
+        TBD
+
+    nondeliverable_software:
+      _num: "5.2.5"
+      _req: >
+        Nondeliverable software
+      _txt: >
+        TBD
+
+  system_requirements_analysis:
+    _num: "5.3"
+    _req: >
+      See Section 5.3 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph on
+      system requirements analysis. This paragraph shall be divided into
+      the following subparagraphs to describe the approach to be followed
+      for participating in system requirements analysis.
+    _txt: >
+      TBD
+
+    analysis_of_user_input:
+      _num: "5.3.1"
+      _req: >
+        Analysis of user input
+      _txt: >
+        TBD
+
+    analysis_of_user_input:
+      _num: "5.3.2"
+      _req: >
+        Operational concept
+      _txt: >
+        TBD
+
+    system_requirements_definition:
+      _num: "5.3.3"
+      _req: >
+        System requirements definition
+      _txt: >
+        TBD
+
+  system_architecture_and_design:
+    _num: "5.4"
+    _req: >
+      System architecture and design. See Section 5.4 and its subparagraphs
+      in the body of (SDSMCS) for the activities and topics to be addressed
+      in this paragraph on requirements for system architectural design.
+
+      This paragraph shall be divided into the following subparagraphs to
+      describe the approach to be followed for participating in system
+      architectural design.
+    _txt: >
+      TBD
+
+    system_wide_architectural_design_decisions:
+      _num: "5.4.1"
+      _req: >
+        System-wide architectural design decisions
+      _txt: >
+        TBD
+
+    system_architectural_design:
+      _num: "5.4.2"
+      _req: >
+        System architectural design
+      _txt: >
+        TBD
+
+  software_requirements_analysis:
+    _num: "5.5"
+    _req: >
+      This paragraph shall describe the approach to be followed for
+      software requirements analysis. See Section 5.5 in the body of
+      (SDSMCS) for the activities and topics to be addressed in this
+      paragraph on software requirements analysis.
+    _txt: >
+      TBD
+
+  software_architecture_and_design:
+    _num: "5.6"
+    _req: >
+      See Section 5.6 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on software architecture and design. This paragraph shall be
+      divided into the following subparagraphs to describe the approach
+      to be followed for software design.
+    _txt: >
+      TBD
+
+    overall_software_architecture:
+      _num: "5.6.1"
+      _req: >
+        Overall software architecture.
+      _txt: >
+        TBD
+
+    software_item_architecture:
+      _num: "5.6.2"
+      _req: >
+        Software item architecture.
+      _txt: >
+        TBD
+
+    software_item_detailed_design:
+      _num: "5.6.3"
+      _req: >
+        Software item detailed design.
+      _txt: >
+        TBD
+
+      software_item_detailed_design:
+        _num: "5.6.3.1"
+        _req: >
+          Software unit detailed design.
+        _txt: >
+          TBD
+
+      software_interface_design:
+        _num: "5.6.3.2"
+        _req: >
+          Software interface design.
+        _txt: >
+          TBD
+
+      database_design:
+        _num: "5.6.3.3"
+        _req: >
+          Database design, as applicable.
+        _txt: >
+          TBD
+
+      user_interface_design:
+        _num: "5.6.3.4"
+        _req: >
+          User interface design, as applicable.
+        _txt: >
+          TBD
+
+      other_applicable_software_design:
+        _num: "5.6.3.5"
+        _req: >
+          Other applicable software design (e.g., model-based software,
+          as applicable).
+        _txt: >
+          TBD
+
+  software_implementation_and_unit_testing:
+    _num: "5.7"
+    _req: >
+      See Section 5.7 and its subparagraphs in the body of (SDSMCS) for
+      the activities and topics to be addressed in this paragraph on
+      software implementation and unit testing. This paragraph shall be
+      divided into the following subparagraphs to describe the approach
+      to be followed for software implementation and unit testing.
+    _txt: >
+      TBD
+
+    implementing_software:
+      _num: "5.7.1"
+      _req: >
+        Implementing software.
+      _txt: >
+        TBD
+
+    preparing_for_unit_testing:
+      _num: "5.7.2"
+      _req: >
+        Preparing for unit testing.
+      _txt: >
+        TBD
+
+    performing_unit_testing:
+      _num: "5.7.3"
+      _req: >
+        Performing unit testing.
+      _txt: >
+        TBD
+
+    analyzing_and_recording_unit_testing_results:
+      _num: "5.7.4"
+      _req: >
+        Analyzing and recording unit testing results.
+      _txt: >
+        TBD
+
+    unit_regression_testing:
+      _num: "5.7.5"
+      _req: >
+        Unit regression testing.
+      _txt: >
+        TBD
+
+    revising_and_retesting_units:
+      _num: "5.7.6"
+      _req: >
+        Revising and retesting units.
+      _txt: >
+        TBD
+
+  unit_integration_and_testing:
+    _num: "5.8"
+    _req: >
+      See Section 5.8 and its subparagraphs in the body of (SDSMCS) for
+      the activities and topics to be addressed in this paragraph on
+      software unit integration and testing.
+
+      This paragraph shall be divided into the following subparagraphs to
+      describe the approach to be followed for unit integration and testing.
+    _txt: >
+      TBD
+
+    testing_on_the_target_computer_system:
+      _num: "5.8.1"
+      _req: >
+        Testing on the target computer system.
+      _txt: >
+        TBD
+
+    preparing_for_unit_integration_and_testing:
+      _num: "5.8.2"
+      _req: >
+        Preparing for unit integration and testing.
+      _txt: >
+        TBD
+
+    preparing_for_unit_integration_and_testing:
+      _num: "5.8.3"
+      _req: >
+        Performing unit integration and testing.
+      _txt: >
+        TBD
+
+    analyzing_and_recording_unit_integration_and_test_results:
+      _num: "5.8.4"
+      _req: >
+        Analyzing and recording unit integration and test results.
+      _txt: >
+        TBD
+
+    unit_integration_regression_testing:
+      _num: "5.8.5"
+      _req: >
+        Unit integration regression testing.
+      _txt: >
+        TBD
+
+    revising_and_retesting_unit_integration:
+      _num: "5.8.6"
+      _req: >
+        Revising and retesting unit integration.
+      _txt: >
+        TBD
+
+  software_item_qualification_testing:
+    _num: "5.9"
+    _req: >
+      See Section 5.9 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on software item qualification testing. This paragraph shall be
+      divided into the following subparagraphs to describe the approach
+      to be followed for software item qualification testing.
+    _txt: >
+      TBD
+
+    independence_in_software_item_qualification_testing:
+      _num: "5.9.1"
+      _req: >
+        Independence in software item qualification testing.
+      _txt: >
+        TBD
+
+    testing_on_the_target_computer_system:
+      _num: "5.9.2"
+      _req: >
+        Testing on the target computer system.
+      _txt: >
+        TBD
+
+    preparing_for_software_item_qualification_testing:
+      _num: "5.9.3"
+      _req: >
+        Preparing for software item qualification testing.
+      _txt: >
+        TBD
+
+    dry_run_of_software_item_qualification_testing:
+      _num: "5.9.4"
+      _req: >
+        Dry run of software item qualification testing.
+      _txt: >
+        TBD
+
+    performing_software_item_qualification_testing:
+      _num: "5.9.5"
+      _req: >
+        Performing software item qualification testing.
+      _txt: >
+        TBD
+
+    analyzing_and_recording_software_item_qualification_test_results:
+      _num: "5.9.6"
+      _req: >
+        Analyzing and recording software item qualification test
+        results.
+      _txt: >
+        TBD
+
+    software_item_qualification_regression_testing:
+      _num: "5.9.7"
+      _req: >
+        Analyzing and recording software item qualification test
+        results.
+      _txt: >
+        TBD
+
+    revising_and_retesting_software_items:
+      _num: "5.9.8"
+      _req: >
+        Revising and retesting software items.
+      _txt: >
+        TBD
+
+  software_hardware_item_integration_and_testing:
+    _num: "5.10"
+    _req: >
+      See Section 5.10 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on software hardware item integration and testing. This paragraph
+      shall be divided into the following subparagraphs to describe the
+      approach to be followed for participating in software-hardware
+      item integration and testing.
+    _txt: >
+      TBD
+
+    testing_on_the_target_computer_system:
+      _num: "5.10.1"
+      _req: >
+        Testing on the target computer system.
+      _txt: >
+        TBD
+
+    testing_on_the_target_computer_system:
+      _num: "5.10.2"
+      _req: >
+        Preparing for software-hardware item integration and testing.
+      _txt: >
+        TBD
+
+    performing_software_hardware_item_integration_and_testing:
+      _num: "5.10.3"
+      _req: >
+        Performing software-hardware item integration and testing.
+      _txt: >
+        TBD
+
+    analyzing_and_recording_software_hardware_integration_and_test_results:
+      _num: "5.10.4"
+      _req: >
+        Analyzing and recording software-hardware item integration and
+        test results.
+      _txt: >
+        TBD
+
+    software_hardware_item_integration_regression_testing:
+      _num: "5.10.5"
+      _req: >
+        Software-hardware item integration regression testing.
+      _txt: >
+        TBD
+
+    revising_and_retesting_software_hardware_item_integration:
+      _num: "5.10.6"
+      _req: >
+        Revising and retesting software-hardware item integration.
+      _txt: >
+        TBD
+
+  system_qualification_testing:
+    _num: "5.10"
+    _req: >
+      See Section 5.11 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on system qualification testing. This paragraph shall be divided
+      into the following subparagraphs to describe the approach to be
+      followed for participating in system qualification testing.
+    _txt: >
+      TBD
+
+    independence_in_system_qualification_testing:
+      _num: "5.11.1"
+      _req: >
+        Independence in system qualification testing.
+      _txt: >
+        TBD
+
+    testing_on_the_target_computer_system:
+      _num: "5.11.2"
+      _req: >
+        Testing on the target computer system(s).
+      _txt: >
+        TBD
+
+    preparing_for_system_qualification_testing:
+      _num: "5.11.3"
+      _req: >
+        Preparing for system qualification testing.
+      _txt: >
+        TBD
+
+    dry_run_of_system_qualification_testing:
+      _num: "5.11.4"
+      _req: >
+        Dry run of system qualification testing.
+      _txt: >
+        TBD
+
+    performing_system_qualification_testing:
+      _num: "5.11.5"
+      _req: >
+        Performing system qualification testing.
+      _txt: >
+        TBD
+
+    analyzing_and_recording_system_qualification_test_results:
+      _num: "5.11.6"
+      _req: >
+        Analyzing and recording system qualification test results.
+      _txt: >
+        TBD
+
+    system_qualification_regression_testing:
+      _num: "5.11.7"
+      _req: >
+        System qualification regression testing.
+      _txt: >
+        TBD
+
+    revising_and_retesting_the_system:
+      _num: "5.11.8"
+      _req: >
+        Revising and retesting the system.
+      _txt: >
+        TBD
+
+  preparing_for_software_transition_to_operations:
+    _num: "5.12"
+    _req: >
+      See Section 5.12 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on preparing for software transition to operations. This paragraph
+      shall be divided into the following subparagraphs to describe the
+      approach to be followed for preparing for software transition to
+      operations.
+    _txt: >
+      TBD
+
+    preparing_the_executable_software:
+      _num: "5.12.1"
+      _req: >
+        Preparing the executable software.
+      _txt: >
+        TBD
+
+    preparing_version_descriptions_for_user_sites:
+      _num: "5.12.2"
+      _req: >
+        Preparing version descriptions for user sites.
+      _txt: >
+        TBD
+
+    preparing_user_manuals:
+      _num: "5.12.3"
+      _req: >
+        Preparing user manuals.
+      _txt: >
+        TBD
+
+      software_user_manuals:
+        _num: "5.12.3.1"
+        _req: >
+          Software user manuals.
+        _txt: >
+          TBD
+
+      computer_operations_manuals:
+        _num: "5.12.3.2"
+        _req: >
+          Computer operations manuals.
+        _txt: >
+          TBD
+
+    installation_at_user_sites:
+      _num: "5.12.4"
+      _req: >
+        Installation at user sites.
+      _txt: >
+        TBD
+
+  preparing_for_software_transition_to_maintenance:
+    _num: "5.13"
+    _req: >
+      See Section 5.13 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on preparing for software transition to maintenance. This
+      paragraph shall be divided into the following subparagraphs
+      to describe the approach to be followed for preparing for
+      software transition to maintenance.
+    _txt: >
+      TBD
+
+    preparing_the_executable_software:
+      _num: "5.13.1"
+      _req: >
+        Preparing the executable software.
+      _txt: >
+        TBD
+
+    preparing_source_files:
+      _num: "5.13.2"
+      _req: >
+        Preparing source files.
+      _txt: >
+        TBD
+
+    preparing_version_descriptions_for_the_maintenance_sites:
+      _num: "5.13.3"
+      _req: >
+        Preparing version descriptions for the maintenance site(s).
+      _txt: >
+        TBD
+
+    preparing_the_as_built_software_architecture_design_and_related_info:
+      _num: "5.13.4"
+      _req: >
+        Preparing the “as built” software architecture, design, and
+        related information.
+      _txt: >
+        TBD
+
+    updating_the_system_subsystem_design_description:
+      _num: "5.13.5"
+      _req: >
+        Updating the system/subsystem design description.
+      _txt: >
+        TBD
+
+    updating_the_software_requirements:
+      _num: "5.13.6"
+      _req: >
+        Updating the software requirements.
+      _txt: >
+        TBD
+
+    updating_the_system_requirements:
+      _num: "5.13.7"
+      _req: >
+        Updating the system requirements.
+      _txt: >
+        TBD
+
+    preparing_maintenance_manuals:
+      _num: "5.13.8"
+      _req: >
+        Preparing maintenance manuals.
+      _txt: >
+        TBD
+
+      computer_programming_manuals:
+        _num: "5.13.8.1"
+        _req: >
+          Computer programming manuals.
+        _txt: >
+          TBD
+
+      firmware_support_manuals:
+        _num: "5.13.8.2"
+        _req: >
+          Firmware support manuals.
+        _txt: >
+          TBD
+
+      transition_to_the_designated_maintenance_site:
+        _num: "5.13.9"
+        _req: >
+          Transition to the designated maintenance site.
+        _txt: >
+          TBD
+
+  software_configuration_management:
+    _num: "5.14"
+    _req: >
+      See Section 5.14 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on software configuration management.
+
+      This paragraph shall be divided into the following subparagraphs
+      to describe the approach to be followed for software configuration
+      management.
+    _txt: >
+      A comprehensive and highly disciplined approach is taken to
+      configuration management. Items placed under configuration control
+      include but are not limited to the following:-
+
+       - Processes, procedures and methods.
+       - Plans and schedules.
+       - Requirements.
+       - Task lists.
+       - Daily work logs.
+       - System models.
+       - Architectural designs.
+       - Detailed designs.
+       - Configuration data.
+       - The team member register.
+       - The register of infrastructure elements.
+       - The register of test equipment and other physical assets.
+       - Test data.
+       - Design documents for the software engineering & test environment.
+       - The software engineering & test environment.
+       - Design documents for the target runtime environment.
+       - The target runtime environment.
+       - Built tool software.
+       - Built test software.
+       - Built product software.
+       - Generated documentation.
+       - Generated test logs.
+       - Generated software metrics reports.
+       - Target hardware.
+       - Test hardware and other physical equipment.
+
+      Electronic items which may be represented in a compact textual form
+      shall be stored in a central monolithic repository in accordance with
+      the policy of continuous integration and product line engineering.
+
+      The central monolithic repository may actually be implemented as a
+      coordinated collection of smaller git repositories so long as it can
+      act as a single repository for the purposes of continuous integration
+      and test.
+
+      Electronic items which are too large to place in the central
+      monolithic repository.
+
+      We adhere to the discipline of continuous integration and test,
+      which we use to coordinate different streams of development, to
+      maintain basic quality standards, and to spread integration risk.
+
+      We also adhere to the discipline of product line engineering to
+      organise and deduplicate development efforts.
+
+      Both of these disciplines impact configuration management.
+
+    configuration_identification:
+      _num: "5.14.1"
+      _req: >
+        Configuration identification
+      _txt: >
+        Baseline configurations shall be identified by
+
+    configuration_control:
+      _num: "5.14.2"
+      _req: >
+        Configuration control
+      _txt: >
+        Design documents, processes
+
+        To the greatest extent possible, engineering documents shall be co-versioned
+
+    configuration_status_accounting:
+      _num: "5.14.3"
+      _req: >
+        Configuration status accounting
+      _txt: >
+        TBD
+
+    configuration_audits:
+      _num: "5.14.4"
+      _req: >
+        Configuration audits
+      _txt: >
+        Not applicable.
+
+    packaging_storage_handling_and_delivery:
+      _num: "5.14.5"
+      _req: >
+        Packaging, storage, handling, and delivery
+      _txt: >
+        Process documents, requirements, design documents and the input
+        data for engineering documents shall be stored in monolithic
+        repository which shall consist of either a single git repository
+        or a coordinated system of git repositories and sub-repositories.
+
+        Larger scale engineering data (test data and ground truth) shall
+        be stored in (TBD) network storage.
+
+        Compiled documentation, software and other generated artifacts shall
+        be stored (for baseline builds only) on TBD network storage,
+
+        compressed and deleted according to (TBD) schedule.
+
+    baselines:
+      _num: "5.14.6"
+      _req: >
+        Baselines
+      _txt: >
+        The development schedule shall be organised into predefined bi-monthly
+        time-box periods. At the beginning of each time-box period, a baseline
+        build shall be created, named after the preceeding time-box period.
+        This provides a common baseline for all engineering artifacts,
+        including process documents, requirements, design documents, tools,
+        as well as generated documentation, built software and systems.
+
+  software_peer_reviews_and_product_evaluations:
+    _num: "5.15"
+    _req: >
+      See Section 5.15 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on software peer reviews and product evaluations. This paragraph
+      shall be divided into the following subparagraphs to describe
+      the approach to be followed for software peer reviews and product
+      evaluations.
+    _txt: >
+      TBD
+
+    software_peer_reviews:
+      _num: "5.15.1"
+      _req: >
+        Software peer reviews
+      _txt: >
+        TBD
+
+      plan_for_software_peer_reviews:
+        _num: "5.15.1.1"
+        _req: >
+          Plan for software peer reviews
+        _txt: >
+          TBD
+
+      prepare_for_an_individual_peer_review:
+        _num: "5.15.1.2"
+        _req: >
+          Prepare for an individual peer review
+        _txt: >
+          TBD
+
+      conduct_peer_reviews:
+        _num: "5.15.1.3"
+        _req: >
+          Conduct peer reviews
+        _txt: >
+          TBD
+
+      analyze_and_report_peer_review_data:
+        _num: "5.15.1.4"
+        _req: >
+          Analyze and report peer review data
+        _txt: >
+          TBD
+
+    product_evaluations:
+      _num: "5.15.2"
+      _req: >
+        Product evaluations
+      _txt: >
+        TBD
+
+      in_process_and_final_product_evaluations:
+        _num: "5.15.2.1"
+        _req: >
+          In-process and final product evaluations
+        _txt: >
+          In process evaluations shall be carried out as part of time box
+          planning and review activities.
+
+      product_evaluation_records:
+        _num: "5.15.2.2"
+        _req: >
+          Product evaluation records
+        _txt: >
+          Records shall be kept as part of the time box planning meeting
+          minutes. Discrepancies shall be entered as managed items.
+
+      independence_in_product_evaluations:
+        _num: "5.15.2.3"
+        _req: >
+          Independence in product evaluations
+        _txt: >
+          Not applicable. Team is too small
+
+
+  software_quality_assurance:
+    _num: "5.16"
+    _req: >
+      See Section 5.16 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on software quality assurance.
+
+      This paragraph shall be divided into the following subparagraphs
+      to describe the approach to be followed for software quality
+      assurance.
+    _txt: >
+      TBD
+
+    software_quality_assurance_evaluations:
+      _num: "5.16.1"
+      _req: >
+        Software quality assurance evaluations
+      _txt: >
+        A rolling detailed quality review will be carried out as part
+        of the time-box review and planning process, with a different
+        architectural area visited on each time-box to ensure coverage.
+        A coarse-grained (overall) quality review will be carried out
+        as part of the time-box review and planning process for time-boxes
+        that fall at the start of each quarter.
+
+    software_quality_assurance_records:
+      _num: "5.16.2"
+      _req: >
+        Software quality assurance records
+      _txt: >
+        Records shall be kept as part of the time box planning meeting
+        minutes. Discrepancies shall be entered as managed items.
+
+    independence_in_software_quality_assurance:
+      _num: "5.16.3"
+      _req: >
+        Independence in software quality assurance
+      _txt: >
+        Not applicable. Team is too small
+
+    software_quality_assurance_noncompliance_issues:
+      _num: "5.16.4"
+      _req: >
+        Software quality assurance noncompliance issues
+      _txt: >
+        Issues will be tracked as 'managed items' (common mechanism as
+        with requirements).
+
+  corrective_action:
+    _num: "5.17"
+    _req: >
+      See Section 5.17 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on corrective action. This paragraph shall be divided into the
+      following subparagraphs to describe the approach to be followed
+      for corrective action.
+    _txt: >
+      We can issue discrepancy and change reports as requirements and
+      use the requirements traceability and tracking system to exert
+      closed loop control over discrepancy and change reports.
+
+    discrepancy_and_change_reports:
+      _num: "5.17.1"
+      _req: >
+        These  Discrepancy and change reports (DCRs) shall include the
+        items to be recorded specified in Appendix C, Table C.2-5 of
+        (SDSMCS).
+      _txt: >
+        TBD
+
+    corrective_action_system:
+      _num: "5.17.2"
+      _req: >
+        Corrective action system
+      _txt: >
+        TBD
+
+  joint_technical_and_management_reviews:
+    _num: "5.18"
+    _req: >
+      See Section 5.18 and its subparagraphs in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph
+      on joint technical and management reviews. See Appendix E, Joint
+      Technical and Management Reviews for additional requirements for
+      joint technical and management reviews. This paragraph shall be
+      divided into the following subparagraphs to describe the approach
+      to be followed for joint technical and management reviews.
+    _txt: >
+      At a low level, technical and management reviews should be integrated
+      into time-box planning activities. At a high level, an extended review
+      session can be held on a quarterly basis. Low level reviews can be
+      done on a rolling basis with a different area addressed on each time
+      box to ensure that we get good coverage over the entire system.
+
+    joint_technical_reviews:
+      _num: "5.18.1"
+      _req: >
+        Joint technical reviews
+      _txt: >
+        TBD
+
+    joint_management_reviews:
+      _num: "5.18.2"
+      _req: >
+        Joint management reviews.
+      _txt: >
+        TBD
+
+  software_risk_management:
+    _num: "5.19"
+    _req: >
+      This paragraph shall describe the approach for performing risk
+      management. See Section 5.19 in the body of (SDSMCS) for the
+      activities and topics to be addressed in this paragraph on
+      software risk management.
+    _txt: >
+      We can track risks in a risk list and raise requirements to address
+      them - using the requirements traceability and proof-of-completeness
+      to ensure that risks are addressed and track open risks.
+
+  software_measurement:
+    _num: "5.20"
+    _req: >
+      This paragraph shall briefly summarize the approach to be used
+      for software measurement throughout the system development lifecycle.
+      This paragraph shall also itemize the specific software measurements
+      to be collected, analyzed, interpreted, applied, and reported. In
+      addition, this paragraph shall summarize the importance of each
+      specific measurement used for decision making, corrective actions,
+      and reporting to the acquirer. See Section 5.20 and its subparagraphs
+      in the body of (SDSMCS) for the activities and topics to be addressed
+      in this paragraph on software measurement. When a separate software
+      measurement plan (SMP) is not required on contract, this paragraph
+      shall include the content described in the SMP template provided in
+      Appendix H.4. When a separate SMP is required on contract, this
+      paragraph shall include a reference to the SMP.
+    _txt: >
+      Effective management of the project will require ongoing measurement
+      of project status. We consider expenditure; schedule; effort; functional
+      size; design complexity, quality, stability and risk to be pertinent
+      factors required for effective project oversight. We try to limit the
+      metrics that we collect to those which may be computed by the build
+      system and reported automatically.
+
+      We measure expenditure and track it alongside estimated costs and
+      available budgets. The relationship between expenditure and budget
+      tells us if we need to act to reduce future spending or raise additional
+      funds. The relationship betweeen expenditure and the projection/estimate
+      tells us if we need to act to improve our estimation or cost tracking
+      capabilities.
+
+      These figures can be obtained in the first instance with a manually
+      updated spreadsheet or, ultimately, by an integration with the (TBD)
+      banking / financial management package. The data shall be presented
+      as a line graph showing planned vs. actual expenditures.
+
+      We measure progress against schedule so we can determine if we need
+      to reduce project scope, increase timescales, find additional resources,
+      or invest in tool and process efficiency improvements. The planning and
+      progress tracking mechanism is currently TBD - but we could possibly
+      hijack the requirements traceability and tracking mechanism to make
+      requirements do double service as quarterly objectives or per-time-box
+      goals.
+
+      We measure effort expended so we can determine our success in meeting
+      staffing requirements as well as how engaged those staff are in the
+      development effort.
+
+      Actual headcount (full-time-equivalent) vs. budget tells us if we are
+      meeting our recruiting targets and gives us a retrospective on how the
+      size of the team has grown.
+
+      We can track the actual actively engaged headcount by tracking the
+      number of unique team members making commits to the repository in
+      each time-box period.
+
+      We can also easily track the consistency with which the team is
+      engaged by tracking the number of unique team members making commits
+      to the repository on each working day, then reporting the minimum
+      daily team size over each time-box interval. A high value relative
+      to the total active team size indicates consistent engagement, whereas
+      a low value may indicate problems due to interruption or distraction.
+
+      Functional size shall be measured in terms of number of requirements,
+      broken down by physical decomposition level within the architecture.
+
+      The design size and complexity necessary to implement the system shall
+      be measured using aggregate Halstead effort; aggregate McCabe complexity
+      and the aggregate number of functions or methods.
+
+      Quality can be measured by tracking the number of trouble reports
+      raised vs. how long it took to detect the error.
+
+      Stability can be measured by tracking the number of new requirements
+      and change requests opened.
+
+      Risks can be measured by maintaining a project risk list and tracking
+      the number of requirements at different severities.
+
+      These metrics shall be computed as part of the build process. The data
+      shall be stored alongside other build artefacts within the configuration
+      management system, and the data shall be presented as a line graph with
+      one data-point per baseline build.
+
+    software_measurement_planning:
+      _num: "5.20.1"
+      _req: >
+        Software measurement planning
+      _txt: >
+        We have an outline idea of which metrics we wish to collect. We want
+        to balance process improvements with work on product deliverables, so
+        we will have to gradually implement these tracking metrics over the
+        course of the project.
+
+    software_measurement_reporting:
+      _num: "5.20.2"
+      _req: >
+        Software measurement reporting
+      _txt: >
+        We will perform baseline builds at the start of each time-box period,
+        as well as daily builds. Metrics will be formally reported (emailed to
+        stakeholders) at the start of each time-box - but interim metrics will
+        also be available daily.
+
+    software_measurement_working_group:
+      _num: "5.20.3"
+      _req: >
+        Software measurement working group (SMWG)
+      _txt: >
+        TBD
+
+  security_and_privacy:
+    _num: "5.21"
+    _req: >
+      This paragraph shall describe the approach for meeting the security
+      and privacy requirements. See Section 5.21 in the body of (SDSMCS)
+      for the activities and topics to be addressed in this paragraph on
+      security and privacy.
+    _txt: >
+      TBD
+
+  software_team_member_management:
+    _num: "5.22"
+    _req: >
+      This paragraph shall list all software developers at any level
+      (e.g., prime contractor, software team members).
+
+      This paragraph shall identify all software, including custom, COTS,
+      modified, and reused, developed by foreign contractors at any level
+      (e.g., prime contractor, software team members) that will be delivered
+      to the acquirer.
+
+      This paragraph shall identify the foreign contractor’s company
+      name and foreign location(s). A “foreign contractor” means any
+      foreign corporation, business association, partnership, trust,
+      society or any other entity or group that is not incorporated
+      or organized to do business in the United States, as well as
+      international organizations, foreign Governments, and any agency
+      or subdivision of foreign Governments (e.g., diplomatic missions).
+
+      This paragraph shall describe the approach for performing software
+      team member management.
+
+      This paragraph shall specify the mechanisms to be used to ensure
+      that all contractual requirements, and all changes to contractual
+      requirements, are flowed down to all levels of software team
+      members.
+
+      See Section 5.22 in the body of (SDSMCS) for the activities and
+      topics to be addressed in this paragraph on software team member
+      management.
+    _txt: >
+      Not applicable.
+
+  interface_with_software_independent_verification_and_validation_agents:
+    _num: "5.23"
+    _req: >
+      This paragraph shall describe the approach for interfacing with
+      the software independent verification and validation (IVandV) agents.
+      See Section 5.23 in the body of (SDSMCS) for the activities and
+      topics to be addressed in this paragraph on interfacing with
+      software independent verification and validation agents.
+    _txt: >
+      Not applicable.
+
+  coordination_with_associate_developers:
+    _num: "5.24"
+    _req: >
+      This paragraph shall describe the approach for performing the
+      coordination with associate developers, working groups, and
+      interface groups. See Section 5.24 in the body of (SDSMCS) for
+      the activities and topics to be addressed in this paragraph on
+      coordination with associate developers.
+    _txt: >
+      Not applicable.
+
+  improvement_of_project_processes:
+    _num: "5.25"
+    _req: >
+      This paragraph shall describe the approach for performing the
+      improvement of project processes. See Section 5.25 in the body
+      of (SDSMCS) for the activities and topics to be addressed in
+      this paragraph on improvement of project processes.
+    _txt: >
+      Process improvement is carried out on a continuous rolling basis.
+      A different process area is selected for review and improvement
+      during each bi-monthly time-box. That process area is assessed for
+      suitability, efficiency and effectiveness, and incremental changes
+      are made alongside normal development work.

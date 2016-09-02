@@ -1,0 +1,86 @@
+overview_of_required_work:
+  _num: "3"
+  _req: >
+    Overview of required work. This section shall be divided into paragraphs
+    as needed to establish the context for the planning described in later
+    sections. It shall include, as applicable, an overview of:
+
+    a. Requirements and constraints on the system and software to be
+       developed,
+
+    b. Requirements and constraints on project documentation;
+
+    c. Position of the project in the system lifecycle;
+
+    d. The selected project and acquisition strategy;
+
+    e. Any requirements or constraints on the selected project and
+       acquisition strategy;
+
+    f. Requirements and constraints on project schedules and resources;
+
+    and
+
+    g. Other requirements and constraints, such as on project security,
+       privacy, methods, standards, interdependencies on hardware and
+       software development.
+  _txt: >
+    Development activities in this plan are subject to the following
+    requirements.
+
+system_and_software_development_requirements_and_constraints:
+  _num: "3.1"
+  _req: >
+    NONE
+  _txt: >
+    The system and software development process shall be tailored
+    to meet time-to-market reqirements. The development effort will
+    tolerate increased technical risk and permit the accrual of
+    technical debt to meet time-to-market constraints. High risk
+    design elements shall be identified for later rework.
+
+project_documentation_requirements_and_constraints:
+  _num: "3.2"
+  _req: >
+    NONE
+  _txt: >
+    There do not exist any external requirements or constraints on
+    project documentation. The quantity and form of documentation is
+    left to the discretion of the project team.
+
+    When discretionary documentation is developed, then the project
+    may choose to adopt and tailor templates from either the SMC-S-012
+    or from MIL-STD-498.
+
+    Both of these standards are comprehensive and detailed, and even
+    a partial implementation of the documentation specified by these
+    standards should suffice for most needs.
+
+project_position_in_the_system_life_cyle:
+  _num: "3.3"
+  _req: >
+    NONE
+  _txt: >
+    The project is at the beginning of the project life-cycle.
+
+selected_program_acquisition_strategy:
+  _num: "3.4"
+  _req: >
+    NONE
+  _txt: >
+    To meet time-to-market constraints, work-packages suitable for
+    subcontracting shall be identified and specified.
+
+project_schedules_and_resources:
+  _num: "3.5"
+  _req: >
+    NONE
+  _txt: >
+    TBD
+
+other_requirements_and_constraints:
+  _num: "3.6"
+  _req: >
+    NONE
+  _txt: >
+    TBD

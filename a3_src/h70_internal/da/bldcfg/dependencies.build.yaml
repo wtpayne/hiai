@@ -1,0 +1,17 @@
+title:
+  Build restriction configuration file for building third-party dependencies.
+
+options:
+
+  loglevel_overall:                   DEBUG
+  loglevel_file:                      DEBUG
+  loglevel_console:                   DEBUG
+
+  dep_build_exclusion:                Null
+  dep_build_limitation:               pycco
+
+steps:
+
+  enable_dep_fetch_src:               True
+  enable_dep_build:                   True
+  enable_main_build:                  False

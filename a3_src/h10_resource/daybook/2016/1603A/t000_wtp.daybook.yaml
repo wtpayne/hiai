@@ -1,0 +1,76 @@
+agenda:
+
+  j0000014_design_baseline_creation_logic:
+    - "We need to decide how the configuration management system handles the
+      creation and storage of baselines."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000015_support_image_processing_models:
+    - "Add support for Python Pillow and OpenCV so that we can do
+      modelling in Python for image processing operations."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160229:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get py.test working, then test AST walking functionality, then make
+        sure that AST and embedded data interface is designed correctly."
+
+  20160301:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get py.test working, then test AST walking functionality, then make
+        sure that AST and embedded data interface is designed correctly."
+
+  20160302:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get py.test working, then test AST walking functionality, then make
+        sure that AST and embedded data interface is designed correctly."
+
+  20160303:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Coverage looks wonky. Try to get some initial HTML reporting done so
+        we can start investigating problems."
+
+  20160307:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Implement first-cut HTML test result reporting so I can see what
+        is going on with the embedded-data-extraction unit tests."
+
+  20160308:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Implement first-cut HTML test result reporting so I can see what
+        is going on with the embedded-data-extraction unit tests."
+
+  20160309:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Implement first-cut HTML test result reporting so I can see what
+        is going on with the embedded-data-extraction unit tests."
+
+  20160310:
+    - j0000015_support_image_processing_models:
+      - "Add support for Python pillow and OpenCV."
+      - "Add support for Python Pillow and OpenCV so that we can do
+        modelling in Python for image processing operations."
+
+  20160313:
+    - j0000015_support_image_processing_models:
+      - "Add support for Python pillow and OpenCV."
+      - "Add support for Python Pillow and OpenCV so that we can do
+        modelling in Python for image processing operations."
+

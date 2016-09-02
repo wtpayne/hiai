@@ -1,0 +1,104 @@
+scope:
+  _num: "1"
+  _req: >
+    This paragraph shall be divided into the following paragraphs:
+  _txt: >
+    ""
+
+  identification:
+    _num: "1.1"
+    _req: >
+      This paragraph shall contain a full identification of the system
+      and the software to which this document applies, including, as
+      applicable, identification number(s), title(s), abbreviation(s),
+      version number(s), and release number(s).
+    _txt: >
+      This document is the base HiAi software development plan. It
+      defines the default text for software development plans used
+      across the organisation.
+
+      When the documentation for a specific system is generated, then
+      for each section where no system specific tailoring is provided,
+      default text originating from this document will be used instead.
+
+      This document is therefore not directly applicable to any specific
+      system.
+
+      The documentation for each system shall be generated whenever a
+      baseline build or release build is made, and shall be available
+      alongside the other build artifacts.
+
+      An authoritative version of the documentation shall be supplied
+      with each system baseline or release. Each document shall identify
+      the configuration for which it is applicable.
+    _txt: >
+      TBD
+
+  system_overview:
+    _num: "1.2"
+    _req: >
+      This paragraph shall briefly state the purpose of the system and
+      the software to which this document applies.
+
+      It shall:
+
+      a. describe the general nature of the system and software;
+
+      b. summarize the history of system development, operation,
+         and maintenance;
+
+      c. identify the project sponsor, acquirer, user, developer, and
+         support organizations;
+
+         and
+
+      d. identify current and planned operating and user sites.
+    _txt: >
+      TBD
+
+  document_overview:
+    _num: "1.3"
+    _req: >
+      This paragraph shall summarize the purpose and contents of this
+      document. This paragraph shall describe any security or privacy
+      considerations associated with its use.
+    _txt: >
+      This SDP documents how the software will be designed, developed,
+      integrated, tested and managed. It identifies applicable policies,
+      requirements and standards for development. It defines schedules,
+      organisation, resources and processes to be followed.
+
+      This document follows the outline of a software development plan
+      contained in the MIL-STD-498 data item description for an SDP:
+      DI-IPSC-8127. Once complete, it also meets the content requirements
+      for IEEE/EIA 12207.1 development plan (paragraph 6.5) and project
+      management plan (paragraph 6.11). This SDP is organized as follows:
+
+      - Section 2 lists all documents referenced by this SDP and
+        used during its preparation.
+      - Section 3 provides an overview of the required work.
+      - Section 4 describes plans for general software development
+        activities.
+      - Section 5 describes the details of all software planning,
+        design, development, engineering, integration, test,
+        evaluation, Software Configuration Management (SCM), product
+        evaluation, Software Quality Assurance (SQA), and preparation
+        for delivery activities.
+      - Section 6 defines the project schedule and activity network.
+      - Section 7 describes the project organization and the resources
+        required to accomplish the work.
+
+      This document should be considered confidential to authorised
+      recipients, governed by the appropriate nondisclosure agreement,
+      but is otherwise not subject to any further security or privacy
+      considerations.
+
+  relationship_to_other_plans:
+    _num: "1.4"
+    _req: >
+      This paragraph shall describe the relationship, if any, of the SDP
+      to other project management plans.
+    _txt: >
+      This SDP and its companion documents, the software configuration
+      management Plan (SCMP) and the software quality assurance plan
+      (SQAP), serve as the guiding documents to develop the software.

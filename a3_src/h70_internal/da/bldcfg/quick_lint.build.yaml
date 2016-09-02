@@ -1,0 +1,34 @@
+title:
+  Build restriction configuration file for pep257-checking-only builds.
+
+options:
+
+  enable_cms_registration:              False
+  enable_cms_delete_old_builds:         False
+  check_changed_files_only:             True
+
+steps:
+
+  # Set TRUE to enable the python unit test phase.
+  enable_test_python_unittest:          False
+
+  # Set TRUE to enable validation of data embedded in source files.
+  enable_static_data_validation:        True
+
+  # Set TRUE to enable indexing of data embedded in source files.
+  enable_static_indexing:               True
+
+  # Set TRUE to enable PEP8 style checking (in static analysis)
+  enable_static_test_python_codestyle:  True
+
+  # Set TRUE to enable PEP257 documentation checking (in static analysis)
+  enable_static_test_python_docstyle:   True
+
+  # Set TRUE to enable python complexity metric checking (in static analysis)
+  enable_static_test_python_complexity: True
+
+  # Set TRUE to enable pylint linting (in static analysis)
+  enable_static_test_python_pylint:     True
+
+  # Set TRUE to enable build reports generation.
+  enable_report_generation:             False

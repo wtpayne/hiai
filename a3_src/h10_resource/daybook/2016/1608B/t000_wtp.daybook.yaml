@@ -1,0 +1,170 @@
+agenda:
+
+  j0000028_increase_test_coverage:
+    - "Increase test coverage to 100% of public function calls."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000029_increase_checks_on_test_cases:
+    - "Increase rigor of test case checks."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000030_unit_centric_build:
+    - "At the moment, the build is explicitly design-document
+      centric. The main loop iterates over each design document
+      in turn and runs static analysis and unit testing on it.
+      In reality, we want to be able to run tests if either the
+      test document or the original changes. We also possibly
+      may want to handle different aggregates of design files
+      or entities that are not source files. This task is to
+      explore the possiblity of using a different and more
+      abstract build unit concept within the main build loop."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000025_create_default_engineering_documents:
+    - "Create default engineering documents."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000031_replace_verbose_build_output_with_a_progress_bar:
+    - "Replace verbose build output with a progress bar."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000032_pytest_output_compatibility_with_click_progress_bar:
+    - "When we suppress pytest output so that the progress
+      bar displays properly, all output (not only progress
+      indicators) is suppressed. We need an alternative
+      way of (either) suppressing pylint output or displaying
+      it from other sources (like the log file)."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000033_make_build_faster_by_unifying_parsing:
+    - "Currently the build is quite slow because each file gets
+      parsed multiple times."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+
+chronicle:
+
+  20160815:
+    - j0000028_increase_test_coverage:
+      - "Increase test coverage to 100% of public function calls."
+      - "We have added checking code to halt the build if we do not
+        have sufficient coverage. Now we need to gradually work our
+        way through each error adding (possibly dummy) tests as
+        needed. The real test code will be added later later when
+        start to check the LOC coverage given by our tests."
+
+  20160816:
+    - j0000028_increase_test_coverage:
+      - "Increase test coverage to 100% of public function calls."
+      - "Keep gradually working our way through each error adding
+        (possibly dummy) tests as needed."
+    - j0000029_increase_checks_on_test_cases:
+      - "Increase rigor of test case checks."
+      - "Look into possibility of using a custom pylintrc file for
+        test case code."
+    - j0000030_unit_centric_build:
+      - "Build unit iteration item as a dict containing various file info."
+      - "Convert the current tuple to a dict and start working through the
+        errors."
+
+  20160817:
+    - j0000030_unit_centric_build:
+      - "Build unit iteration item as a dict containing various file info."
+      - "Convert the current tuple to a dict and start working through the
+        errors."
+
+  20160818:
+    - j0000030_unit_centric_build:
+      - "Build unit iteration item as a dict containing various file info."
+      - "Convert the current tuple to a dict and start working through the
+        errors."
+
+  20160819:
+    - j0000030_unit_centric_build:
+      - "Build unit iteration item as a dict containing various file info."
+      - "Convert the current tuple to a dict and start working through the
+        errors."
+    - j0000025_create_default_engineering_documents:
+      - "Create default engineering documents."
+      - "Get a first cut document written."
+
+  20160820:
+    - j0000031_replace_verbose_build_output_with_a_progress_bar:
+      - "Replace verbose build output with a progress bar."
+      - "Any text should be useful and actionable."
+
+  20160821:
+    - j0000032_pytest_output_compatibility_with_click_progress_bar:
+      - "Make pytest output compatible with click progress bar."
+      - "Try getting errors from log files and reprinting them ourselves."
+
+  20160822:
+    - j0000033_make_build_faster_by_unifying_parsing:
+      - "Improve build speed by reducing the number of times files are parsed."
+      - "We could try monkeypatching the AST parsing function to memoize it
+        with a size 2 cache (not helpful if recursive)."
+
+  20160823:
+    - j0000033_make_build_faster_by_unifying_parsing:
+      - "Improve build speed by reducing the number of times files are parsed."
+      - "Implement an system whereby we do the parse greedily at the beginning
+        of the build process for that element, then pass around a reference
+        to the AST. Eventually, we want to work towards a system whereby we
+        pass around an object and do the parse lazily."
+    - j0000025_create_default_engineering_documents:
+      - "Keep working on default engineering documents."
+      - "Try to add sections on traceability."
+
+  20160824:
+    - j0000025_create_default_engineering_documents:
+      - "Keep working on default engineering documents."
+      - "Switch from (incorrectly) sorting sections lexicographically to the
+        (correct) numeric sort order."
+
+  20160825:
+    - j0000025_create_default_engineering_documents:
+      - "Keep working on default engineering documents."
+      - "Try to get HTML rendering working & refactor where needed."
+
+  20160826:
+    - j0000025_create_default_engineering_documents:
+      - "Keep working on default engineering documents."
+      - "Try to get HTML rendering working & refactor where needed."
+
+  20160827:
+    - j0000025_create_default_engineering_documents:
+      - "Keep working on default engineering documents."
+      - "Keep adding information to the SDP."
+
+  20160828:
+    - j0000025_create_default_engineering_documents:
+      - "Keep working on default engineering documents."
+      - "Keep adding information to the SDP."

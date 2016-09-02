@@ -1,0 +1,180 @@
+agenda:
+
+  j0000020_initial_test_coverage:
+    - "Get initial (minimal) test coverage in place."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000014_design_baseline_creation_logic:
+    - "Add data validation for job data."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000021_document_generation_for_reporting:
+    - "Add the ability to generate word documents from YAML data."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000022_build_native_libraries_using_autoconf:
+    - "Add the ability to build native libraries using autoconf."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+
+chronicle:
+
+  20160613:
+    - j0000020_initial_test_coverage:
+      - "Get initial (minimal) test coverage in place."
+      - "Now that we can measure test coverage - we should make sure that
+        every module has at least one test."
+
+  20160614:
+    - j0000020_initial_test_coverage:
+      - "Get initial (minimal) test coverage in place."
+      - "Now that we can measure test coverage - we should make sure that
+        every module has at least one test."
+
+  20160615:
+    - j0000020_initial_test_coverage:
+      - "Get initial (minimal) test coverage in place."
+      - "Now that we can measure test coverage - we should make sure that
+        every module has at least one test."
+
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160616:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160617:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160619:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160620:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160621:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160622:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160623:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation for job data."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160626:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Now that we have validation logic we can create documents
+        as YAML files with a known format and generate word documents
+        from them."
+
+  20160627:
+    - j0000021_document_generation_for_reporting:
+      - "Add the ability to generate word documents from YAML data."
+      - "Now that we have validation logic we can create documents
+        as YAML files with a known format and generate word documents
+        from them."
+
+  20160701:
+    - j0000022_build_native_libraries_using_autoconf:
+      - "Add the ability to build native libraries using autoconf."
+      - "To satisfy j0000021 we we want to use the python_docx and
+        python_dox_template libraries - but these depend on native
+        libraries that are not yet fully supported by our dependency
+        build system. This job is to add such support as is required
+        to get these libraries up and running."

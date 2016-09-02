@@ -1,0 +1,51 @@
+agenda:
+
+  j0000018_integrate_static_analysis:
+    - "Get pep8, pep257 and pylint integration working."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160502:
+    - j0000018_integrate_static_analysis:
+      - "Per file processing."
+      - "Implement per-file processing for unit-test and static analysis."
+
+  20160504:
+    - j0000018_integrate_static_analysis:
+      - "Multi version builds."
+      - "Implement multi-version builds."
+
+  20160505:
+    - j0000018_integrate_static_analysis:
+      - "Multi version builds."
+      - "Implement multi-version builds."
+
+  20160509:
+    - j0000018_integrate_static_analysis:
+      - "Multi version builds."
+      - "Try to get dependencies under control for faster builds."
+
+  20160511:
+    - j0000018_integrate_static_analysis:
+      - "Multi version builds."
+      - "Experiment with different metabuild architectures."
+
+  20160512:
+    - j0000018_integrate_static_analysis:
+      - "Multi version builds."
+      - "Experiment with different metabuild architectures."
+
+  20160513:
+    - j0000018_integrate_static_analysis:
+      - "Multi version builds."
+      - "Slowly work back to a metabuild loop."
+
+  20160515:
+    - j0000018_integrate_static_analysis:
+      - "Multi version builds."
+      - "Slowly work back to a metabuild loop."

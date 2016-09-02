@@ -1,0 +1,86 @@
+agenda:
+
+  j0000017_fix_coverage_nondeterminism:
+    - "Investigate and fix apparently nondeterministic behaviour in the
+       coverage metrics."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000018_integrate_static_analysis:
+    - "Get pep8, pep257 and pylint integration working."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160418:
+    - j0000017_fix_coverage_nondeterminism:
+      - "Fix nondeterminism in test coverage reporting."
+      - "Check to see if pytest-coverage is still nondeterministic."
+
+  20160419:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Monkeypatching pep8 to capture the output."
+
+  20160420:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Monkeypatching pep8 to capture the output."
+
+  20160421:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Monkeypatching pep8 to capture the output."
+
+  20160422:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Monkeypatching pep8 to capture the output."
+
+  20160424:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Monkeypatching pep8 to capture the output."
+
+  20160425:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Creating an error-handling coroutine."
+
+  20160426:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Creating an error-handling coroutine."
+
+  20160427:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Creating an error-handling coroutine."
+
+  20160428:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Working through the errors raised by pylint."
+
+  20160429:
+    - j0000018_integrate_static_analysis:
+      - "Get pep8 static analysis integrated properly."
+      - "Working through the errors raised by pylint."
+
+  20160430:
+    - j0000018_integrate_static_analysis:
+      - "Code complexity metrics."
+      - "Integrate complexity metrics and implement reporting."
+
+  20160501:
+    - j0000018_integrate_static_analysis:
+      - "Code complexity metrics."
+      - "Integrate complexity metrics and implement reporting."
+

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% for sect in section_list  %}
+    <h{{ sect.level }}>{{ sect.num }} {{ sect.title }}</h{{ sect.level }}>
+    {% for html in sect.html %}
+    {{ html }}
+    {% endfor %}
+{% endfor %}
+</head>
+<body>
+</body>
+</html>

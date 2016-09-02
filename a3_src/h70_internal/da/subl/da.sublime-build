@@ -1,0 +1,16 @@
+{
+
+    "selector":          "source.python",
+    "cmd":               ["da", "build", "default"],
+    "file_regex":        "^[ ]*File \"(...*?)\", line ([0-9]*)", // Error output
+    "result_file_regex": "",
+    "result_line_regex": "",
+    "result_base_dir":   "",
+    "variants": [
+        {
+            "name": "dependencies",
+            "cmd":  ["da", "build", "dependencies"]
+        }
+    ]
+
+}

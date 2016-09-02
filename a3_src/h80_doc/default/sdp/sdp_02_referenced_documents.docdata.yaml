@@ -1,0 +1,18 @@
+referenced_documents:
+  _num: "2"
+  _req: >
+    This section shall list the number, title, revision, and date of all
+    documents referenced in this plan. This section shall also identify
+    the source for all documents not available through normal Government
+    stocking activities.
+  _txt: >
+    The following documents were referenced in the preparation of this SDP:-
+
+     - DI-IPSC-81427, Data item description for software development plans.
+     - SMC-S-012(2015), Software development for space systems.
+     - MIL-STD-498, Software development and documentation.
+     - IEE/EIA Standard 12207, Software life cycle processes.
+     - ATR-2011(8404)-11, The elements of an effective SDP.
+
+    These documents all exist in the public domain and are available
+    from [http://www.everyspec.com].

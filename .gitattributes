@@ -1,0 +1,137 @@
+# Set default behavior for all files: Check out platform-dependent line
+# endings, store as Unix (LF).
+* text=auto
+
+# Explicitly declare files that we know to be text
+# ------------------------------------------------
+
+# Source code.
+*.bat               text
+*.c                 text
+*.c++               text
+*.cmake             text
+*.cpp               text
+*.cs                text
+*.go                text
+*.h                 text
+*.h++               text
+*.hpp               text
+*.java              text
+*.m                 text
+*.php               text
+*.py                text
+*.rb                text
+*.sh                text
+
+# Human-readable documents; markup; markdown etc...
+*.html              text
+*.md                text
+*.mkdn              text
+*.txt               text
+
+# Textual data files.
+*.csv               text
+*.json              text
+*.xml               text
+*.yaml              text
+
+# Configuration files
+*.conf              text
+*.gitattributes     text
+*.gitignore         text
+*.in                text
+*.list              text
+*.sublime-project   text
+*.sublime-settings  text
+
+# Explicitly declare files that we know to be binary.
+# ---------------------------------------------------
+
+*.pdf               binary
+
+# Open Office
+*.odm               binary
+*.odt               binary
+*.oth               binary
+*.ott               binary
+
+# MS Word
+*.doc               binary
+*.docm              binary
+*.docx              binary
+*.dot               binary
+*.dotm              binary
+*.dotx              binary
+
+# MS Excel
+*.xls               binary
+*.xlsb              binary
+*.xlsm              binary
+*.xlsx              binary
+*.xlt               binary
+*.xlw               binary
+
+# MS PowerPoint
+*.pot               binary
+*.potm              binary
+*.potx              binary
+*.pps               binary
+*.ppt               binary
+*.pptm              binary
+*.pptx              binary
+
+# Visio diagrams
+*.vsd               binary
+
+# Graphics files.
+*.bmp               binary
+*.gif               binary
+*.ico               binary
+*.jp2               binary
+*.jpeg              binary
+*.jpeg2000          binary
+*.jpf               binary
+*.jpg               binary
+*.jpx               binary
+*.pcx               binary
+*.png               binary
+*.ras               binary
+*.raw               binary
+*.tga               binary
+*.tif               binary
+*.tiff              binary
+*.wmf               binary
+
+# Video files
+*.avi               binary
+*.mpeg              binary
+*.mpg               binary
+
+# Matlab binaries
+*.fig               binary
+*.mat               binary
+*.mexa64            binary
+*.mexglx            binary
+*.mexmaci           binary
+*.mexmaci           binary
+*.mexmaci64         binary
+*.mexw32            binary
+*.mexw64            binary
+
+# Executables & libraries
+*.a                 binary
+*.dll               binary
+*.dylib             binary
+*.exe               binary
+*.lib               binary
+*.o                 binary
+*.so                binary
+
+# Archives, compressed files, packages
+*.7z                binary
+*.dmg               binary
+*.gz                binary
+*.iso               binary
+*.rar               binary
+*.tar               binary
+*.zip               binary

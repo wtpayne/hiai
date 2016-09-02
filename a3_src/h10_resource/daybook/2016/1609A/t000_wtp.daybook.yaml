@@ -1,0 +1,69 @@
+agenda:
+
+  j0000034_create_default_sdp_document:
+    - "Create default text for the software development plan document."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000035_improve_document_rendering:
+    - "Improve DOCX rendering to allow use of markdown syntax. In practice
+       this means converting markdown to HTML then converting HTML to DOCX."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000036_native_libraries:
+    - "Add initial capability to build native libraries."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000037_initial_mil_capability:
+    - "Add initial capability to run model in the loop simulations."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000038_integrate_pycco:
+    - "Integrate Pycco documentation generation."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160829:
+    - j0000037_initial_mil_capability:
+      - "Implement a CLI plugin and sketch the system architecture."
+      - "First sketch implementation"
+
+  20160830:
+    - j0000038_integrate_pycco:
+      - "Integrate Pycco documentation generation."
+      - "Refactoring to accomodate documentation generation."
+
+  20160831:
+    - j0000038_integrate_pycco:
+      - "Tidy up where reports and logs get put."
+      - "More refactoring."
+
+  20160901:
+    - j0000038_integrate_pycco:
+      - "Tidy up where reports and logs get put."
+      - "More refactoring."
+
+  20160902:
+    - j0000038_integrate_pycco:
+      - "Tidy up where reports and logs get put."
+      - "More refactoring."

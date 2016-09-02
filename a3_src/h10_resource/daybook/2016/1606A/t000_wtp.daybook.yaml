@@ -1,0 +1,91 @@
+agenda:
+
+  j0000019_initial_metabuild_capability:
+    - "Put a frameweork in place for metabuilds and automated optimisation."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000020_initial_test_coverage:
+    - "Get initial (minimal) test coverage in place."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+  20160530:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Refactoring work on the current build framework."
+
+  20160601:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Fixing dependency build issues."
+
+  20160605:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Fixing dependency build issues."
+
+  20160606:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Fixing dependency build issues."
+
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Pass exceptions."
+
+  20160607:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "When exceptions are raised from subsidirary builds, rewrite
+        the stack trace so files appear to come from the main repository
+        rather than the isolation area."
+
+  20160608:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Put some (very) initial reporting in place."
+
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Pytest integration."
+
+  20160609:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Integrate pytest and get coverage reporting to work."
+
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Get pytest-cov to provide coverage reporting on a per-test-case
+        basis - so that we can use coverage to help traceability."
+
+  20160610:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Write a pytest plugin to provide coverage reporting on a per-test-case
+        basis - so that we can use coverage to help traceability."
+
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Now that we are checking coverage we need to actually have some
+        coverage from our tests. Dummy tests are no longer good enough."
+
+  20160611:
+    - j0000019_initial_metabuild_capability:
+      - "Put a frameweork in place for metabuilds and automated optimisation."
+      - "Now that we are checking coverage we need to actually have some
+        coverage from our tests. Dummy tests are no longer good enough."
+
+  20160612:
+    - j0000020_initial_test_coverage:
+      - "Get initial (minimal) test coverage in place."
+      - "Now that we can measure test coverage - we should make sure that
+        every module has at least one test."

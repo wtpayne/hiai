@@ -1,0 +1,110 @@
+agenda:
+
+  j0000014_design_baseline_creation_logic:
+    - "We need to decide how the configuration management system handles the
+      creation and storage of baselines."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160118:
+    - j0000014_design_baseline_creation_logic:
+      - "Tidy up existing cms baseline code"
+      - "Even though the requirements are not yet clear in my head, I'm pretty
+        certain that the current implementation is not really what we want,
+        so the first task is to tidy it up to make a foundation for future
+        work."
+
+  20160119:
+    - j0000014_design_baseline_creation_logic:
+      - "Implement baselines based on daily builds."
+      - "I think that creating baselines automatically from regular
+        development builds is going to be problematic. As we don't
+        control the amount of testing in the development build, we
+        don't know if the build will provide sufficient testing for
+        the baseline to be reliable. It seems best at the moment to
+        create baselines using build  configurations specifically
+        crafted for that purpose. At the moment, the idea of using a
+        daily baseline is attractive - upgrading the last successful
+        daily build in the timebox to become the timebox baseline."
+
+  20160120:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160121:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160122:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160123:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "If we want to create baselines and synchronise with remotes
+        automatically, we really need to wait until the developer is
+        doing a context-switch so we don't break their focus of
+        concentration. In other words, in order to create baselines
+        automatically, we need to know when the state of our tasks
+        change. We therefore need to add a state variable to our
+        tasks, which (practically) will require us to validate the
+        task data structures. We therefore need to add data validation
+        functionality before we can proceed with baseline creation."
+
+  20160125:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get PyLint working (potential to help with validation)."
+
+  20160126:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get PyLint working (potential to help with validation)."
+
+  20160128:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get PyLint working (potential to help with validation)."
+
+  20160129:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get PyLint working (potential to help with validation)."
+
+  20160130:
+    - j0000014_design_baseline_creation_logic:
+      - "Add data validation functionality."
+      - "Get PyLint working (potential to help with validation)."

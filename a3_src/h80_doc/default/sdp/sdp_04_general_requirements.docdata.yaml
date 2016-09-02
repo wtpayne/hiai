@@ -1,0 +1,423 @@
+general_requirements:
+  _num: "4"
+  _req: >
+    Provisions corresponding to nonrequired activities may be satisfied
+    by the words 'Not applicable'. If different builds or different
+    software on the project require different planning, these differences
+    shall be noted in the paragraphs. See Section 4 in the body of the
+    Software Development Standard for Mission Critical Systems (SDSMCS)
+    for the activities and topics to be addressed in this leading paragraph.
+
+    This section shall be divided into the following paragraphs. In
+    addition to the content specified below, each paragraph shall identify
+    applicable risks and uncertainties and plans for dealing with them.
+  _txt: >
+    ""
+
+  software_development_process:
+    _num: "4.1"
+    _req: >
+      This paragraph shall describe the software development process to
+      be used. The planning shall cover:
+
+        a. identification of the software development lifecycle model(s)
+           to be used;
+
+        b. planned builds, if applicable;
+
+        c. their build objectives;
+
+        and
+
+        d. the software development activities to be performed in each build.
+
+      See Section 4.1 in the body of (SDSMCS) for the activities and topics
+      to be addressed in this paragraph.
+    _txt: >
+      The system shall be developed according to a spiral software
+       development lifecycle model with timeboxes occurring on a fixed
+       bi-monthly schedule. Named baseline builds shall be created at
+       the start of each timebox period. In addition, daily and CI
+       builds shall also be performed to provide continuous feedback to
+       the development team. An early project objective shall be to
+       demonstrate integration on representative hardware; with
+       subsequent builds demonstrating incremental and systemtatic
+       improvements in functionality and performance.
+
+  general_requirements_for_software_development:
+    _num: "4.2"
+    _req: >
+      See Section 4.2 and its subsections in the body of (SDSMCS) for the
+      activities and topics to be addressed in this paragraph on software
+      development.
+
+      This paragraph shall be divided into the following subparagraphs.
+    _txt: >
+      TBD
+
+    software_development_methods:
+      _num: "4.2.1"
+      _req: >
+        This paragraph shall describe or reference the software development
+        methods to be used. This paragraph shall include descriptions of the
+        manual and automated tools and procedures to be used in support of
+        these methods. Reference may be made to other paragraphs in this plan
+        if the methods are better described in context with the activities
+        to which they will be applied. See Section 4.2.1 and its subparagraphs
+        in the body of (SDSMCS) for the activities and topics to be addressed
+        in this paragraph on software development methods.
+      _txt: >
+        Subsystems that are identified as performance critical or safety
+        critical shall be designed using the C programming language.
+
+        Non-critical subsystems, simulations, models and test infrastructure
+        shall be designed using the Python programming language.
+
+        System level requirements tests; HW integration tests and regression
+        tests shall be performed on the (TBD) HIL unit for each named bimonthly
+        baseline build.
+
+        The (TBD) simulation environment shall be used to support integration
+        and regression tests for each daily build.
+
+        Open loop randomised testing shall be carried out against algorithm
+        components using a combination of recorded data and the randomised
+        test data generation tool [American Fuzzy Lop].
+
+        At a detailed design level, randomised testing will be carried out
+        against individual units using the randomised test data generation
+        tool [Hypothesis] on the [Pytest] test running framework.
+
+        Unit tests and integration tests at the detailed design level shall
+        be restricted to the minimum set required to document the behaviour
+        of each unit. These shall be implemented using the [Pytest] test
+        running framework.
+
+        Design documents written in the Python programming language shall
+        be analysed using the static analysis tools pylint; pep8; pep257
+        and radon. Limits on complexity metrics shall be set to maintain
+        the effectiveness of randomised testing at the unit level.
+
+        Design documents written in the C programming language shall behaviour
+        analysed using the static analysis tools (TBD).
+
+    standards_for_products:
+      _num: "4.2.2"
+      _req: >
+        This paragraph shall describe or reference the standards to be
+        followed for representing requirements, architecture, design, code,
+        test cases, test procedures, test results, test logs, and discrepancy
+        and change reports. The standards shall cover all contractual
+        requirements concerning standards for products. Reference may be
+        made to other paragraphs in this plan if the standards are better
+        described in context with the activities to which they will be
+        applied.
+
+        See Section 4.2.2 in the body of (SDSMCS) for the activities and
+        topics to be addressed in this paragraph on standards for software
+        products.
+
+        The contents of Paragraph 4.2.2 shall be placed into separate
+        appendices of the SDP, not in Paragraph 4.2.2. Paragraph 4.2.2
+        shall reference these appendices.
+      _txt: >
+        NONE
+
+      standards_for_code:
+        _num: "4.2.2.1"
+        _req: >
+          Standards for code shall be provided for each programming language
+          to be used. The coding standards for each language shall include,
+          as a minimum:
+
+          a. Standards for format (such as indentation, spacing,
+             capitalization, and order of information);
+
+          b. Standards for header comments, requiring, for example, name
+             and identifier of the code; version identification; modification
+             history; purpose; requirements and design decisions implemented;
+             notes on the processing (such as algorithms used, assumptions,
+             constraints, limitations, and side effects); and notes on the
+             data (e.g., inputs, outputs, variables, data structures);
+
+          c. Standards for other comments, such as required number and
+             content expectations);
+
+          d. Naming conventions (e.g., for constants, types, variables,
+             parameters, packages, procedures, classes, objects, methods,
+             functions, files);
+
+          e. Restrictions, if any, on the use of programming language
+             constructs or features;
+
+          and
+
+          f. Restrictions, if any, on the complexity of code aggregates.
+        _txt: >
+          Detailed program design documents written in the
+          Python programming language shall comply with the
+          style guide in [h80_doc/python_style_guide.md].
+
+          Detailed program design documents written in the
+          C programming language shall comply with the style
+          guide in [h80_doc/c_style_guide.md].
+
+          Programming languages other than C or Python should
+          not be used.
+
+      standards_for_dcrs:
+        _num: "4.2.2.2"
+        _req: >
+          Standards for discrepancy and change reports (DCRs) shall be
+          provided. The DCR standards shall include, as a minimum:
+
+          a. A glossary and definitions of terms that can be used in
+             discrepancy and change reports (DCRs), including all specialized
+             terms used in DCR titles, descriptions, causes, and resolutions;
+
+          b. Alternative and additional definitions, if any, for DCR terms
+             specified in Appendix C.2.1 of this standard;
+
+          c. A DCR acronym list that includes all acronyms that are used (or
+             are permitted to be used) in DCRs. These acronyms might appear
+             in (e.g., DCR titles, free text descriptions of test incidents,
+             discrepancies, failures, causes, resolutions, and development,
+             integration and qualification test activity names); Note: This
+             DCR acronym list is in addition to the acronym list for the
+             entire SDP.
+
+          d. A list of activity names and their definitions used for DCRs
+             besides those in Appendix C, Table C.2-2, of the standard; and
+
+          e. The names and sequence of the DCR steps that can be used.
+        _txt: >
+          TBD
+
+      standards_for_test_logs:
+        _num: "4.2.2.3"
+        _req: >
+          Standards for test logs. Standards for test logs shall be provided.
+          The test log standards shall include, as a minimum:
+
+          a. The test log fields and terms specified in Appendix F.2 of
+             (SDSMCS);
+
+             and
+
+          b. Alternative and additional definitions, if any, for test log
+             terms specified in Appendix F.2.1 of (SDSMCS).
+        _txt: >
+          TBD
+
+    traceability:
+      _num: "4.2.3"
+      _req: >
+        This paragraph shall describe the approach to be followed for
+        establishing and maintaining bidirectional traceability between
+        levels of requirements, between requirements and design, between
+        design and the software that implements it, between requirements
+        and qualification test information, and between computer hardware
+        resource utilization requirements and measured computer hardware
+        resource utilization. See Section 4.2.3 in the body of (SDSMCS)
+        for the activities, topics, and other items to be addressed in this
+        paragraph on bidirectional traceability.
+      _txt: >
+        A convention over configuration approach to traceability is
+        followed wherever possible, such that traceability information
+        is given implicitly by the location of documents or documentation
+        items rather than by the explicit use of identifiers.
+
+        It is, however, recognised that textual identifiers are necessary,
+        and an indexing step in the build provides for the generation of
+        traceability matrices or other representations of trace information.
+
+      traceability_between_requirements:
+        _num: "4.2.3.1"
+        _req: >
+          NONE
+        _txt: >
+          Given by required attributes in the requirement data structure.
+
+      traceability_between_requirement_and_design:
+        _num: "4.2.3.2"
+        _req: >
+          NONE
+        _txt: >
+          When a requirement has been allocated to a particular element in
+          the physical decomposition of the product, then the text of that
+          requirement SHALL be stored in the relevant folder of the design
+          document repository. In other cases, traces shall be given by
+          required attributes in the requirement data structure.
+
+      traceability_between_requirement_and_test:
+        _num: "4.2.3.3"
+        _req: >
+          NONE
+        _txt: >
+          Implicit trace given by the location of the requirement text
+
+      traceability_between_requirement_and_kpi:
+        _num: "4.2.3.4"
+        _req: >
+          NONE
+        _txt: >
+          TBD
+
+      traceability_between_design_and_implementation:
+        _num: "4.2.3.5"
+        _req: >
+          NONE
+        _txt: >
+          Implicit trace given by location of the respective
+          design documents.
+
+    reusable_software_products:
+      _num: "4.2.4"
+      _req: >
+        See Section 4.2.4 in the body of (SDSMCS) for the activities and
+        topics to be addressed in this paragraph on reusable software
+        products. This paragraph shall be divided into the following
+        subparagraphs.
+      _txt: >
+        TBD
+
+      incorporating_reusable_software_products:
+        _num: "4.2.4.1"
+        _req: >
+          This paragraph shall describe the approach to be followed for
+          identifying, evaluating, and incorporating reusable software
+          products, including the scope of the search for such products
+          and the criteria to be used for their evaluation. Candidate or
+          selected reusable software products known at the time this plan
+          is prepared or updated shall be identified and described, together
+          with benefits, drawbacks, alternatives considered, rationale for
+          those selected, remaining viable alternatives, and restrictions,
+          as applicable, associated with their use.
+        _txt: >
+          TBD
+
+      developing_reusable_software_products:
+        _num: "4.2.4.2"
+        _req: >
+          This paragraph shall describe the approach to be followed for
+          identifying, evaluating, and reporting opportunities for
+          developing reusable software products.
+        _txt: >
+          TBD
+
+    assurance_of_critical_requirements:
+      _num: "4.2.5"
+      _req: >
+       See Section 4.2.5 in the body of (SDSMCS) for the activities and
+        topics to be addressed in this paragraph on assurance of critical
+        requirements. This paragraph shall be divided into the following
+        subparagraphs to describe the approach to be followed for handling
+        requirements designated critical.
+      _txt: >
+        TBD
+
+      safety:
+        _num: "4.2.5.1"
+        _req: >
+          Safety
+        _txt: >
+          TBD
+
+      security:
+        _num: "4.2.5.2"
+        _req: >
+          Security
+        _txt: >
+          TBD
+
+      privacy_protection:
+        _num: "4.2.5.3"
+        _req: >
+          Privacy protection
+        _txt: >
+          TBD
+
+      reliability_maintainability_and_availability:
+        _num: "4.2.5.4"
+        _req: >
+          Reliability, maintainability, and availability
+        _txt: >
+          TBD
+
+      dependability:
+        _num: "4.2.5.5"
+        _req: >
+          Dependability
+        _txt: >
+          TBD
+
+      human_system_integration:
+        _num: "4.2.5.6"
+        _req: >
+          Human system integration, including human factors engineering.
+        _txt: >
+          TBD
+
+      assurance_of_other_mission_critical_requirements:
+        _num: "4.2.5.7"
+        _req: >
+          Assurance of other mission-critical requirements as agreed to
+          by the acquirer and developer
+        _txt: >
+          TBD
+
+    computer_hardware_resource_utilization:
+      _num: "4.2.6"
+      _req: >
+        This paragraph shall describe the approach to be followed for
+        allocating computer hardware resources and monitoring their
+        utilization. See Section 4.2.6 in the body of (SDSMCS) for the
+        activities and topics to be addressed in this paragraph on
+        computer hardware resource utilization.
+      _txt: >
+        Early resource utilisation given by representative hardware
+        (development board) or raspbery Pi.
+
+    recording_rationale:
+      _num: "4.2.7"
+      _req: >
+        This paragraph shall describe the approach to be followed for
+        recording rationale that will be useful to the support organization
+        for key decisions made on the project. It shall interpret the term
+        “key decisions” for the project. It shall state where the rationale
+        are to be recorded. See Section 4.2.7 in the body of (SDSMCS) for
+        the activities and topics to be addressed in this paragraph on
+        recording rationale.
+      _txt: >
+        TBD
+
+    access_for_acquirer_review:
+      _num: "4.2.8"
+      _req: >
+        This paragraph shall describe the approach to be followed for
+        providing the acquirer and its authorized representatives access
+        to developer and software team member facilities for review of
+        products and activities. It shall cover all contractual requirements
+        concerning acquirer team access for review. See Section 4.2.8 in
+        the body of (SDSMCS) for the activities and topics to be addressed
+        in this paragraph on access for acquirer review.
+      _txt: >
+        TBD
+
+    contractual_requirements:
+      _num: "4.2.8"
+      _req: >
+        This paragraph shall describe the approach to be followed for
+        meeting all the contractual requirements regarding software
+        development, including testing, transition, maintenance, and
+        operations. Reference may be made to other paragraphs in this
+        plan if the approach to be followed for meeting contractual
+        requirements is better described in context with the activities
+        to which they will be applied. These contractual requirements
+        can be found in, e.g., the Statement of Work (SOW), Contract
+        Data Requirements List (CDRL), compliance documents and their
+        tailoring, Integrated Master Plan (IMP), specifications, Section
+        H of the Model Contract (Sections A-K of the RFP and Contract),
+        and other contractual documentation.
+      _txt: >
+        TBD

@@ -1,0 +1,45 @@
+# Git ignore file
+#
+# Our process involves automatically comitting changes to the repository, so
+# we use a whitelist-oriented .gitignore to ensure that inappropriate files
+# are not added to the repository by accident.
+#
+
+*
+!*/
+
+# -----------------------------------------------------------------------------
+# Blacklist
+
+# -----------------------------------------------------------------------------
+# Whitelist specific progam logic design document file types.
+
+!*.bash
+!*.css
+!*.template.html
+!*.template.docx
+!*.py
+
+# -----------------------------------------------------------------------------
+# Whitelist specific manually created YAML data file sub-types.
+
+!*.build.yaml
+!*.glossary.yaml
+!*.daybook.yaml
+!*.register.yaml
+!*.rspec.yaml
+!*.docdata.yaml
+!*.milcfg.yaml
+!*.silcfg.yaml
+!*.hilcfg.yaml
+
+# -----------------------------------------------------------------------------
+# Whitelist specific files
+
+!.gitignore
+!h10_resource/registry/dependencies.register.json
+!h70_internal/da/.coveragerc
+!h70_internal/da/check/pytest.ini
+!h70_internal/da/check/design.pylintrc
+!h70_internal/da/check/specification.pylintrc
+!h70_internal/da/subl/da.sublime-build

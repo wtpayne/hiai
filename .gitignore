@@ -1,0 +1,38 @@
+# Git ignore file
+#
+# Our process involves automatically comitting changes to the repository, so
+# we use a whitelist-oriented .gitignore to ensure that inappropriate files
+# are not added to the repository by accident.
+#
+
+*
+!*/
+
+# -----------------------------------------------------------------------------
+# Blacklist
+
+/a0_env/*
+/a2_dat/*
+/a4_tmp/*
+/a5_cms/*
+
+*.pyc
+*__pycache__*
+
+# -----------------------------------------------------------------------------
+# Whitelist
+
+!/a0_env/env.depmap.json
+!/a0_env/readme.dirinfo.yaml
+!/a1_cfg/readme.dirinfo.yaml
+!/a2_dat/readme.dirinfo.yaml
+!/a3_src/readme.dirinfo.yaml
+!/a4_tmp/readme.dirinfo.yaml
+!/a5_cms/readme.dirinfo.yaml
+
+!.gitattributes
+!.gitignore
+!da
+!LICENSE
+!README.md
+
