@@ -12,3 +12,7 @@ register:
   z0000_atomic:
     hostname:   "atomic"
     desc:       "Dell XPS ultrabook 2015 workstation."
+
+  z0001_baron:
+    hostname:   "baron"
+    desc:       "Linode at 151.236.218.112."

@@ -73,3 +73,8 @@ chronicle:
       - "As we have been bootstrapping the build system, we are gradually
         adding various capabilities which need to be described in our
         default project documentation"
+
+  20160905:
+    - j0000035_improve_document_rendering:
+      - "Improve DOCX rendering to allow use of markdown syntax."
+      - "Convert markdown to HTML then HTML to DOCX."

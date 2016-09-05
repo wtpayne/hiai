@@ -119,13 +119,17 @@ def _python(arglist,                                    # pylint: disable=R0913
                                 dependency_id    = python_version,
                                 interface        = 'cli',
                                 dirpath_lwc_root = dirpath_lwc_root), 'pyrun')
-
-    return _subprocess_call(
-                [filepath_python] + arglist,
-                stdout = stdout,
-                stderr = stderr,
-                cwd    = cwd,
-                env    = env)
+    try:
+        return _subprocess_call(
+                    [filepath_python] + arglist,
+                    stdout = stdout,
+                    stderr = stderr,
+                    cwd    = cwd,
+                    env    = env)
+    except OSError:
+        # TODO: This is the exception that you get when you don't have an
+        #       environment -- try to print a helpful error message here.
+        raise
 
 
 # -----------------------------------------------------------------------------
