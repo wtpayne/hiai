@@ -107,8 +107,11 @@ def _create_engineering_documents(cfg):
 
     """
     # TODO: Consider if we want to filter what gets generated?
+    #
     #       Why isn't this being driven by the main loop?
+    #
     #       How do we do incremental documentation builds?
+    #
     for (relpath, doc_type, data) in _gen_doc_data(cfg):
         (filepath_docx, filepath_html) = _get_document_paths(
                                                         cfg, relpath, doc_type)

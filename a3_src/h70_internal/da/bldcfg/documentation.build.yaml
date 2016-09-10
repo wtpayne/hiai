@@ -5,7 +5,7 @@ options:
 
   enable_cms_registration:              False
   enable_cms_delete_old_builds:         False
-  check_changed_files_only:             False
+  check_changed_files_only:             True
 
 steps:
 

@@ -15,4 +15,4 @@ register:
 
   z0001_baron:
     hostname:   "baron"
-    desc:       "Linode at 151.236.218.112."
+    desc:       "Linode CI VM."

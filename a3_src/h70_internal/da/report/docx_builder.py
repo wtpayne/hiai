@@ -35,6 +35,7 @@ import os.path
 
 import docx
 import docx.oxml.shared
+import lxml.html
 
 import da.util
 from . import docx_styles
@@ -59,7 +60,17 @@ def build(doc_data, section_list, filepath):
     _add_title_section(document, doc_data['_metadata'])
     _add_toc_section(document)
 
+    # print('#' * 80  )
     for section in section_list:
+    #     root = lxml.html.fragment_fromstring(section['html'][0])
+
+    #     if root.text:
+    #         print('ROOT TEXT = ' + root.text)
+
+    #     # print(repr(section['html'][0]))
+    #     for child in root:
+    #         if child.tail:
+    #             print('CHILD TAIL = ' + child.tail)
 
         if section['level'] == 1:
             _add_new_page_section(document)
@@ -93,6 +104,8 @@ def _add_content_section(document, section):
                                     style = title_style)
 
     _suppress_line_numbers(title_para)
+
+    # TODO: ITERATE OVER HTML 'RUNS' AND CONVERT TO DOCX XML RUNS
 
     for para in section['para']:
 

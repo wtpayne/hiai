@@ -116,6 +116,28 @@
             }
         },
 
+        "beautiful_soup": {
+            "desc":         "Beautiful Soup sits atop an HTML or XML parser, providing Pythonic idioms for iterating, searching, and modifying the parse tree.",
+            "notes":        "Used for report generation.",
+            "dirname":      "beautiful_soup",
+            "policy":       "ver_4.5.1",
+            "iface":        ["lib_python2",
+                             "lib_python3"],
+            "path": {
+                "lib_python2":  "lib/python2",
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "manual",
+                "tool":     "bzr",
+                "url":      "ssh://bazaar.launchpad.net/+branch/beautifulsoup/"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
+            }
+        },
+
         "boltons": {
             "desc":         "A set of pure-Python utilities.",
             "notes":        "A rather useful library used for a variety of different tasks.",
@@ -663,6 +685,27 @@
             },
             "build": {
                 "method":   "manual",
+                "tool":     "python_setuptools"
+            }
+        },
+
+        "lys": {
+            "desc":         "Simple HTML templating for Python.",
+            "notes":        "Used to generate HTML documentation.",
+            "dirname":      "lys",
+            "policy":       "ver_0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python2":  "lib/python2",
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/mdamien/lys"
+            },
+            "build": {
+                "method":   "automatic",
                 "tool":     "python_setuptools"
             }
         },
@@ -1653,7 +1696,7 @@
             "desc":         "A Python package for studying complex networks.",
             "notes":        "Used to analyse networks.",
             "dirname":      "requests",
-            "policy":       "ver_v2.9.1",
+            "policy":       "ver_v2.11.1",
             "iface":        ["lib_python2",
                              "lib_python3"],
             "path": {

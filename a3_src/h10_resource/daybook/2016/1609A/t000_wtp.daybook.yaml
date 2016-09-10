@@ -77,4 +77,39 @@ chronicle:
   20160905:
     - j0000035_improve_document_rendering:
       - "Improve DOCX rendering to allow use of markdown syntax."
-      - "Convert markdown to HTML then HTML to DOCX."
+      - "Convert markdown to HTML then HTML to DOCX.
+        Looking at the code for report generation - it looks like we
+        should refactor this so that it is called during the main
+        build process rather than just at the end."
+
+  20160906:
+    - j0000035_improve_document_rendering:
+      - "Improve DOCX rendering to allow use of markdown syntax."
+      - "Convert markdown to HTML then HTML to DOCX.
+        Looking at the code for report generation - it looks like we
+        should refactor this so that it is called during the main
+        build process rather than just at the end."
+
+  20160907:
+    - j0000035_improve_document_rendering:
+      - "Improve DOCX rendering to allow use of markdown syntax."
+      - "Convert markdown to HTML then HTML to DOCX.
+        Looking at the code for report generation - it looks like we
+        should refactor this so that it is called during the main
+        build process rather than just at the end."
+
+  20160908:
+    - j0000035_improve_document_rendering:
+      - "Improve DOCX rendering to allow use of markdown syntax."
+      - "Convert markdown to HTML then HTML to DOCX.
+        Looking at the code for report generation - it looks like we
+        should refactor this so that it is called during the main
+        build process rather than just at the end."
+
+  20160910:
+    - j0000035_improve_document_rendering:
+      - "Improve DOCX rendering to allow use of markdown syntax."
+      - "Convert markdown to HTML then HTML to DOCX.
+        Looking at the code for report generation - it looks like we
+        should refactor this so that it is called during the main
+        build process rather than just at the end."

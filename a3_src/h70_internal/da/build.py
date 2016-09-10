@@ -71,7 +71,16 @@ def main(cfg):
 
     The build.main() function is responsible for top level control over
     the build process. The build process takes as input a set of design
-    documents and produces as output a set of artifacts.
+    documents. If no nonconformities are detected, it produces as output
+    a set of built artifacts, If nonconformities are detected, it issues
+    a report and halts.
+
+    The build process is a little unusual in that it is *not* designed to
+    minimise the overall build time, but rather to minimise the time taken
+    to detect a nonconformity in an incremental build. This recognises the
+    fact that most iterations of the edit-build-test loop are performed
+    with the design in a nonconforming state and after relatively small
+    incremental changes.
 
     The build.main() function can be configured to restrict the set of
     design documents used as build inputs as well as the processing steps
@@ -112,8 +121,8 @@ def main(cfg):
         build_monitor.send(build_element)
         build_data = build_process.send(build_element)
 
-    # Delay importing report module as it has large dependencies.
     if cfg['steps']['enable_report_generation']:
+        # Delay importing the report module as it has heavyweight dependencies.
         import da.report as _report
         _report.build(cfg, build_data)
         error_handler.send('PHASE_END')
