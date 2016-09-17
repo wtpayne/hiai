@@ -105,12 +105,15 @@ def has_expired(dirpath_build_cms, time_now):
     """
     Return true if the specified build has expired and may be safely deleted.
 
-    Builds which are no longer required by any test or archival process are
-    deleted to reduce waste. Processes may indicate if they require a build
-    to be kept alive for a time by setting an expiration date.
+    Builds which are no longer required by any test
+    or archival process are deleted to reduce waste.
+    Processes may indicate if they require a build
+    to be kept alive for a time by setting an
+    expiration date.
 
-    A process is only deemed to have expired if all expiration dates which
-    have been set are in the past.
+    A process is only deemed to have expired if
+    all expiration dates which have been set are
+    in the past.
 
     """
     for (_, expiration, _) in _iter_expiration_files(
@@ -126,10 +129,11 @@ def _iter_expiration_files(dirpath_expiration):
     """
     Yield tuples with expiration data for all files in the specified directory.
 
-    Expiration dates are set by creating files in a specified expiration
-    directory in the configuration management system. This function iterates
-    over all such files in the specified expiration directory, yielding a
-    tuple for each expiration file found.
+    Expiration dates are set by creating files in
+    a specified expiration directory in the configuration
+    management system. This function iterates over
+    all such files in the specified expiration directory,
+    yielding a tuple for each expiration file found.
 
     The tuple contains (path, expiration_date, owner).
 

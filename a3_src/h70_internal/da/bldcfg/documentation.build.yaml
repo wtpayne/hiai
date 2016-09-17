@@ -5,7 +5,7 @@ options:
 
   enable_cms_registration:              False
   enable_cms_delete_old_builds:         False
-  check_changed_files_only:             True
+  check_changed_files_only:             False
 
 steps:
 
@@ -29,6 +29,9 @@ steps:
 
   # Set TRUE to enable pylint linting (in static analysis)
   enable_static_test_python_pylint:     False
+
+  # Set TRUE to enable design documentation generation.
+  enable_generate_design_docs:          True
 
   # Set TRUE to enable build reports generation.
   enable_report_generation:             True

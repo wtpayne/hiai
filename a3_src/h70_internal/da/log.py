@@ -90,6 +90,7 @@ class JseqFormatter(logging.Formatter):
     # design of this class is predetermined by
     # the architecture of the logging library
     # and is not under our control.
+    #
     def formatTime(self, record, datefmt):              # pylint: disable=C0103
         """
         Return the creation time of the specified LogRecord as formatted text.
@@ -104,6 +105,7 @@ class JseqFormatter(logging.Formatter):
     # design of this class is predetermined by
     # the architecture of the logging library
     # and is not under our control.
+    #
     def formatException(self, exc_info):                # pylint: disable=C0103
         """
         Format and return the specified exception information as a string.

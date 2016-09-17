@@ -75,9 +75,11 @@ def is_specification_file(filepath):
     """
     Return True if filepath is for a specification file.
 
-    Specification files contain the requirements specifications and unit tests
-    that together document the behaviour of design elements contained within
-    a corresponding design document.
+    Specification files contain the requirements
+    specifications and unit tests that together
+    document the behaviour of design elements
+    contained within a corresponding design
+    document.
 
     """
     (dirpath, filename) = os.path.split(filepath)
@@ -92,7 +94,8 @@ def is_design_file(filepath):
     """
     Return True if filepath is a design document.
 
-    Source files are either design documents or specification documents.
+    Source files are either design documents or
+    specification documents.
 
     """
     return is_source_file(filepath) and not is_specification_file(filepath)
@@ -147,6 +150,15 @@ def is_tool_config(filepath):
 
 
 # -----------------------------------------------------------------------------
+def is_experimental(filepath):
+    """
+    Return true if filepath is an experimental design document.
+
+    """
+    return True if 'h50_research' in filepath else False
+
+
+# -----------------------------------------------------------------------------
 def design_filepath_for(filepath_spec):
     """
     Return the design doc filepath corresponding to the specification provided.
@@ -160,7 +172,9 @@ def design_filepath_for(filepath_spec):
     assert dirname_spec == SPEC_DIR_NAME
     assert filename_spec.startswith(SPEC_FILE_PREFIX)
 
-    # Tests for packages are named after the package name, not the module name.
+    # Tests for packages are named after the package
+    # name, not the module name.
+    #
     design_name = rootname_spec.replace(SPEC_FILE_PREFIX, '')
     if design_name == dirname_module:
         filename_module = '__init__.py'
@@ -183,7 +197,9 @@ def specification_filepath_for(filepath_design):
     dirpath_spec                      = os.path.join(
                                                 dirpath_design, SPEC_DIR_NAME)
 
-    # Tests for packages are named after the package name, not the module name.
+    # Tests for packages are named after the package
+    # name, not the module name.
+    #
     if (fileext_design == '.py') and (rootname_design == '__init__'):
         name = os.path.basename(dirpath_design)
     else:

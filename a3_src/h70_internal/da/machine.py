@@ -69,14 +69,17 @@ def env_id():
     """
     Return the identifier code for the current runtime environment.
 
-    The env_id is used to identify the machines and binaries that are
-    ABI-compatible with one another. Because the way that we check for
-    ABI compatibility varies between Linux, Windows and OSX, the logic
-    used to determine the env_id is also operating system specific.
+    The env_id is used to identify the machines and
+    binaries that are ABI-compatible with one another.
+    Because the way that we check for ABI compatibility
+    varies between Linux, Windows and OSX, the logic
+    used to determine the env_id is also operating
+    system specific.
 
-    If an env_id is defined, then there is an implied claim of support
-    for that runtime environment. We should only add env_ids for which
-    we also have the means to run regression tests. (i.e. a virtual
+    If an env_id is defined, then there is an implied
+    claim of support for that runtime environment.
+    We should only add env_ids for which we also have
+    the means to run regression tests. (i.e. a virtual
     test environment of some sort)
 
     """
@@ -111,14 +114,17 @@ def _env_id_for_linux_systems():
      distro_ver,
      distro_id) = platform.linux_distribution()
 
-    # If we are running inside pyrun on Ubuntu Linux (Xenial), the
-    # platform.linux_distribution function reports 'debian' as the
-    # distro_name and 'stretch/sid' as the distro_ver, rather than
-    # the 'Ubuntu' and '16.04' that CPython reports. If we suspect
-    # that this may be happening, then we fall back on the system
-    # lsb_release command to get a more reliably consistent set of
-    # values for the distribution information.
-
+    # If we are running inside pyrun on Ubuntu Linux
+    # (Xenial), the platform.linux_distribution
+    # function reports 'debian' as the distro_name
+    # and 'stretch/sid' as the distro_ver, rather
+    # than the 'Ubuntu' and '16.04' that CPython
+    # reports. If we suspect that this may be
+    # happening, then we fall back on the system
+    # lsb_release command to get a more reliably
+    # consistent set of values for the distribution
+    # information.
+    #
     maybe_pyrun = (distro_name == 'debian' and
                    distro_ver  == 'stretch/sid')
     if maybe_pyrun:

@@ -57,10 +57,13 @@ def coro(error_handler):
         build_element = (yield)
 
         filepath = build_element['filepath']
-        if not filepath.endswith('.py'):            # Ignore non-python files.
+
+        # Ignore non-python design documents.
+        if not da.lwc.file.is_python_file(filepath):
             continue
 
-        if da.lwc.file.is_test_related(filepath):   # Ignore tests
+        # Ignore experimental design documents.
+        if da.lwc.file.is_experimental(filepath):
             continue
 
         # Gather complexity metrics for each function in the file...

@@ -89,10 +89,9 @@ def get(idclass_tab):
         Optional('enable_static_test_python_codestyle'):    bool,
         Optional('enable_static_test_python_docstyle'):     bool,
         Optional('enable_static_test_python_pylint'):       bool,
-        Optional('enable_docgen_design'):                   bool,
-        Optional('enable_docgen_api'):                      bool,
         Optional('enable_compile_gcc'):                     bool,
         Optional('enable_compile_clang'):                   bool,
+        Optional('enable_generate_design_docs'):            bool,
         Optional('enable_report_generation'):               bool,
         Extra:                                              Reject
     })

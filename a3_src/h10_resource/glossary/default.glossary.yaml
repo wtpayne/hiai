@@ -1,40 +1,94 @@
-entry_id:
-  def:  "Definition text."
-  alt:  ["alternative spellings"]
-  tag:  ["A list of classification tags - acronym / noun / verb / adjective"]
-  ref:  ["A list of external reference documents or URLs"]
-
-design_element:
-  def:  "A representation of a design decision."
-  alt:  ["Design element"]
+build:
+  def:  "A process whereby a set of build output artifacts are generated
+        in accordance with a design configuration, and where the design
+        configuration is specified by a set of consistent and conformant
+        design documents."
+  alt:  ["build", "build process"]
   tag:  ["noun"]
   ref:  []
+
+
+build_element:
+  def:  "A package containing design documents together with related
+        specifications, tests and build recipes."
+  alt:  ["build element"]
+  tag:  ["noun"]
+  ref:  []
+
+
+build_output_artifacts:
+  def:  "An item that has been generated as the result of the operation of
+        a build process. This is normally a digital file such as a binary
+        executable, a pdf, a web page, or some other document."
+  alt:  ["build", "build process"]
+  tag:  ["noun"]
+  ref:  []
+
+
+camel_case:
+  def:  "An identifier capitalisation style where the first letter of each
+        word is written in upper case, excluding the first: camelCase"
+  alt:  ["pascal case"]
+  tag:  ["noun"]
+  ref:  []
+
+
+design_configuration:
+  def:  "The term 'design configuration' is defined as a set of design
+        decisions which collectively specify one or more designs. A design
+        configuration is represented by a set of design documents, and is
+        identified by the git SHA-1 digest for the relevant repository
+        revision. Any act which changes a design should also result in a
+        change to the design configuration."
+  alt:  ["design element"]
+  tag:  ["noun"]
+  ref:  []
+
+
+design_decision:
+  def:  "A decision made in the course of creating a design. The
+        granularity and impact of design decisions can vary wildly.
+        Some design decisions play a key role in safety or performance,
+        and are documented and tracked as part of the development process.
+        A design decision may be represented by one or more design elements
+        contained within one or more design documents."
+  alt:  ["design element"]
+  tag:  ["noun"]
+  ref:  []
+
 
 design_document:
-  def:  "A document containing design elements."
-  alt:  ["Design document",
-         "Design file"]
+  def:  "A document composed of design elements and expository text."
+  alt:  ["design document",
+         "design file"]
   tag:  ["noun"]
   ref:  []
+
+
+design_element:
+  def:  "The representation of a part of a design which is sufficiently
+        compact and small for it to be considered as if it were an
+        irreducible atom. Design elements live at the level of individual
+        parameter values; expressions; control constructs and small one or
+        two line functions."
+  alt:  ["design element"]
+  tag:  ["noun"]
+  ref:  []
+
+
+pascal_case:
+  def:  "An identifier capitalisation style where the first letter of each
+        word is written in upper case, including the first: PascalCase."
+  alt:  ["pascal case"]
+  tag:  ["noun"]
+  ref:  []
+
 
 specification_document:
   def:  "A document containing requirements and tests."
-  alt:  ["Specification document",
-         "Specification file"]
+  alt:  ["specification document",
+         "specification file"]
   tag:  ["noun"]
   ref:  []
-
-build_element:
-  def:  "A design document and its specification document."
-  alt:  ["Build element"]
-  tag:  ["noun"]
-  ref:  []
-
-
-
-
-
-
-
 
 

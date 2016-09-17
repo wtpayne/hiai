@@ -45,10 +45,12 @@ def member_id(dirpath_lwc_root = None, user_id = None):
     ----------
 
     dirpath_lwc_root : str
-        The fully qualified path to the currently active local working copy.
+        The fully qualified path to the currently
+        active local working copy.
 
     user_id : str
-        The user-id for the team member on the current workstation.
+        The user-id for the team member on the
+        current workstation.
 
     """
     if user_id is None:

@@ -84,13 +84,14 @@ def index_builder_coro(index = None):
     """
     Return a coroutine that builds an index (map) from supplied tuples.
 
-    The last element in each tuple is treated as the payload value
-    that is to be indexed, and the preceeding elements as a hierarchy
-    of indices by which it is to be indexed.
+    The last element in each tuple is treated as
+    the payload value that is to be indexed, and
+    the preceeding elements as a hierarchy of
+    indices by which it is to be indexed.
 
-    The index itself is a nested default-dictionary with len(tup)
-    levels of nesting, containing a list at the innermost level
-    to hold the payload.
+    The index itself is a nested default-dictionary
+    with len(tup) levels of nesting, containing a
+    list at the innermost level to hold the payload.
 
     >>> builder = index_builder_coro()
     >>> builder.send(None)
@@ -120,38 +121,46 @@ def build_index(itable_tup):
     """
     Return an index for an iterable container of tuples, all the same length.
 
-    The last element in each tuple is treated as the payload value
-    that is to be indexed, and the preceeding elements as a hierarchy
-    of indices by which it is to be indexed.
+    The last element in each tuple is treated as
+    the payload value that is to be indexed, and
+    the preceeding elements as a hierarchy of
+    indices by which it is to be indexed.
 
-    The index itself is a nested default-dictionary with len(tup)
-    levels of nesting, containing a list at the innermost level
-    to hold the payload.
+    The index itself is a nested default-dictionary
+    with len(tup) levels of nesting, containing a
+    list at the innermost level to hold the payload.
 
     >>> idx = build_index((('a','b', 1), ('a','c', 2)), 3)
     >>> import json
     >>> print(json.dumps(idx, sort_keys=True))
     {"a": {"b": [1], "c": [2]}}
 
-    This function is a bit of an exercise in making use of the
-    functional programming capabilities that come with Python,
-    so the  implementation is a little more terse and opaque
-    than it might otherwise be...
+    This function is a bit of an exercise in making
+    use of the functional programming capabilities
+    that come with Python, so the implementation is
+    a little more terse and opaque than it might
+    otherwise be...
 
-    For each tuple in iter_tup, we construct a slot in the index
-    using the lazy initialisation capability that is provided by
-    the collections.defaultdict class. All but the last element
-    in the tuple are used for indexing. The last element is the
-    payload which gets added to the inner list after the structure
-    has been initialised. The basic capability is provided by
-    the nested defaultdict data structure returned from the idx_ctor
-    function, which in turn is built with the aid of the higher
-    order lambda function (_partial(_dedict, ctor)).
+    For each tuple in iter_tup, we construct a slot in
+    the index using the lazy initialisation capability
+    that is provided by the collections.defaultdict
+    class.
 
-    All this is plugged together using calls to functools.reduce,
-    which is used to construct the custom index data structure; to
-    add each tuple to the index, as well as to iterate over the
-    input.
+    All but the last element in the tuple are used
+    for indexing. The last element is the payload
+    which gets added to the inner list after the
+    structure has been initialised. The basic
+    capability is provided by the nested defaultdict
+    data structure returned from the idx_ctor
+    function, which in turn is built with the aid
+    of the higher order lambda function
+    (_partial(_dedict, ctor)).
+
+    All this is plugged together using calls to
+    functools.reduce, which is used to construct
+    the custom index data structure; to add each
+    tuple to the index, as well as to iterate over
+    the input.
 
     """
     _dedict   = collections.defaultdict
@@ -203,21 +212,29 @@ def walkobj(obj,                                  # pylint: disable=R0912,R0913
     Adapted from:
     http:/code.activestate.com/recipes/577982-recursively-walk-python-objects/
 
-    This function performs a (depth-first left to right recursive) traversal
-    over the provided data structure, which we assume to consist of a finite;
-    treelike arrangement of nested collections.Mapping and collections.Iterable
+    This function performs a (depth-first left to
+    right recursive) traversal over the provided
+    data structure, which we assume to consist of
+    a finite; treelike arrangement of nested
+    collections.Mapping and collections.Iterable
     types.
 
-    This function can be configured to yield information about nodes in the
-    tree: leaf nodes; non-leaf (internal) nodes or both.
+    This function can be configured to yield
+    information about nodes in the tree: leaf
+    nodes; non-leaf (internal) nodes or both.
 
-    The information that is yielded may also be configured: the path to the
-    node can be delivered as can the object at the node itself.
+    The information that is yielded may also be
+    configured: the path to the node can be
+    delivered as can the object at the node
+    itself.
 
     """
-    # If the object is elemental, it cannot be decomposed, so we must
-    # bottom out the recursion and yield the object and its' path before
-    # returning control back up the stack.
+    # If the object is elemental, it cannot be
+    # decomposed, so we must bottom out the
+    # recursion and yield the object and its'
+    # path before returning control back up
+    # the stack.
+    #
     is_itable    = isinstance(obj, collections.Iterable)
     is_leaf      = (not is_itable) or is_string(obj)
 
@@ -231,14 +248,20 @@ def walkobj(obj,                                  # pylint: disable=R0912,R0913
                 yield obj
         return
 
-    # Since this is a recursive function, we need to be on our guard against
-    # any references to objects back up the call stack (closer to the root of
-    # the tree). Any such references would be circular, leading to an infinite
-    # tree, and causing us to blow our stack in a fit of unbounded recursion.
+    # Since this is a recursive function, we need
+    # to be on our guard against any references
+    # to objects back up the call stack (closer
+    # to the root of the tree). Any such
+    # references would be circular, leading to
+    # an infinite tree, and causing us to blow
+    # our stack in a fit of unbounded recursion.
     #
-    # If we detect that we've already visited this object (using identity not
-    # equality), then the safe thing to do is to halt the recursive descent
-    # and return control back up the stack.
+    # If we detect that we've already visited
+    # this object (using identity not equality),
+    # then the safe thing to do is to halt the
+    # recursive descent and return control back
+    # up the stack.
+    #
     _id = id(obj)
     if memo is None:
         memo = set()
@@ -246,15 +269,19 @@ def walkobj(obj,                                  # pylint: disable=R0912,R0913
         return
     memo.add(_id)
 
-    # If the object is not elemental (i.e. it is an Iterable), then it
-    # may be decomposed, so we should recurse down into each component,
-    # yielding the results as we go. Of course, we need different iteration
-    # functions for mappings vs. other iterables.
+    # If the object is not elemental (i.e. it is
+    # an Iterable), then it may be decomposed, so
+    # we should recurse down into each component,
+    # yielding the results as we go. Of course,
+    # we need different iteration functions for
+    # mappings vs. other iterables.
+    #
     def mapiter(mapping):
         """
         Return an iterator over the specified mapping or other iterable.
 
-        This function selects the appropriate iteration function to use.
+        This function selects the appropriate
+        iteration function to use.
 
         """
         return getattr(mapping, 'iteritems', mapping.items)()
@@ -280,10 +307,13 @@ def walkobj(obj,                                  # pylint: disable=R0912,R0913
                               memo        = memo):
             yield result
 
-    # We only need to guard against infinite recursion within a branch of
-    # the call-tree. There is no danger in visiting the same item instance
-    # in sibling branches, so we can forget about objects once we are done
+    # We only need to guard against infinite
+    # recursion within a branch of the call-tree.
+    # There is no danger in visiting the same item
+    # instance in sibling branches, so we can
+    # forget about objects once we are done
     # with them and about to pop the stack.
+    #
     memo.remove(_id)
     return
 
@@ -294,9 +324,12 @@ def flatten_ragged(raggedlist, memo = None):
     Flatten a 'ragged' list (a list-of-lists).
 
     """
-    # If the object is elemental, it cannot be decomposed, so we must
-    # bottom out the recursion and yield the object and its' path before
-    # returning control back up the stack.
+    # If the object is elemental, it cannot be
+    # decomposed, so we must bottom out the
+    # recursion and yield the object and its'
+    # path before returning control back up the
+    # stack.
+    #
     is_itable    = isinstance(raggedlist, collections.Iterable)
 
     is_leaf      = (not is_itable) or is_string(raggedlist)
@@ -305,14 +338,20 @@ def flatten_ragged(raggedlist, memo = None):
         yield raggedlist
         return
 
-    # Since this is a recursive function, we need to be on our guard against
-    # any references to objects back up the call stack (closer to the root of
-    # the tree). Any such references would be circular, leading to an infinite
-    # tree, and causing us to blow our stack in a fit of unbounded recursion.
+    # Since this is a recursive function, we need
+    # to be on our guard against any references
+    # to objects back up the call stack (closer
+    # to the root of the tree). Any such
+    # references would be circular, leading to
+    # an infinite tree, and causing us to blow
+    # our stack in a fit of unbounded recursion.
     #
-    # If we detect that we've already visited this object (using identity not
-    # equality), then the safe thing to do is to halt the recursive descent
-    # and return control back up the stack.
+    # If we detect that we've already visited this
+    # object (using identity not equality), then
+    # the safe thing to do is to halt the
+    # recursive descent and return control back
+    # up the stack.
+    #
     _id = id(raggedlist)
     if memo is None:
         memo = set()
@@ -323,10 +362,13 @@ def flatten_ragged(raggedlist, memo = None):
     for element in flatten_ragged(raggedlist, memo):
         yield element
 
-    # We only need to guard against infinite recursion within a branch of
-    # the call-tree. There is no danger in visiting the same item instance
-    # in sibling branches, so we can forget about objects once we are done
+    # We only need to guard against infinite
+    # recursion within a branch of the call-tree.
+    # There is no danger in visiting the same
+    # item instance in sibling branches, so we
+    # can forget about objects once we are done
     # with them and about to pop the stack.
+    #
     memo.remove(_id)
     return
 
@@ -359,10 +401,13 @@ def load(filepath):
     Load the specified file with the format determined by the file extension.
 
     """
-    # The yaml module is not part of the standard library. It is part of
-    # the configuration controlled runtime environment in a0_env. We import
-    # it in function scope becausse the util module is imported before a0_env
-    # is enabled in the bootstrap process.
+    # The yaml module is not part of the standard
+    # library. It is part of the configuration
+    # controlled runtime environment in a0_env.
+    # We import it in function scope because the
+    # util module is imported before a0_env is
+    # enabled in the bootstrap process.
+    #
     import yaml
 
     if filepath.endswith('.yaml'):

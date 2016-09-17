@@ -36,7 +36,7 @@ import uuid
 import json
 import os
 
-# import BeautifulSoup
+import bs4
 import lys
 
 
@@ -55,16 +55,6 @@ def _load_lines(filepath):
     with open(filepath, 'rt') as file:
         lines = tuple(line for line in file)
     return lines
-
-
-# -----------------------------------------------------------------------------
-def _text_excerpt(filepath, start_line, num_lines):
-    """
-    Return text excerpted from range of lines in a file.
-
-    """
-    end_line = start_line + (num_lines - 1)
-    return '\n'.join(_load_lines(filepath)[start_line:end_line])
 
 
 # -----------------------------------------------------------------------------
@@ -89,39 +79,93 @@ def _html_design_docs(rootpath_doc, relpath_file):
 
 
 # -----------------------------------------------------------------------------
-def _accordion_row(collapsed, expanded):
+def _accordion_row(title, content):
+    """
+    Return HTML for a CSS-only collapsible accordion row.
+
+    """
     uid = uuid.uuid1().hex
-    return L.li / (
-        L.label(for_ = uid) / (collapsed),
-        L.input(type = 'checkbox', id   = uid),
-        L.ol / (L.li / (child) for child in expanded))
+    return L.div(class_ = 'accordion') / (
+            L.input(type   = 'checkbox',
+                    class_ = 'accordion',
+                    id     = uid),
+            L.label(class_ = 'accordion',
+                    for_   = uid) / (
+                L.div(class_ = 'accordion_content') / (title, content)))
 
 
 # -----------------------------------------------------------------------------
-def _html_excerpt(rootpath_src,
-                  rootpath_doc,
-                  relpath_file,
-                  start_line,
-                  num_lines):
+def _excerpt(rootpath_src,
+             rootpath_doc,
+             relpath_file,
+             line,
+             column):
     """
-    Return collapsible HTML for an excerpted reference.
+    Return the HTML for a single (collapsible) excerpt.
 
     """
     filepath_src = os.path.join(rootpath_src, relpath_file)
+    filename_src = os.path.basename(filepath_src)
     filepath_doc = _html_design_docs(rootpath_doc, relpath_file)
     link_address = 'file:///{path}#{line:04.0f}'.format(
                                             path = filepath_doc,
-                                            line = start_line)
-    link_text    = '{path}:{line:04.0f}'.format(
-                                            path = relpath_file,
-                                            line = start_line)
-    excerpt      = _format_excerpt(
-                        'unknown',
-                        _text_excerpt(filepath_src, start_line, num_lines))
+                                            line = line)
+    link_text    = '{name}:{line:04.0f}:{col:02.0f}'.format(
+                                            name = filename_src,
+                                            line = line,
+                                            col  = column)
 
-    return _accordion_row(
-                collapsed = L.a(href=link_address) / (link_text),
-                expanded  = [excerpt])
+    start_line   = line - 1
+    end_line     = line + 4
+    list_lines   = _load_lines(filepath_src)[start_line:end_line]
+    title        = L.a(href=link_address) / (link_text)
+    content      = L.div / ((line, L.br) for line in list_lines)
+    return _accordion_row(title, content)
+
+
+# -----------------------------------------------------------------------------
+def _excerpts_from_file(rootpath_src,
+                        rootpath_doc,
+                        relpath_file,
+                        locations):
+    """
+    Return the HTML for all (collapsible) excerpts from a file.
+
+    """
+    filepath_doc = _html_design_docs(rootpath_doc, relpath_file)
+    link_address = 'file:///{path}'.format(path = filepath_doc)
+    link_text    = relpath_file
+    title        = L.a(href=link_address) / (link_text)
+    content      = list()
+    for line, column in locations:
+        content.append(
+            _excerpt(rootpath_src,
+                     rootpath_doc,
+                     relpath_file,
+                     line,
+                     column))
+    return _accordion_row(title, content)
+
+
+# -----------------------------------------------------------------------------
+def _excerpts_for_all_references_to_identifier(rootpath_src,
+                                               rootpath_doc,
+                                               identifier,
+                                               references):
+    """
+    Return the HTML for all files with...
+
+    """
+
+    title   = identifier
+    content = list()
+    for relpath_file, locations in references.items():
+        content.append(
+            _excerpts_from_file(rootpath_src,
+                                rootpath_doc,
+                                relpath_file,
+                                locations))
+    return _accordion_row(title, content)
 
 
 # -----------------------------------------------------------------------------
@@ -140,29 +184,22 @@ def _generate():
     with open(filepath_data, 'rt') as file:
         data = [json.loads(line) for line in file]
 
+    content = list()
     for line_of_json in data:
         for identifier, references in line_of_json.items():
-            for relpath_file, line_numbers in references.items():
-                for start_line, num_lines in line_numbers:
-                    fragment = _html_excerpt(rootpath_src,
-                                             rootpath_doc,
-                                             relpath_file,
-                                             start_line,
-                                             num_lines)
-                    return fragment
+            content.append(
+                _cross_references_for_identifier(rootpath_src,
+                                                 rootpath_doc,
+                                                 identifier,
+                                                 references))
 
-    # doc = L.html / (_accordion_row(
-    #                     collapsed = ['collapsed'],
-    #                     expanded  = ['one', 'two']))
-
-    # L = lys.L
-    # doc = L.html / (
-    #     L.head(lang = 'en') / (
-    #         L.meta(charset = 'utf-8')),
-    #     L.body / (
-
-    #               ))
-    # return doc
+    doc = L.html / (
+        L.head(lang = 'en') / (
+            L.meta(charset = 'utf-8')),
+            L.link(rel     = 'stylesheet',
+                   href    = './static/css/trace.css'),
+        L.body / (content))
+    return doc
 
 
 
@@ -172,7 +209,31 @@ def generate():
     Generate HTML
 
     """
-    print(_generate())
+    relfilepath_self = __file__ if __file__ else sys.argv[0]
+    dirpath_self     = os.path.dirname(os.path.realpath(relfilepath_self))
+    ugly_html        = str(_generate())
+    pretty_html      = bs4.BeautifulSoup(ugly_html, 'html.parser').prettify()
+    filepath_html    = os.path.join(dirpath_self, 'index.html')
+
+    with open(filepath_html, 'wt') as file:
+        file.write(pretty_html)
+    print(filepath_html)
+
+
+# {
+#     "i00033_halt_the_build_immediately_a_failure_is_detected": {
+#         "a3_src/h70_internal/da/doc/build.rspec.yaml": {
+#             "(87, 4)": {
+#                 "('i00033_halt_the_build_immediately_a_failure_is_detected',)": [
+#                     [
+#                         "The system SHOULD halt the build as soon as a failing test is detected.",
+#                         {"notes":
+#                             "We are required to minimise the time elapsed between the introduction of \
+#                             a regression or other error and the developer responsible being made aware of it."},
+#                         {"type": "guidance"},
+#                         {"state": "draft"}]
+#                     ]
+#                 }}}}
 
 
 # # -----------------------------------------------------------------------------
@@ -206,8 +267,6 @@ def generate():
 #     Generate HTML
 
 #     """
-#     relfilepath_self  = __file__ if __file__ else sys.argv[0]
-#     dirpath_self      = os.path.dirname(os.path.realpath(relfilepath_self))
 #     dirpath_data      = os.path.join(dirpath_self, 'static', 'data')
 #     filepath_data     = os.path.join(dirpath_data, 'job.line_index.jseq')
 #     with open(filepath_data, 'rt') as file:
@@ -218,7 +277,4 @@ def generate():
 #     tpl   = env.get_template('trace.jinja2.html')
 #     html  = tpl.render(data = data)
 
-#     filepath_html = os.path.join(dirpath_self, 'index.html')
-#     with open(filepath_html, 'wt') as file:
-#         file.write(html)
 

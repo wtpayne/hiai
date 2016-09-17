@@ -2,9 +2,10 @@
 """
 Development Automation System Command Line Interface.
 
-This module handles the Development Automation Command Line Interface. It
-makes use of the click library (click.pocoo.org) for input parameter parsing
-and command dispatch.
+This module handles the Development Automation Command
+Line Interface. It makes use of the click library
+(click.pocoo.org) for input parameter parsing and
+command dispatch.
 
 ---
 type:
@@ -67,8 +68,10 @@ class ExitWithCode(click.ClickException):
         """
         if file is None:
 
-            # Pylint rule W0212 (protected-access) disabled at risk to
-            # enable use of internal (non-public) Click library functionality.
+            # Pylint rule W0212 (protected-access)
+            # disabled at risk to enable use of
+            # internal (non-public) Click library
+            # functionality.
             #
             file = click._compat.get_text_stderr()      # pylint: disable=W0212
 
@@ -87,9 +90,12 @@ class CustomContextObject(dict):
 
 
 # -----------------------------------------------------------------------------
-# Pylint rule C0103 (invalid-name) disabled by design decision.
-# The pass_custom_ctx variable is a decorator function, not an
-# item of constant data, so an all-caps would be misleading.
+# Pylint rule C0103 (invalid-name) disabled by
+# design decision.
+#
+# The pass_custom_ctx variable is a decorator
+# function, not an item of constant data, so an
+# all-caps name would be misleading.
 #
 pass_custom_ctx = click.make_pass_decorator(            # pylint: disable=C0103
                                 CustomContextObject)
@@ -107,8 +113,9 @@ class FuzzyCommandAliasGroup(click.Group):
         Return the command given by fuzzily matching a supplied command alias.
 
         """
-        # Note: Plugins need to be loaded at import-time so that they
-        #       will appear in the help text. It isn't sufficient to
+        # Note: Plugins need to be loaded at import
+        #       time so that they will appear in the
+        #       help text. It isn't sufficient to
         #       import plugins here.
 
         # Try an exact match.
@@ -153,8 +160,12 @@ def fuzzy_alias_group(name = None, cls = None, **attrs):
     Once decorated the function turns into a click command Group.
 
     args:
-        name:   The name of the command. This defaults to the function name.
-        cls:    The class to instantiate. Default is FuzzyCommandAliasGroup.
+
+        name:   The name of the command. This defaults
+                to the function name.
+
+        cls:    The class to instantiate. Default is
+                FuzzyCommandAliasGroup.
 
     """
     attrs.setdefault('invoke_without_command', True)
@@ -166,14 +177,16 @@ def fuzzy_alias_group(name = None, cls = None, **attrs):
         Return Click decorator function for FuzzyCommandAliasGroup callbacks.
 
         """
-        # Pylint rule W0212 (protected-access) disabled at risk to enable use
-        # of internal (non-public) Click library functionality.
+        # Pylint rule W0212 (protected-access)
+        # disabled at risk to enable use of internal
+        # (non-public) Click library functionality.
         #
         cmd = click.decorators._make_command(           # pylint: disable=W0212
                                     func, name, attrs, cls)
 
-        # Pylint rule W0201 (attribute-defined-outside-init) disabled at risk
-        # to support integration with Click library functionality.
+        # Pylint rule W0201 (attribute-defined-outside-init)
+        # disabled at risk to support integration
+        # with Click library functionality.
         #
         cmd.__doc__ = func.__doc__                      # pylint: disable=W0201
         return cmd
@@ -186,12 +199,15 @@ class ExplicitInfoNameCommand(click.Command):
     """
     A Command that creates Contexts with an explicitly specified info_name.
 
-    This class ensures that the usage message always displays the correct
-    command name rather than using the user's input string from sys.argv.
+    This class ensures that the usage message always
+    displays the correct command name rather than
+    using the user's input string from sys.argv.
 
-    It is a subclass of click.Command with the make_context method overridden
-    so that the Context class from which the usage message is supplied takes
-    its info_name from Command.name rather than from sys.argv.
+    It is a subclass of click.Command with the
+    make_context method overridden so that the
+    Context class from which the usage message
+    is supplied takes its info_name from
+    Command.name rather than from sys.argv.
 
     """
 
@@ -223,12 +239,13 @@ def main(click_ctx):
     """
     The main entry point for Development Automation System commands.
 
-    The Development Automation System defines and controls the development
-    process and is the basis for engineering process compliance monitoring
-    and automation.
+    The Development Automation System defines and
+    controls the development process and is the
+    basis for engineering process compliance
+    monitoring and automation.
 
-    Wherever possible development process steps are carried out or reported
-    via this tool.
+    Wherever possible development process steps are
+    carried out or reported via this tool.
 
     """
     if click_ctx.invoked_subcommand is None:
@@ -298,23 +315,27 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
     """
     Build current LWC with CFG_NAME build config.
 
-    CFG_NAME can be the name of a configuration file or the name of a
-    design element.
+    CFG_NAME can be the name of a configuration
+    file or the name of a design element.
 
-    If the name of a design element is supplied, then configuration is
-    generated automatically to restrict the build to that design element
+    If the name of a design element is supplied,
+    then configuration is generated automatically
+    to restrict the build to that design element
     only.
 
-    The notion of a build is quite general. Any action that can be done
-    in a single step and that produces some sort of persistent output
+    The notion of a build is quite general. Any
+    action that can be done in a single step and
+    that produces some sort of persistent output
     should be thought of as part of the build.
 
-    The only exceptions are actions that start interactive sessions or
-    other processes, e.g. launching interactive tools, reporting servers
-    etc..
+    The only exceptions are actions that start
+    interactive sessions or other processes,
+    e.g. launching interactive tools, reporting
+    servers etc..
 
     """
-    # Rename imports to prevent conflict w/outer da imports.
+    # Rename imports to prevent conflict with
+    # outer da imports.
     #
     import sys
     import traceback
@@ -323,7 +344,8 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
     import da.exception as _exception
     import da.lwc.run   as _run
 
-    # Some of the build configuration can only be defined at runtime.
+    # Some of the build configuration can only be
+    # defined at runtime.
     cfg_extras = {
         'build_context': {
             'pid':              da_ctx['pid'],
@@ -372,17 +394,22 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
                       filepath         = filepath,
                       line_number      = line_number)
 
-    # Pylint rule W0703 (broad-except) disabled. All Exception objects
-    # are caught because keeping an explicit list of exception classes
-    # is not practical given the evolving and low-maturity nature of
-    # much of the software that will be doing the throwing.
+    # Pylint rule W0703 (broad-except) disabled.
+    # All Exception objects are caught because
+    # keeping an explicit list of exception
+    # classes is not practical given the evolving
+    # and low-maturity nature of much of the
+    # software that will be doing the throwing.
     #
     except Exception as err:                            # pylint: disable=W0703
 
-        # I find the stack trace that the Python interpreter prints to be
-        # a bit dense and hard to read, so instead of letting the exception
-        # propagate back up the interpreter, we intercept it here and
-        # print the stack trace in a manner of our choosing.
+        # I find the stack trace that the Python
+        # interpreter prints to be a bit dense
+        # and hard to read, so instead of letting
+        # the exception propagate back up the
+        # interpreter, we intercept it here and
+        # print the stack trace in a manner of
+        # our choosing.
         #
         click.secho(
             '\n{hr}\n{title}\n{uscore}\n\n{exc}\n\n{trace}\n{hr}\n'.format(
@@ -393,13 +420,17 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
                                     trace  = traceback.format_exc(limit=10)),
             fg = 'red')
 
-        # Since we have already intercepted the exception, we can take the
-        # opportunity to add hooks for whatever development environment we
-        # happen to be using at the momeent (e.g. Eclipse or Sublime).
+        # Since we have already intercepted the
+        # exception, we can take the opportunity
+        # to add hooks for whatever development
+        # environment we happen to be using at
+        # the momeent (e.g. Eclipse or Sublime).
         #
-        # In the first instance, we simply open the editor at the location
-        # where the exception was thrown, but in future we may do something
-        # more sophisticated here.
+        # In the first instance, we simply open
+        # the editor at the location where the
+        # exception was thrown, but in future we
+        # may do something more sophisticated
+        # here.
         #
         # TODO: Review and extend IDE integration.
         #
@@ -417,32 +448,40 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
 #
 # ---
 # i00041_control_access_to_counterparty_specific_confidential_documents:
-#   - "Access to counterparty specific confidential documents SHALL be
-#      controlled."
-#   - notes: "We want to provide assurance to our counterparties that access
-#            controls will be instituted and enforced to protect their
-#            confidential information and intellectual property."
+#   - "Access to counterparty specific confidential
+#      documents SHALL be controlled."
+#   - notes: "We want to provide assurance to our
+#            counterparties that access controls
+#            will be instituted and enforced to
+#            protect their confidential information
+#            and intellectual property."
 #   - type: mandate
 #   - state: draft
 #
 # i00042_organise_documents_for_reuse:
-#   - "Documents SHALL be organised to facilitate reuse across projects."
-#   - notes: "We want to promote reuse of design documents by adopting a
-#            product line engineering approach. This means that many
-#            products and projects are aggregated together into a single
-#            monolithic configuration."
+#   - "Documents SHALL be organised to facilitate
+#      reuse across projects."
+#   - notes: "We want to promote reuse of design
+#            documents by adopting a product line
+#            engineering approach. This means that
+#            many products and projects are aggregated
+#            together into a single monolithic
+#            configuration."
 #   - type: mandate
 #   - state: draft
 #
 # i00043_store_counterparty_confidential_documents_in_secure_subrepos:
 #   - "Counterparty specific confidential documents SHALL be stored in
 #      access-controlled subrepositories."
-#   - notes: "We want to coversion documents with counterparty specific
-#            confidentiality alongside product line documents that are
-#            open-access across the organisation. To achieve this, we
-#            store the confidential documents in an access controlled
-#            subrepository that is (optionally) embedded within the
-#            encompassing product line organisational structure."
+#   - notes: "We want to coversion documents with
+#            counterparty specific confidentiality
+#            alongside product line documents that
+#            are open-access across the organisation.
+#            To achieve this, we store the confidential
+#            documents in an access controlled
+#            subrepository that is (optionally)
+#            embedded within the encompassing
+#            product line organisational structure."
 #   - type: mandate
 #   - state: draft
 #   - ref:
@@ -451,30 +490,38 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
 #
 # i00044_discoverable_processes_and_procedures:
 #   - "Processes and procedures SHALL be discoverable."
-#   - notes: "We want new members of staff to be able to look up and discover
-#            the right processes, procedures and tools for their current task."
+#   - notes: "We want new members of staff to be
+#            able to look up and discover the right
+#            processes, procedures and tools for
+#            their current task."
 #   - type: mandate
 #   - state: draft
 #
 # i00045_single_command_line_entry_point:
 #   - "The DA command line tool SHALL permit access to all manually triggered
 #      procedures."
-#   - notes: "The online help for the DA command line tool is the mechanism
-#            whereby team members can discover processes and procedures."
+#   - notes: "The online help for the DA command
+#            line tool is the mechanism whereby
+#            team members can discover processes
+#            and procedures."
 #   - type: mandate
 #   - state: draft
 #   - ref:
 #       - i00044_discoverable_processes_and_procedures
 #
 # i00046_counterparty_specific_command_line_plugins:
-#   - "The DA command line tool SHALL include a plugin mechanism for functions
-#      that are confidential to a specific counterparty."
-#   - notes: "We want to expose counterparty-specific functionality through
-#            the da command-line tool, yet be able to secure access to that
-#            functionality to authorised users only. To achieve this goal, the
-#            DA command line tool SHALL implement a plugin mechanism to pick
-#            up CLI extensions from whatever counterparty specific subrepos
-#            that are present."
+#   - "The DA command line tool SHALL include a
+#      plugin mechanism for functions that are
+#      confidential to a specific counterparty."
+#   - notes: "We want to expose counterparty-specific
+#            functionality through the da command-line
+#            tool, yet be able to secure access to
+#            that functionality to authorised users
+#            only. To achieve this goal, the DA
+#            command line tool SHALL implement a
+#            plugin mechanism to pick up CLI
+#            extensions from whatever counterparty
+#            specific subrepos that are present."
 #   - type: mandate
 #   - state: draft
 #   - ref:

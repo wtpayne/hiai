@@ -45,4 +45,4 @@ class SpecifyCoro:
 
         """
         import da.docgen.design
-        assert da.docgen.design.coro(None, None) is not None
+        assert da.docgen.design.coro(None) is not None

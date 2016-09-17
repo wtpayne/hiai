@@ -54,15 +54,18 @@ def load_cfg(cfg_key, cfg_extras, dirpath_lwc_root):
     """
     Find or generate skeleton build configuration matching the specified name.
 
-    This function tries to find a build configuration file matching CFG_NAME.
+    This function tries to find a build configuration
+    file matching CFG_NAME.
 
-    If an exact match cannot be found, it also attempts fuzzy string matching
-    to account for the possibility of mistyped or partially completed inputs.
+    If an exact match cannot be found, it also attempts
+    fuzzy string matching to account for the possibility
+    of mistyped or partially completed inputs.
 
-    The configuration that this function returns is incomplete; skeletal. We
-    wait until after the LWC is automatically committed to the VCS before
-    adding VCS-commit-hash derived information to the build configuration
-    structure.
+    The configuration that this function returns is
+    incomplete; skeletal. We wait until after the
+    LWC is automatically committed to the VCS before
+    adding VCS-commit-hash derived information to the
+    build configuration structure.
 
     """
     # Is cfg_key an exact match with a build configuration file?
@@ -79,8 +82,10 @@ def load_cfg(cfg_key, cfg_extras, dirpath_lwc_root):
 
         if cfg_data is None:
 
-            # Does cfg_key (fuzzily) match a build configuration file?
-            # (One of the ones that it didn't exactly match earlier).
+            # Does cfg_key (fuzzily) match a build
+            # configuration file?
+            # (One of the ones that it didn't exactly
+            # match earlier).
             (cfg_name, cfg_data) = _fuzzy_match_or_none(query      = cfg_key,
                                                         candidates = misses)
 
@@ -107,8 +112,8 @@ def is_in_restricted_build(relpath, restriction_list):
     if (not restriction_list) or (not relpath):
         return False
 
-    # We could use a glob based build restriction - or even
-    # a regex?
+    # We could use a glob based build restriction
+    # - or even a regex?
     (dirpath_rel, filename) = os.path.split(relpath)
     (rootname, _)           = os.path.splitext(filename)
     relpath_parts           = dirpath_rel.split(os.sep)
@@ -131,8 +136,8 @@ def _exact_match_or_none(cfg_name, dirpath_lwc_root):
     for filepath_cfg in _gen_config_files(dirpath_lwc_root):
 
         filename_cfg = os.path.basename(filepath_cfg)
-        # Build config filename is <id>.build.yaml so os.path.splitext() is
-        # not suitable here.
+        # Build config filename is <id>.build.yaml
+        # so os.path.splitext() is not suitable here.
         id_cfgfile = filename_cfg.split('.')[0]
 
         if id_cfgfile == cfg_name:
@@ -150,18 +155,22 @@ def _build_restriction_or_none(restriction_list, dirpath_lwc_root):
     """
     Return cfg_name and cfg_data if restriction matches something, else None.
 
-    If the restriction list can be used to succesfully restrict the build to
-    one or more design elements or subsystems, then dynamically create a
-    build configuration that uses it and return.
+    If the restriction list can be used to succesfully
+    restrict the build to one or more design elements
+    or subsystems, then dynamically create a build
+    configuration that uses it and return.
 
-    The cfg_name is created by slugging the contents of the restriction list
-    so we can create directories from it.
+    The cfg_name is created by slugging the contents
+    of the restriction list so we can create directories
+    from it.
 
-    For the moment we consider only design documents (source files) as
-    potential matches for a build restriction. In future we may wish to
-    extend this to counterparty names or project names so that we can build
-    all systems relevant to a particular counterparty, or all systems
-    relevant to a particular project or contract.
+    For the moment we consider only design documents
+    (source files) as potential matches for a build
+    restriction. In future we may wish to extend this
+    to counterparty names or project names so that
+    we can build all systems relevant to a particular
+    counterparty, or all systems relevant to a particular
+    project or contract.
 
     """
     for filepath_src in da.lwc.discover.gen_src_files(dirpath_lwc_root):
@@ -223,11 +232,13 @@ def _assemble_cfg(cfg_name, cfg_data, cfg_extras, dirpath_lwc_root):
     Create configuration structure.
 
     """
-    # We always load the default configuration file. If another custom
-    # confiugration file is specified, we load that one too, and allow
-    # it to selectively override whatever default values it wishes to.
-    # If any custom configuration is provided by the command line, this
-    # takes priority over both of the above.
+    # We always load the default configuration file.
+    # If another custom confiugration file is specified,
+    # we load that one too, and allow it to selectively
+    # override whatever default values it wishes to.
+    # If any custom configuration is provided by the
+    # command line, this takes priority over both of
+    # the above.
     #
     dirpath_internal     = da.lwc.discover.path(
                                         key              = 'internal',

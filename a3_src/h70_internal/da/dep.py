@@ -58,14 +58,18 @@ def build(dirpath_lwc_root, dirpath_log, dep_build_cfg):
     limitation = dep_build_cfg['limitation']
     exclusion  = dep_build_cfg['exclusion']
 
-    # Not all dependencies are captured in the dependencies_register.
-    # To the best of my knowledge, the host environment will also need
-    # the python-dev package; lxml; and lapack/blas installed. Maybe
-    # others too that I am not aware of.
+    # Not all dependencies are captured in the
+    # dependencies_register.
     #
-    # As soon as we get our virtualisation solution working we will have
-    # to do some experiments and see if we can get a truly external-dependency
-    # free build.
+    # To the best of my knowledge, the host
+    # environment will also need the python-dev
+    # package; lxml; and lapack/blas installed.
+    # Maybe others too that I am not aware of.
+    #
+    # As soon as we get our virtualisation solution
+    # working we will have to do some experiments
+    # and see if we can get a build that is truly
+    # free of external dependencies.
     #
     register   = da.lwc.env.dependencies_register(
                                         dirpath_lwc_root = dirpath_lwc_root)
@@ -75,11 +79,15 @@ def build(dirpath_lwc_root, dirpath_log, dep_build_cfg):
 
     for key in keylist:
 
-        # Skip dependency module if it matches our exclusion criteria.
+        # Skip dependency module if it matches our
+        # exclusion criteria.
+        #
         if (exclusion is not None) and re.match(exclusion, key):
             continue
 
-        # Skip dependency module if it does not match our limitation criteria.
+        # Skip dependency module if it does not
+        # match our limitation criteria.
+        #
         if (limitation is not None) and (not re.match(limitation, key)):
             continue
 
@@ -111,53 +119,108 @@ def _fetch_dependency_source_files(dep):
     """
     Fetch and update source files for the specified dependency.
 
-    Makes sure that the source design documents for the specified
-    dependency comply with the version specified in the env.depmap.json
-    configuration file.
+    Makes sure that the source design documents for
+    the specified dependency comply with the version
+    specified in the env.depmap.json configuration
+    file.
 
     """
     if dep['config']['method'] == 'manual':
         return
 
-    version = _get_version(dep)
+    tool    = dep['config']['tool']
 
-    configuration_tool = dep['config']['tool']
-    if configuration_tool == 'git':
+    configuration_function_table = {
+        'bzr':    _bzr_update,
+        'git':    _git_update,
+        'darcs':  _darcs_update,
+        'hg':     _hg_update,
+        'svn':    _svn_update,
+        'manual': _manual_update,
+    }
 
-        import git
-        import da.vcs as _vcs  # Rename to prevent conflict w/outer da import.
-        try:
+    if tool in configuration_function_table:
 
-            da.util.ensure_dir_exists(dep['dirpath_src'])
-            _vcs.delete_untracked_files(dep['dirpath_src'])
-            _vcs.ensure_cloned(dirpath_local = dep['dirpath_src'],
-                               url_remote    = dep['config']['url'],
-                               ref           = version)
-        except git.GitCommandError:
-            logging.warning('Attempt to fetch failed for: %s', dep['name'])
-        except AssertionError as error:
-            logging.error('Failed to configure %s', dep['name'])
-            raise error
-
-    elif configuration_tool == 'darcs':
-        raise RuntimeError(
-            'Darcs auto-checkout not yet supported')
-
-    elif configuration_tool == 'hg':
-        raise RuntimeError(
-            'Mercurial auto-checkout not yet supported')
-
-    elif configuration_tool == 'svn':
-        raise RuntimeError(
-            'Subversion auto-checkout not yet supported')
-
-    elif configuration_tool == 'manual':
-        raise RuntimeError(
-            'Cannot auto-checkout unless a tool is specified.')
+        configuration_function = configuration_function_table[tool]
+        configuration_function(dep)
 
     else:
-        raise RuntimeError(
+        raise da.exception.ImplementationNotPresentError(
             'Did not recognise auto-checkout tool for {dep}'.format(dep = dep))
+
+
+# -----------------------------------------------------------------------------
+def _bzr_update(_):
+    """
+    Update dependency source design documents using Bazaar.
+
+    """
+    raise da.exception.ImplementationNotPresentError(
+        'Bazaar auto-checkout not yet supported')
+
+
+# -----------------------------------------------------------------------------
+def _git_update(dep):
+    """
+    Update dependency source design documents using Git.
+
+    """
+    import git
+    import da.vcs as _vcs  # Rename to prevent conflict w/outer da import.
+    try:
+
+        da.util.ensure_dir_exists(dep['dirpath_src'])
+        _vcs.delete_untracked_files(dep['dirpath_src'])
+        _vcs.ensure_cloned(dirpath_local = dep['dirpath_src'],
+                           url_remote    = dep['config']['url'],
+                           ref           = _get_version(dep))
+
+    except git.GitCommandError:
+        logging.warning('Attempt to fetch failed for: %s', dep['name'])
+
+    except AssertionError as error:
+        logging.error('Failed to configure %s', dep['name'])
+        raise error
+
+
+# -----------------------------------------------------------------------------
+def _darcs_update(_):
+    """
+    Update dependency source design documents using Darcs.
+
+    """
+    raise da.exception.ImplementationNotPresentError(
+        'Darcs auto-checkout not yet supported')
+
+
+# -----------------------------------------------------------------------------
+def _hg_update(_):
+    """
+    Update dependency source design documents using Mercurial.
+
+    """
+    raise da.exception.ImplementationNotPresentError(
+        'Mercurial auto-checkout not yet supported')
+
+
+# -----------------------------------------------------------------------------
+def _svn_update(_):
+    """
+    Update dependency source design documents using Subversion.
+
+    """
+    raise da.exception.ImplementationNotPresentError(
+        'Subversion auto-checkout not yet supported')
+
+
+# -----------------------------------------------------------------------------
+def _manual_update(_):
+    """
+    Update dependency source design documents manually.
+
+    """
+    raise da.exception.ImplementationNotPresentError(
+        'Cannot auto-checkout unless a tool is specified.')
 
 
 # -----------------------------------------------------------------------------
@@ -176,12 +239,15 @@ def _get_version(dep):
 
     # TODO: Automatic dependency upgrades.
     #
-    # At the moment, we only handle a single policy type for our dependencies:
-    # downloading and building a user-defined version. In the future, we may
-    # wish to automate the process of upgrading dependencies by downloading
-    # and building the latest release (lexicograpically largest vcs tag that
-    # is formatted like an x.y.z semantic version number); or even the latest
-    # commit from a specified branch.
+    # At the moment, we only handle a single policy
+    # type for our dependencies: downloading and
+    # building a user-defined version. In the future,
+    # we may wish to automate the process of upgrading
+    # dependencies by downloading and building the
+    # latest release (lexicograpically largest vcs
+    # tag that is formatted like an x.y.z semantic
+    # version number); or even the latest commit
+    # from a specified branch.
     #
     # Suggested policy naming convention:
     #   - latest_<BRANCH_NAME>      - Most recent commit on specified branch.
@@ -240,21 +306,28 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
     # Path to dependency source files
     dirpath_src = dep['dirpath_src']
 
-    # Path to root of environment & version specific dependency folder
+    # Path to root of environment & version specific
+    # dependency folder
+    #
     dirpath_dep = dep['dirpath_dep']
 
     # Ensure that the log directory exists
+    #
     if not os.path.isdir(dirpath_log):
         os.makedirs(dirpath_log)
 
-    # Ensure that we are performing a clean build by removing the temporary
-    # in-source build directory that is created by distutils by default.
+    # Ensure that we are performing a clean build
+    # by removing the temporary in-source build
+    # directory that is created by distutils by
+    # default.
+    #
     dirpath_build = os.path.join(dirpath_src, 'build')
     if os.path.isdir(dirpath_build):
         logging.debug('Remove previous temporary build directory.')
         shutil.rmtree(dirpath_build)
 
     # Ensure that the setup.py script is present.
+    #
     dep_id = dep['name']
     filepath_setup_script = os.path.join(dirpath_src, 'setup.py')
     if not os.path.isfile(filepath_setup_script):
@@ -272,8 +345,11 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
         elif interface == 'lib_python3':
             python_fcn = da.lwc.run.python3
 
-        # If we already have files in the output directory, remove them so that
-        # we may reduce the risk of unwanted files contaminating our output.
+        # If we already have files in the output
+        # directory, remove them so that we may
+        # reduce the risk of unwanted files
+        # contaminating our output.
+        #
         dirpath_dst = os.path.join(dirpath_dep, dep['path'][interface])
         if os.path.isdir(dirpath_dst):
             logging.debug('Remove previous installation directory.')
@@ -297,9 +373,11 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
                                    log_files,
                                    dirpath_lwc_root)
 
-    # Once we are finished, we remove the (temporary) build sub-directory in
-    # order that we may return the source tree back to the state in which we
+    # Once we are finished, we remove the (temporary)
+    # build sub-directory in order that we may return
+    # the source tree back to the state in which we
     # found it.
+    #
     _remove_temp_dir_or_throw(dirpath_build)
 
     # Calculate checksum of input files.
@@ -314,12 +392,12 @@ def _prep_log_files(dirpath_log, dep_id, interface):
     """
     Return a tuple of build log filepaths.
 
-    Ensure that the files don't exist (to prevent congusion with previous
-    builds.)
+    Ensure that the files don't exist (to prevent
+    confusion with previous builds).
 
     """
-    # Delete old log-files (if any exist) so we won't be confused or
-    # misled by them.
+    # Delete old log-files (if any exist) so we
+    # won't be confused or misled by them.
     filepath_log_stderr = os.path.join(dirpath_log,
                                 '{dep}.{iface}.stderr.log'.format(
                                                         dep   = dep_id,

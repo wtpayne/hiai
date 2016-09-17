@@ -329,6 +329,34 @@ class SpecifyIsToolConfig:
 
 
 # =============================================================================
+class SpecifyIsExperimental:
+    """
+    Specify the is_experimental() function.
+
+    """
+
+    # -------------------------------------------------------------------------
+    def it_returns_true_when_given_a_filename_in_research_area(self):
+        """
+        It returns True when given a file path in the research area.
+
+        """
+        import da.lwc.file
+        assert da.lwc.file.is_experimental(
+                                    'anydir/h50_research/anyfile.py') is True
+
+    # -------------------------------------------------------------------------
+    def it_returns_false_when_given_a_filename_not_in_the_research_area(self):
+        """
+        It returns False when given a file path not in the research area.
+
+        """
+        import da.lwc.file
+        assert da.lwc.file.is_experimental(
+                                'anydir_not_in_research/anyfie.py') is False
+
+
+# =============================================================================
 class SpecifyDesignFilepathFor:
     """
     Specify the design_filepath_for() function.

@@ -101,6 +101,40 @@ class SpecifyCommitInfo:
 
 
 # =============================================================================
+class SpecifyRollbackContext:
+    """
+    Specify the da.vcs.rollback_context() function
+
+    """
+
+    # -------------------------------------------------------------------------
+    def it_is_callable(self):
+        """
+        The rollback_context() function is callable.
+
+        """
+        import da.vcs
+        assert callable(da.vcs.rollback_context)
+
+
+# =============================================================================
+class SpecifyRollback:
+    """
+    Specify the da.vcs.rollback() function
+
+    """
+
+    # -------------------------------------------------------------------------
+    def it_is_callable(self):
+        """
+        The rollback() function is callable.
+
+        """
+        import da.vcs
+        assert callable(da.vcs.rollback)
+
+
+# =============================================================================
 class SpecifyGetConfigurationId:
     """
     Specify the da.vcs.get_configuration_id() function

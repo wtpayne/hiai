@@ -84,10 +84,11 @@ def compose(daybook_entry, work_start_time):
     # paragraph indentation to make it look attractive
     # and legible in the git log output.
     #
-    # The page width is limited to a rather restrictive
-    # 60 characters so that commit messages can appear
-    # without wrapping in the pop-up boxes used by
-    # the github 'blame' tool.
+    # The page width is limited to a rather
+    # restrictive 60 characters so that commit
+    # messages can appear without wrapping in the
+    # pop-up boxes used by the github 'blame' tool.
+    #
     page_width   = 60
     indent_size  = 17
     para_width   = page_width - indent_size

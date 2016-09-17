@@ -64,9 +64,14 @@ def coro(dirpath_src, error_handler):
 
         build_element = (yield)
 
-        # Ignore non-python files.
         filepath_module = build_element['filepath']
+
+        # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath_module):
+            continue
+
+        # Ignore experimental design documents.
+        if da.lwc.file.is_experimental(filepath_module):
             continue
 
         # Check to ensure that the test files, classes and methods are present.
@@ -133,15 +138,17 @@ def coro(dirpath_src, error_handler):
         design_elements = list(da.python_source.gen_ast_paths_depth_first(
                                                     ast_module, module_name))
 
-        # Work out if the coverage provided by the unit tests
-        # is sufficient.
+        # Work out if the coverage provided by the
+        # unit tests is sufficient.
         #
-        # Initially, we just check to see that *some* coverage is
-        # given for each document. (Module-level coverage)
+        # Initially, we just check to see that
+        # *some* coverage is given for each
+        # document. (Module-level coverage)
         #
-        # As we mature this system, we will (conditionally) extend
-        # checks to ensure minimum standards for function-level
-        # coverage and line-level coverage.
+        # As we mature this system, we will
+        # (conditionally) extend checks to
+        # ensure minimum standards for function-
+        # level coverage and line-level coverage.
         #
         if len(design_elements) > 1 and filepath_module not in cov_by_file:
             relpath_module = build_element['relpath']
@@ -155,8 +162,9 @@ def coro(dirpath_src, error_handler):
             })
             continue
 
-        # For traceability, we can gather sections (= test cases)
-        # and correlate them with AST design elements (= functions and classes)
+        # For traceability, we can gather sections
+        # (= test cases) and correlate them with
+        # AST design elements (= functions and classes)
         # for section_id in coverage.sections:
         # cov_by_test = coverage.gather_sections()
 
@@ -167,8 +175,10 @@ def _pytest_context(dirpath_cwd, filepath_stdout, filepath_stderr):
     """
     Context manager helper for running pytest.
 
-    Change directory to dirpath_cwd, and swap stdout and stderr to the
-    specified files, then set everything back the way it was when done.
+    Change directory to dirpath_cwd, and swap
+    stdout and stderr to the specified files,
+    then set everything back the way it was
+    when done.
 
     """
     with open(filepath_stdout, 'wt') as file_stdout:
@@ -207,8 +217,10 @@ def _report_unit_test_failure(filepath_test,
             if stage['outcome'] == 'passed':
                 continue
 
-            # Set the default error message, error filepath and error line so
-            # if we can't find a more detailed one we can
+            # Set the default error message, error
+            # filepath and error line so if we can't
+            # find a more detailed one we can still
+            # return some sort of message.
             #
             message  = 'Undetermined test failure: {stage}: {path}.'.format(
                                                         stage = stage['name'],
@@ -216,9 +228,10 @@ def _report_unit_test_failure(filepath_test,
             filepath_err = filepath_test
             line_err     = 0
 
-            # Parse the string in the longrepr field (if it exists) to try to
-            # get more a accurate message, filepath and line number for our
-            # error report.
+            # Parse the string in the longrepr
+            # field (if it exists) to try to get
+            # a more accurate message, filepath
+            # and line number for our error report.
             #
             if 'longrepr' in stage:
                 message       = stage['longrepr']
@@ -244,18 +257,22 @@ def _check_static_coverage(build_element, error_handler):
     """
     Send an error message to the handler if static coverage is incorrect.
 
-    Static coverage is the test coverage that can be determined statically -
-    without running the test.
+    Static coverage is the test coverage that can
+    be determined statically - without running the
+    test.
 
     """
-    # If we have no functions to be tested, then we don't require any tests.
+    # If we have no functions to be tested, then
+    # we don't require any tests.
+    #
     top_level_functions = list(da.python_source.gen_top_level_function_names(
                                                         build_element['ast']))
     if not top_level_functions:
         return
 
-    # If we have at least one function to be tested, then we need a file to
-    # put our tests in.
+    # If we have at least one function to be tested,
+    # then we need a file to put our tests in.
+    #
     relpath_module = build_element['relpath']
     if 'spec' not in build_element:
         filepath_module = build_element['filepath']
@@ -270,10 +287,13 @@ def _check_static_coverage(build_element, error_handler):
             'line':   1,
             'col':    0
         })
-        # If we don't have a test file, then our other checks are pretty
-        # much meaningless, so we can return early here. This allows the
-        # rest of the function to be simpler as it does not have to deal
-        # with absent test files.
+        # If we don't have a test file, then our
+        # other checks are pretty much meaningless,
+        # so we can return early here. This allows
+        # the rest of the function to be simpler
+        # as it does not have to deal with absent
+        # test files.
+        #
         return
 
     (permitted_test_class_names,
@@ -283,8 +303,10 @@ def _check_static_coverage(build_element, error_handler):
     test_classes = list(da.python_source.gen_top_level_class_names(
                                                 build_element['spec']['ast']))
 
-    # Check that all the class names in our test suite correspond to
-    # one of the functions in the module or package under test.
+    # Check that all the class names in our test
+    # suite correspond to one of the functions
+    # in the module or package under test.
+    #
     for test_class in test_classes:
         if test_class not in permitted_test_class_names:
             msg = 'Bad test class: {name} for: {module}'.format(
@@ -299,8 +321,10 @@ def _check_static_coverage(build_element, error_handler):
                 'col':    0
             })
 
-    # Check to make sure that each public function or method in the
-    # srcfile has a corresponding class in the test-file.
+    # Check to make sure that each public function
+    # or method in the srcfile has a corresponding
+    # class in the test-file.
+    #
     missing_classes = list()
     for class_name in mandatory_test_class_names:
         if class_name not in test_classes:
@@ -324,17 +348,16 @@ def _get_expected_test_class_names(top_level_functions):
     """
     Return permitted and mandatory test class names.
 
-    We organise our tests into classes, one class for each function
-    that is being tested. The name of the class is determined by
-    converting the name of the function from underscore delimited
-    style to a PascalCase style.
+    We organise our tests into classes, one class
+    for each function that is being tested. The
+    name of the class is determined by converting
+    the name of the function from underscore
+    delimited style to a PascalCase style.
 
-    We enforce the creation of one mandatory test class for each public
-    function, and we allow optional test classes for each private
-    functions. No other test classes are currently allowed.
-
-    A note on terminology: PascalCase identifiers start with a capital
-    letter, whilst camelCase identifiers start with a lowercase letter.
+    We enforce the creation of one mandatory test
+    class for each public function, and we allow
+    optional test classes for each private functions.
+    No other test classes are currently allowed.
 
     """
     permitted_test_class_names = list()

@@ -70,7 +70,8 @@ def get():
                 },
                 'config': {
                     'method':           Any('automatic', 'manual'),
-                    'tool':             Any('git',
+                    'tool':             Any('bzr',
+                                            'git',
                                             'hg',
                                             'svn',
                                             'darcs',

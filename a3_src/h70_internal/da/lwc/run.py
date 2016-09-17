@@ -183,19 +183,25 @@ def subl(filepath = None, line_number = 1, dirpath_lwc_root = None):
         logging.debug('Run sublime text')
         return _subprocess_call([filepath_subl])
 
-    # The stack trace that is retrieved during the handling of an Exception
-    # thrown from within one of PyRun's built-in libraries may have a stack
-    # trace that contains filenames of the form "<pyrun>/filename.py". It is
-    # not possible to open such files in the editor.
+    # The stack trace that is retrieved during the
+    # handling of an Exception thrown from within
+    # one of PyRun's built-in libraries may have
+    # a stack trace that contains filenames of the
+    # form "<pyrun>/filename.py". It is not possible
+    # to open such files in the editor.
     #
-    # Although this is an anomalous condition, we do not expect the developer
-    # to take any remedial action when it is encountered. We therefore refrain
-    # from throwing an exception and instead simply log the fact that it has
+    # Although this is an anomalous condition, we
+    # do not expect the developer to take any
+    # remedial action when it is encountered. We
+    # therefore refrain from throwing an exception
+    # and instead simply log the fact that it has
     # occurred and return normally.
     #
-    # It is conceivable that other similar conditions may be encountered, so
-    # as a piece of defensive programming, we also take the same action if
-    # the filepath parameter does not indicate a valid file.
+    # It is conceivable that other similar conditions
+    # may be encountered, so as a piece of defensive
+    # programming, we also take the same action if
+    # the filepath parameter does not indicate a
+    # valid file.
     if filepath.startswith('<pyrun>') or not os.path.isfile(filepath):
         logging.warning('Cannot open file: "%s"', filepath)
         return 1

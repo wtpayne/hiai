@@ -99,17 +99,14 @@ steps:
   # Set TRUE to enable pylint linting (in static analysis)
   enable_static_test_python_pylint:     True
 
-  # Set TRUE to enable design documentation generation.
-  enable_docgen_design:                 False
-
-  # Set TRUE to enable api documentation generation.
-  enable_docgen_api:                    False
-
   # Set TRUE to enable gcc compilation phase.
   enable_compile_gcc:                   False
 
   # Set TRUE to enable clang compilation phase.
   enable_compile_clang:                 False
+
+  # Set TRUE to enable design documentation generation.
+  enable_generate_design_docs:          True
 
   # Set TRUE to enable build reports generation.
   enable_report_generation:             False

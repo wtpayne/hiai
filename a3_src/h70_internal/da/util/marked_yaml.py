@@ -2,19 +2,23 @@
 """
 A PyYAML loader that annotates position in source documents.
 
-The loader is based on `SafeConstructor`, i.e., the behaviour of
-`yaml.safe_load`, but in addition:
+The loader is based on `SafeConstructor`, i.e.,
+the behaviour of `yaml.safe_load`, but in addition:
 
- - Every dict/list/unicode is replaced with DictNode/ListNode/StringNode,
-   which subclasses dict/list/unicode to add the attributes `start_mark`
-   and `end_mark`. (See the yaml.error module for the `Mark` class.)
+ - Every dict/list/unicode is replaced with
+   DictNode/ListNode/StringNode, which subclasses
+   dict/list/unicode to add the attributes
+   `start_mark` and `end_mark`. (See the yaml.error
+   module for the `Mark` class.)
 
- - Every string is always returned as unicode, no ASCII-ficiation is
-   attempted.
+ - Every string is always returned as unicode, no
+   ASCII-ficiation is attempted.
 
- - Note that int/bool/... are returned unchanged for now
+ - Note that int/bool/... are returned unchanged
+   for now
 
-This module is modified/adapted from Dag Sverre Seljebotn's GitHub Gist:
+This module is modified/adapted from Dag Sverre
+Seljebotn's GitHub Gist:
     https://gist.github.com/dagss/5008118
 
 ---
@@ -80,10 +84,14 @@ def create_node_class(node_type):
     Return an object of a custom type to represent items of the specified type.
 
     """
-    # Pylint rule R0903 (too-few-public-methods) disabled as class design
-    # is determined by the YAML library architecture, and is not under our
-    # control. (It is a POD object rather than a true Class, and has no
-    # methods other than its' construction and initialisation functions).
+    # Pylint rule R0903 (too-few-public-methods)
+    # has been disabled as the  class design is
+    # determined by the YAML library architecture,
+    # and is not under our control. (It is a POD
+    # object rather than a true Class, and has no
+    # methods other than its' construction and
+    # initialisation functions).
+    #
     class NodeClass(node_type):                         # pylint: disable=R0903
         """
         Represent a node in the YAML AST.
@@ -105,8 +113,11 @@ def create_node_class(node_type):
             self.start_mark = start_mark
             self.end_mark   = end_mark
 
-        # Pylint rule W0613 (unused-argument) disabled as arguments
-        # are required to be present to conform with YAML interface.
+        # Pylint rule W0613 (unused-argument)
+        # disabled as arguments are required
+        # to be present to conform with YAML
+        # interface.
+        #
         def __new__(cls, obj, start_mark, end_mark):    # pylint: disable=W0613
             """
             Part of the NodeClass creation sequence defined by the YAML module.
@@ -130,11 +141,14 @@ class NodeConstructor(SafeConstructor):
 
     """
 
-    # To support lazy loading, the original constructors first yield
-    # an empty object, then fill them in when iterated. Due to
-    # laziness we omit this behaviour (and will only do "deep
-    # construction") by first exhausting iterators, then yielding
+    # To support lazy loading, the original
+    # constructors first yield an empty object,
+    # then fill them in when iterated. Due to
+    # laziness we omit this behaviour (and will
+    # only do "deep construction") by first
+    # exhausting iterators, then yielding
     # copies.
+    #
     def construct_yaml_map(self, node):
         """
         Return a node class representing a line-marked dictionary.
@@ -175,9 +189,10 @@ NodeConstructor.add_constructor(
 
 
 # =============================================================================
-# Pylint rule R0901 (too-many-ancestors) disabled as class design
-# is determined by the YAML library architecture, and is not under
-# our control.
+# Pylint rule R0901 (too-many-ancestors) disabled
+# as class design is determined by the YAML library
+# architecture, and is not under our control.
+#
 class Loader(Reader,                                    # pylint: disable=R0901
              Scanner,
              Parser,

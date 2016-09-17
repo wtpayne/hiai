@@ -30,6 +30,7 @@ license:
 ...
 """
 
+import contextlib
 import datetime
 import functools
 import logging
@@ -74,9 +75,11 @@ def checkout(dirpath_root, configuration_id):
     """
     Checkout the specified configuration id into the local working copy.
 
-    This function changes the head of the repository to match the specified
-    configuration id (git sha or reference) and changes the files in the local
-    working copy and the staging area (git index) to match.
+    This function changes the head of the repository
+    to match the specified configuration id (git sha
+    or reference) and changes the files in the local
+    working copy and the staging area (git index) to
+    match.
 
     """
     _repo(dirpath_root).head.reset(commit       = configuration_id,
@@ -85,12 +88,55 @@ def checkout(dirpath_root, configuration_id):
 
 
 # ------------------------------------------------------------------------------
+@contextlib.contextmanager
+def rollback_context(dirpath_root):
+    """
+    Record the initial repository state and rollback if an exception is raised.
+
+    We want to be able to revert back to a known
+    good state if anything goes wrong, so right
+    at the start of the meta-build process we take
+    a record of the source repository configuration
+    id (git SHA) as well as the name of the current
+    branch.
+
+    If an exception occurs, we reset the repository
+    right to its' original state prior to our auto-
+    commit of any local developer changes so that
+    the developer has a chance to redo or modify
+    his changes before continuing.
+
+    """
+    baseline_id = da.vcs.get_configuration_id(dirpath_root)
+    branch_name = da.vcs.get_branch_name(dirpath_root)
+    try:
+        yield
+    except (Exception, KeyboardInterrupt):
+        rollback(dirpath_root     = dirpath_root,
+                 branch_name      = branch_name,
+                 configuration_id = baseline_id)
+        raise
+
+
+# ------------------------------------------------------------------------------
+def rollback(dirpath_root, branch_name, configuration_id):
+    """
+    Roll the specified branch back to the specified configuration.
+
+    """
+    reset_head(dirpath_root, configuration_id)
+    if branch_name is not None:
+        move_branch_to_head(dirpath_root, branch_name)
+
+
+# ------------------------------------------------------------------------------
 def reset_head(dirpath_root, configuration_id):
     """
     Reset the head of the repository to the specified configuration id.
 
-    This function changes the head of the repository to match the specified
-    configuration id (git sha or reference) but leaves the local working copy
+    This function changes the head of the repository
+    to match the specified configuration id (git sha
+    or reference) but leaves the local working copy
     and the staging area (git index) alone.
 
     """
@@ -104,8 +150,9 @@ def move_branch_to_head(dirpath_root, branch_name):
     """
     Move/rename the specified branch to the head commit.
 
-    This function moves the specified branch so that it points to the
-    current head of the repository.
+    This function moves the specified branch so
+    that it points to the current head of the
+    repository.
 
     """
     repo                = _repo(dirpath_root)
@@ -118,6 +165,10 @@ def move_branch_to_head(dirpath_root, branch_name):
 def commit_info(dirpath_root = None, ref = 'HEAD'):
     """
     Get assorted commit information for the specified repo & commit reference.
+
+    This function is used to keep a record of the
+    design configuration that the currently executing
+    metabuild instance belongs to.
 
     """
     if dirpath_root is None:
@@ -314,6 +365,19 @@ def files_changed_in_lwc(dirpath_root):
     """
     Return a list of files that have changed versus the repository index.
 
+    This
+
+    We want static analysis and unit tests
+    to be as fast as possible, so we gather
+    a list of files that have changed
+    between repo HEAD and the LWC.
+
+    We can combine this with a list of
+    previous test failures to reduce the
+    amount of time wasted testing items
+    that are known to conform with our
+    rules and guidelines.
+
     """
     repo      = _repo(dirpath_root)
     file_list = []
@@ -342,7 +406,21 @@ def auto_commit(cfg, dirpath_lwc_root):
     """
     Automatically commit changed files to the VCS.
 
+    We want to be able to reproduce and diagnose
+    errors when they occur, which means keeping
+    careful records so that each and every build
+    is made from a known design configuration.
+
+    To ease the administrative burden of this, we
+    automatically commit changes to the local
+    working copy; using periodic audits together
+    with a strict whitelist based .gitignore file
+    to keep unwanted files out of the repository.
+
     """
+    if not cfg['options']['auto_commit']:
+        return
+
     # Have we made any changes?
     repo          = _repo(dirpath_lwc_root)
     is_dirty      = repo.is_dirty()
@@ -361,8 +439,8 @@ def auto_commit(cfg, dirpath_lwc_root):
     work_summary  = daybook_entry['work_summary']
     work_notes    = daybook_entry['work_notes']
 
-    # TODO: Make sure our changes fall within the mandate of our
-    #       current job.
+    # TODO: Make sure our changes fall within the
+    #       mandate of our current job.
 
     # What were we working on in the last commit?
     prev = {}
@@ -374,8 +452,10 @@ def auto_commit(cfg, dirpath_lwc_root):
     is_same_work = (     work_summary == prev['work_summary']
                      and work_notes   == prev['work_notes'])
 
-    # If we are working on the same thing as before, fixup the content of the
-    # previous commit with our new changes.
+    # If we are working on the same thing as before,
+    # fixup the content of the previous commit with
+    # our new changes.
+    #
     branch      = repo.head.reference
     head_commit = repo.head.commit
     if is_same_work and (len(head_commit.parents) == 1):

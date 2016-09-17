@@ -1,0 +1,36 @@
+agenda:
+
+  j0000039_html_documentation_and_traceability:
+    - "Work towards HTML documentation and traceability."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20160912:
+    - j0000039_html_documentation_and_traceability:
+      - "Work towards HTML documentation and traceability."
+      - "Experiments with CSS only accordion UI elements."
+
+  20160913:
+    - j0000039_html_documentation_and_traceability:
+      - "Work towards HTML documentation and traceability."
+      - "Experiments with CSS only accordion UI elements."
+
+  20160914:
+    - j0000039_html_documentation_and_traceability:
+      - "Work towards HTML documentation and traceability."
+      - "Experiments with CSS only accordion UI elements."
+
+  20160916:
+    - j0000039_html_documentation_and_traceability:
+      - "Work towards HTML documentation and traceability."
+      - "Experiments with CSS only accordion UI elements."
+
+  20160917:
+    - j0000039_html_documentation_and_traceability:
+      - "Work towards HTML documentation and traceability."
+      - "Experiments with CSS only accordion UI elements."

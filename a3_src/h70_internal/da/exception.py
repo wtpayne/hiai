@@ -32,28 +32,60 @@ license:
 
 
 # =============================================================================
+class ImplementationNotPresentError(RuntimeError):
+    """
+    Exception to be raised when a feature is not yet implemented.
+
+    We allow features to be introduced incrementally
+    to production software, disabled or enabled by
+    suitable runtime configuration.
+
+    This exception serves both as a searchable
+    indicator of unfinished work and also as an
+    indicator of configuration errors during
+    testing.
+
+    The Python built-in exception NotImplementedError
+    is not suitable as it is intended for a different
+    use-case. Its' documentation explicitly states
+    that it is intended to be used (only?) for abstract
+    methods in a base class that need to be overridden.
+
+    """
+
+    pass
+
+
+# =============================================================================
 class AbortWithoutStackTrace(Exception):
     """
     Exception to be raised when the display of a stack trace is undesirable.
 
-    Raising this exception will not result in a stack trace in the CLI, so it
-    should not be used to indicate errors in running components of the build
-    system, but should instead be used to indicate incorrect or invalid input
-    being provided to the build. E.g. bad parameters, bad configuration files
-    or other build input file errors.
+    Raising this exception will not result in a
+    stack trace in the CLI, so it should not be
+    used to indicate errors in running components
+    of the build system, but should instead be
+    used to indicate incorrect or invalid input
+    being provided to the build. E.g. bad parameters,
+    bad configuration files or other build input
+    file errors.
 
     ---
     type: class
     attributes:
         message:
-            Human readable string describing the reason for the abort.
+            Human readable string describing the
+            reason for the abort.
         filepath:
-            If specified, this is a string holding the fully qualified
-            path to the file within which a fault was found. Otherwise
-            None.
+            If specified, this is a string holding
+            the fully qualified path to the file
+            within which a fault was found.
+            Otherwise None.
         line_number:
-            If specified, this is an integer indicating the line number
-            in filepath where a fault was found. Otherwise None.
+            If specified, this is an integer
+            indicating the line number in
+            filepath where a fault was found.
+            Otherwise None.
     ...
     """
 
@@ -65,19 +97,25 @@ class AbortWithoutStackTrace(Exception):
         type: constructor
         args:
             message:
-                Human readable string describing the reason for the abort.
+                Human readable string describing
+                the reason for the abort.
             filepath:
-                If specified, this is a string holding the fully qualified
-                path to the file within which a fault was found. Otherwise
-                None.
+                If specified, this is a string
+                holding the fully qualified path
+                to the file within which a fault
+                was found. Otherwise None.
             line_number:
-                If specified, this is an integer indicating the line number
-                in filepath where a fault was found. Otherwise None.
+                If specified, this is an integer
+                indicating the line number in
+                filepath where a fault was found.
+                Otherwise None.
         ...
 
         """
-        # We need to be careful to call the base class with the parameters
-        # that it needs - as we will have difficulty unpickling it otherwise.
+        # We need to be careful to call the base
+        # class with the parameters that it needs
+        # - as we will have difficulty unpickling
+        # it otherwise.
         #
         super(AbortWithoutStackTrace, self).__init__(message)
         self.message     = message

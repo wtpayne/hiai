@@ -1,6 +1,31 @@
 # -*- coding: utf-8 -*-
 """
-Build operations.
+The build module is responsible for top level control over the build process.
+
+The build process is responsible for generating a
+set of built output artifacts in accordance with a
+single specific design configuration.
+
+If a nonconformity in the design is detected, the
+build halts and a report is issued.
+
+The build module supports compilation; testing;
+documentation generation; running simulations for
+performance analysis and any operation which takes
+a set of input files and processes them to produce
+a set of output files, and is particularly applicable
+when the input and output files need to be
+configuration-controlled and the operation itself
+needs to be reproduceable.
+
+In each case, the input is known as the design
+configuration and is represented by a set
+of design documents and identified by the git SHA-1
+digest.)
+
+This contrasts with the metabuild module, which is
+responsible for generating and comparing multiple
+competing design configurations.
 
 ---
 type:
@@ -53,7 +78,6 @@ import da.compile.clang
 import da.compile.gcc
 import da.constants
 import da.dep
-import da.docgen.api
 import da.docgen.design
 import da.exception
 import da.index
@@ -69,38 +93,43 @@ def main(cfg):
     """
     Run a build and return the resulting status code.
 
-    The build.main() function is responsible for top level control over
-    the build process. The build process takes as input a set of design
-    documents. If no nonconformities are detected, it produces as output
-    a set of built artifacts, If nonconformities are detected, it issues
-    a report and halts.
+    The build.main() function is responsible for
+    top level control over the build process.
 
-    The build process is a little unusual in that it is *not* designed to
-    minimise the overall build time, but rather to minimise the time taken
-    to detect a nonconformity in an incremental build. This recognises the
-    fact that most iterations of the edit-build-test loop are performed
-    with the design in a nonconforming state and after relatively small
-    incremental changes.
+    The build process takes as input a set of design
+    documents. If any nonconformities are detected,
+    it issues a report and halts; else it produces
+    or  updates a set of built artifacts.
 
-    The build.main() function can be configured to restrict the set of
-    design documents used as build inputs as well as the processing steps
+    The build.main() function can be configured to
+    restrict the set of design documents used as
+    build inputs as well as the processing steps
     applied to them.
 
-    In this way we can restrict the build to selected products or components,
-    and can apply only the specific processing steps that we choose, which
-    enables us to get rapid feedback on areas that are giving us problems.
+    In this way we can restrict the build to selected
+    products or components, and can apply only the
+    specific processing steps that we choose, which
+    enables us to get rapid feedback on areas that
+    are giving us problems. Even when performing
+    full builds, build inputs and processing steps
+    are sequenced to maximise the probability of
+    discovering nonconformities early.
 
-    The _build_inputs() generator function selects design documents from
-    the current configuration and sequences them to detect nonconformities
+    The _build_inputs() generator function selects
+    design documents from the current configuration
+    and sequences them to detect nonconformities
     as early as possible.
 
-    The _build_process() coroutine selects the processing steps applied
-    by the build and and sequences them to detect nonconformities as early
-    as possible.
+    The _build_process() coroutine selects the
+    processing steps applied by the build and and
+    sequences them to detect nonconformities as
+    early as possible.
 
-    Errors and nonconformities are handled by the _error_handler coroutine,
-    which contains logic for selcting between Jidoka (fail-fast) or robust
-    (comprehensive reporting) nonconformity response strategies.
+    Errors and nonconformities are handled by the
+    _error_handler coroutine, which contains logic
+    for selcting between Jidoka (fail-fast) or robust
+    (comprehensive reporting) nonconformity response
+    strategies.
 
     ---
     type: function
@@ -143,21 +172,46 @@ def _build_inputs(cfg):
     """
     Yield filtered and prioritised build elements.
 
-    Each build element consists of a single design document
-    plus all of it's supporting documents: specifications,
-    tests, header files and so on.
+    The build process is a little unusual in that
+    it is *not* designed to minimise the overall
+    build time,  but rather to minimise the time
+    taken to detect a nonconformity after an
+    incremental change. A key design goal is to
+    detect 95% of nonconformities within the first
+    5 seconds of the build.
 
-    Build elements are selected and prioritised based on
-    when they were last modified and by the assessed risk
-    of a nonconformity or error.
+    This frees the developer from actively monitoring
+    the build after the first few seconds; he may
+    then shift his attention to the next task with
+    only a 1-in-20 chance of being interrupted by
+    a nonconformity report issued in the latter
+    stages of the build.
 
-    The build can be configured to limit the build elements
-    that are generated so that only particular products or
-    projects are built.
+    We assume that more than 95% of edit-build-test
+    loop iterations are performed after relatively
+    small incremental changes; that more than 75%
+    of those changes introduce a nonconformity or
+    regression; and that more than 95% of any new
+    nonconformities are detected by checks performed
+    at or close to the 'unit' level in the V model
+    (both static and dynamic).
 
-    Yielded build elements will often include open file
-    handles. This generator ensures that each of these
-    handles will be closed at the end of each iteration.
+    Each build element consists of a single design
+    document plus all of it's supporting documents:
+    specifications, tests, header files and so on.
+
+    Build elements are selected and prioritised
+    based on when they were last modified and by
+    the assessed risk of a nonconformity or error.
+
+    The build can be configured to limit the build
+    elements that are generated so that only particular
+    products or projects are built.
+
+    Yielded build elements will often include open
+    file handles. This generator ensures that each
+    of these handles will be closed at the end of
+    each iteration.
 
     """
     iter_prioritised = _gen_prioritised_filepaths(cfg)
@@ -218,15 +272,18 @@ def _normalise_filepaths(iter_filepaths):
     """
     Yield a sequence of normalised (design document) filepaths.
 
-    Filepaths are normalised by converting filepaths for supporting documents
-    into the filepath of the design document that they support.
+    Filepaths are normalised by converting filepaths
+    for supporting documents into the filepath of
+    the design document that they support.
 
-    Duplicates are then removed, leaving a sequence of filepaths of design
-    documents which are to be included in the build; one for each build
+    Duplicates are then removed, leaving a sequence
+    of filepaths of design documents which are to
+    be included in the build; one for each build
     element.
 
-    Files which are not design documents or do not support a design document
-    (i.e. are not part of any build element) are skipped.
+    Files which are not design documents or do not
+    support a design document (i.e. are not part
+    of any build element) are skipped.
 
     """
     deduplication = set()
@@ -237,11 +294,20 @@ def _normalise_filepaths(iter_filepaths):
              or da.lwc.file.is_test_config(filepath)):
             continue
 
-        # Filepaths of supporting documents are converted into the filepath of
-        # the design document that they support. This gives us a string that
-        # we can use to identify each unique build element.
+        # Filepaths of supporting documents are
+        # converted into the filepath of the design
+        # document that they support. This gives
+        # us a string that we can use to identify
+        # each unique build element.
+        #
         if da.lwc.file.is_specification_file(filepath):
-            filepath = da.lwc.file.design_filepath_for(filepath)
+            filepath_design = da.lwc.file.design_filepath_for(filepath)
+            if os.path.isfile(filepath_design):
+                filepath = filepath_design
+            else:
+                raise RuntimeError(
+                        'Missing design file for spec: {filepath}'.format(
+                                                        filepath = filepath))
 
         # Ignore duplicates.
         if filepath in deduplication:
@@ -256,8 +322,8 @@ def _restrict_filepaths(cfg, iter_filepaths):
     """
     Yield filepaths, skipping those eliminated by any in-force resrtrictions.
 
-    If no restriction is specified, all supplied filespaths are yielded
-    unchanged and in order.
+    If no restriction is specified, all supplied
+    filespaths are yielded unchanged and in order.
 
     """
     restriction = cfg['scope']['restriction']
@@ -343,25 +409,31 @@ def _build_process(cfg, error_handler):                 # pylint: disable=R0912
     """
     Configure and return the build function (a closure).
 
-    Build steps are implemented as coroutines, all of which are initialised
-    when the _build_process() function is called at the start of the build
+    Build steps are implemented as coroutines, all
+    of which are initialised when the _build_process()
+    function is called at the start of the build
     process.
 
-    This function returns a closure, _build_function(), which has access to
-    all of the initialised build steps.
+    This function returns a closure, _build_function(),
+    which has access to all of the initialised
+    build steps.
 
-    When called with a build_element argument, _build_function()
-    will pass the build_element to each of the build steps in turn,
-    allowing the build element to be validated, documented and compiled.
+    When called with a build_element argument,
+    _build_function() will pass the build_element
+    to each of the build steps in turn, allowing
+    the build element to be validated, documented
+    and compiled.
 
-    Most build_elements represent individual units and their associated
-    tests, but some will also represent subsystems and systems at less
-    fine-grained levels of integration.
+    Most build_elements represent individual units
+    and their associated tests, but some will also
+    represent subsystems and systems at less fine-
+    grained levels of integration.
 
-    Pylint rule R0912 (too many branches) is disabled for this function
-    because the use of if statements to apply configuration values feels
-    justified and legible and I do not believe that it poses any obstacle
-    to either maintenance or test.
+    Pylint rule R0912 (too many branches) is disabled
+    for this function because the use of if statements
+    to apply configuration values feels justified
+    and legible and I do not believe that it poses
+    any obstacle to either maintenance or test.
 
     """
     dirpath_src = cfg['paths']['dirpath_isolated_src']
@@ -382,10 +454,9 @@ def _build_process(cfg, error_handler):                 # pylint: disable=R0912
     chk_complex = da.check.pycomplexity.coro(error_handler)
     chk_pycode  = da.check.pycodestyle.coro(error_handler)
     chk_pydoc   = da.check.pydocstyle.coro(error_handler)
-    doc_design  = da.docgen.design.coro(cfg, error_handler)
-    doc_api     = da.docgen.api.coro(error_handler)
     bld_gcc     = da.compile.gcc.coro(error_handler)
     bld_clang   = da.compile.clang.coro(error_handler)
+    doc_design  = da.docgen.design.coro(cfg)
 
     report_data = None
     while True:
@@ -420,13 +491,9 @@ def _build_process(cfg, error_handler):                 # pylint: disable=R0912
         if steps['enable_compile_clang']:
             bld_clang.send(build_element)
 
-        # Docco style literate documentation.
-        if steps['enable_docgen_design']:
+        # Generate design documentation.
+        if steps['enable_generate_design_docs']:
             doc_design.send(build_element)
-
-        # Sphinx/Doxygen style API documentation.
-        if steps['enable_docgen_api']:
-            doc_api.send(build_element)
 
         # Data validation has to come before
         # indexing -- perhaps both should be
@@ -484,7 +551,7 @@ def _build_monitor(cfg):
     _msg('Report:',      url_build_report)
 
     # TODO: Get estimate from some sort of cache ...
-    est_num_elem  = 115
+    est_num_elem  = 119
 
     # TODO: Configure progressbar on/off
     with open(filepath_build_report, 'wt') as file_build_report:
@@ -504,9 +571,15 @@ def _build_monitor(cfg):
             if build_element == 'BUILD_END':
                 break
 
-            relpath = build_element['relpath']
+            relpath      = build_element['relpath']
+            dirpath_doc  = os.path.join(dirpath_branch_log, relpath)
+            filepath_doc = os.path.join(dirpath_doc, 'design.html')
+            url_doc      = 'file://{filepath}'.format(filepath = filepath_doc)
+            link         = '<a href="{url}">{name}</a>'.format(url  = url_doc,
+                                                               name = relpath)
+
             with open(filepath_build_report, 'at') as file_build_report:
-                file_build_report.write(relpath + '<br>\n')
+                file_build_report.write(link + '<br>\n')
             os.sync()
 
     # Finalise
@@ -570,22 +643,29 @@ def _error_handler(cfg):
     """
     Coroutine to handle errors and nonconformities identified during the build.
 
-    This coroutine is responsible for deciding how the build process should
-    respond to errors, and enables us to configure either a fail-fast policy
-    (the first error terminates the build) or a robust policy (Waiting until
-    either the end of the current build phase or the end of the entire build
-    before failing).
+    This coroutine is responsible for deciding how
+    the build process should respond to errors,
+    and enables us to configure either a fail-fast
+    policy (the first error terminates the build)
+    or a robust policy (Waiting until either the
+    end of the current build phase or the end of
+    the entire build before failing).
 
-    The coroutine expects to be sent either error items or control messages.
+    The coroutine expects to be sent either error
+    items or control messages.
 
-    Error items are dicts containing information about the error. If the
-    system has been configured with a fail-fast policy, then the first error
-    will terminate the build. Otherwise, the errors are accumulated in a list
-    until the appropriate time for them to be collectively processed.
+    Error items are dicts containing information
+    about the error. If the system has been
+    configured with a fail-fast policy, then the
+    first error will terminate the build. Otherwise,
+    the errors are accumulated in a list until the
+    appropriate time for them to be collectively
+    processed.
 
-    Control messages are strings, either 'PHASE_END' or 'BUILD_END'. The
-    receipt of a control message may trigger the termination of the build
-    if the build is so configured.
+    Control messages are strings, either 'PHASE_END'
+    or 'BUILD_END'. The receipt of a control message
+    may trigger the termination of the build if the
+    build is so configured.
 
     """
     errors = []

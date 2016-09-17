@@ -114,9 +114,10 @@ def python_import_path(interface = None,                # pylint: disable=R0912
     """
     Return a list of Python import paths configured for the local working copy.
 
-    Dependency information for the current local working copy is stored in
-    the dependency map file. Different directories are used to store python
-    libraries for python2 and python3.
+    Dependency information for the current local
+    working copy is stored in the dependency map
+    file. Different directories are used to store
+    python slibraries for python2 and python3.
 
     """
     if interface is None:
@@ -130,7 +131,9 @@ def python_import_path(interface = None,                # pylint: disable=R0912
                                 dirpath_lwc_root = dirpath_lwc_root)
 
     # python_path for the specified iface.
-    # Replicates some of the logic in function addpackage in site.py
+    # Replicates some of the logic in function
+    # addpackage in site.py
+    #
     python_path = []
     for (_, dependency_data) in register.items():
         if interface not in dependency_data['iface']:
@@ -178,8 +181,9 @@ def _iface_for_current_python_rt():
     """
     Return a library interface id compatible with the current Python runtime.
 
-    The interface id is used to determine which library version to import, so
-    we can switch between python 2.x and python 3.x if required.
+    The interface id is used to determine which
+    library version to import, so we can switch
+    between python 2.x and python 3.x if required.
 
     """
     (major, minor, _) = platform.python_version_tuple()

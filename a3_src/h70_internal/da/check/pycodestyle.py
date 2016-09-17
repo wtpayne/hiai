@@ -44,10 +44,12 @@ def coro(error_handler):
     Send errors to error_handler if supplied files not compliant with pep8.
 
     """
-    # Several whitespace related rules are relaxed to permit the vertical
-    # alignment of operators and operands on consecutive lines. This allows
-    # us to visually group related statements and to readily identify
-    # discrepanices.
+    # Several whitespace related rules are relaxed
+    # to permit the vertical alignment of operators
+    # and operands on consecutive lines. This allows
+    # us to visually group related statements and
+    # to readily identify discrepanices.
+    #
     ignore_list = [
         'E126',  # Allow semantically meaningful indentation.
         'E127',  # Allow semantically meaningful indentation.
@@ -88,14 +90,21 @@ def coro(error_handler):
     style = pycodestyle.StyleGuide(quiet = False, ignore = ignore_list)
     style.init_report(reporter = ReportAdapter)  # Inject custom reporting.
 
-    # Run main file-processing loop: recieve file paths from outside the
-    # coroutine and send them one at a time to the pep8 module.
+    # Run main file-processing loop: recieve file
+    # paths from outside the coroutine and send
+    # them one at a time to the pep8 module.
+    #
     while True:
 
         build_element = (yield)
         filepath      = build_element['filepath']
 
+        # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath):
+            continue
+
+        # Ignore experimental design documents.
+        if da.lwc.file.is_experimental(filepath):
             continue
 
         style.check_files((filepath,))

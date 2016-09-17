@@ -2,16 +2,21 @@
 """
 Module for handling daybook files.
 
-Team members maintain an electronic lab notebook called a 'daybook' within
-which we keep notes describing our daily activities.
+Team members maintain an electronic lab notebook
+called a 'daybook' within which we keep notes
+describing our daily activities.
 
-These daybooks are parsed by the build-system so that commit messages with
-suitable traceability information may be composed automatically.
+These daybooks are parsed by the build-system so
+that commit messages with suitable traceability
+information may be composed automatically.
 
-A number of daybook files are created for each 2-3 week long time-box period:
-One file for each team member. Each of these daybook files are split into two
-sections: An agenda listing the jobs scheduled for the current time-box period,
-and a chronicle listing the activities which actually took place, day-by-day.
+A number of daybook files are created for each 2-3
+week long time-box period: One file for each team
+member. Each of these daybook files are split into
+two sections: An agenda listing the jobs scheduled
+for the current time-box period, and a chronicle
+listing the activities which actually took place,
+day-by-day.
 
 ---
 type:

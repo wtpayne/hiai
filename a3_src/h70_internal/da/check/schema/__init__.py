@@ -206,6 +206,10 @@ def coro(error_handler, dirpath_lwc_root = None):
         if da.lwc.file.is_tool_config(filepath):
             continue
 
+        # No checking for CSS.
+        if filepath.endswith('.css'):
+            continue
+
         if da.check.schema.engdoc.validate(filepath, error_handler):
             continue
 

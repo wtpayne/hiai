@@ -30,6 +30,8 @@ license:
 ...
 """
 
+import da.exception
+
 
 # -----------------------------------------------------------------------------
 def optimise_build(build_fcn, cfg):                     # pylint: disable=W0613
@@ -37,4 +39,4 @@ def optimise_build(build_fcn, cfg):                     # pylint: disable=W0613
     Run design proposal parameter optimisation.
 
     """
-    raise RuntimeError('NOT IMPLEMENTED')
+    raise da.exception.ImplementationNotPresentError()

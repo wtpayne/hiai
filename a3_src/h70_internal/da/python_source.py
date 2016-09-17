@@ -79,8 +79,8 @@ def gen_top_level_function_names(ast_root):
     """
     Yield function names defined at the top level of the specified AST.
 
-    Methods inside classes and functions defined inside other functions are
-    not returned.
+    Methods inside classes and functions defined
+    inside other functions are not returned.
 
     """
     for child in _iter_children_with_bodies(ast_root):
@@ -97,7 +97,8 @@ def iter_embedded_data(module_name, root, file):
     iter_path = _iter_windowed_pairs(
                                 gen_ast_paths_depth_first(root, module_name))
 
-    # If iter_path is lazy then: file2 = os.fdopen(os.dup(file.fileno), 'r')
+    # If iter_path is lazy then:
+    # file2 = os.fdopen(os.dup(file.fileno), 'r')
     file.seek(0)
     (path, next_path) = next(iter_path)
     for embed in _gen_embedded_data_in_file(file):
@@ -164,10 +165,12 @@ def gen_functions(module_name, source_text, root_node):
         idx_lo     = fcn_node.lineno - 1
         fcn_indent = _indent_level(source_lines[idx_lo])
 
-        # fcn_node.da_lineno_last is the line on which the last child
-        # expression in the function *starts*. It is not always the
-        # actual last line in the function. To find the actual last
-        # line in the function we need to search forwards a little bit.
+        # fcn_node.da_lineno_last is the line on
+        # which the last child expression in the
+        # function *starts*. It is not always the
+        # actual last line in the function. To find
+        # the actual last line in the function we
+        # need to search forwards a little bit.
         #
         idx_file_end    = len(source_lines)               # Last line in file
         idx_last_child  = fcn_node.da_lineno_last - 1     # Last child in func.
@@ -203,43 +206,59 @@ def gen_ast_paths_depth_first(root, module_name):
     """
     Yield paths to class and function blocks in depth first order.
 
-    This function walks the AST in depth-first order, yielding the path
-    to each AST node encountered that has a name attribute. At the time of
-    writing, the only AST node types that have a name attribute are Class
-    definition and Function definition nodes.
+    This function walks the AST in depth-first order,
+    yielding the path to each AST node encountered
+    that has a name attribute. At the time of writing,
+    the only AST node types that have a name attribute
+    are Class definition and Function definition
+    nodes.
 
-    Each node in the yielded path is also enhanced with a da_addr attribute
-    and a da_lineno_last attribute.
+    Each node in the yielded path is also enhanced
+    with a da_addr attribute and a da_lineno_last
+    attribute.
 
-    The da_lineno_last attribute, combined with the preexisting lineno
-    attribute, serves to precisely identify the location of the node's
-    subtree within the Python source file. (i.e. the body of the class
-    or function definition).
+    The da_lineno_last attribute, combined with the
+    preexisting lineno attribute, serves to precisely
+    identify the location of the node's subtree within
+    the Python source file. (i.e. the body of the
+    class or function definition).
 
-    The da_addr attribute serves to identify the location of the node
-    within the Python syntax tree.
+    The da_addr attribute serves to identify the
+    location of the node within the Python syntax
+    tree.
 
-    The ast.walk function in the Python standard library makes no guarantees
-    as to the order with which it traverses the AST. At the time of writing,
-    it uses a breadth-first traversal strategy.
+    The ast.walk function in the Python standard
+    library makes no guarantees as to the order
+    with which it traverses the AST. At the time
+    of writing, it uses a breadth-first traversal
+    strategy.
 
-    This function implements an iterative depth-first traversal which
-    guarantees that nodes will be visited in the same order that they
-    have in the original source file. This means that the start line number
-    (the lineno attribute) will increase monotonically, a fact which may
-    be exploited to make merging line-oriented information easier and more
-    efficient.
+    This function implements an iterative depth-first
+    traversal which guarantees that nodes will be
+    visited in the same order that they have in the
+    original source file. This means that the start
+    line number (the lineno attribute) will increase
+    monotonically, a fact which may be exploited to
+    make merging line-oriented information easier
+    and more efficient.
 
     """
     setattr(root, 'name',    module_name)
     setattr(root, 'da_addr', module_name)
     setattr(root, 'lineno',  0)
 
-    # The ast.walk function (used by the _last_line_in calculation) does not
-    # visit comments - which means that trailing comments at the end of the
-    # file are ignored. Also, trailing comments in any given function or
-    # other block may also be ignored. Drat. TODO: CHECK THIS.
-    # (Reason for using sys.maxsize rather than _last_line_in as was)
+    # The ast.walk function (used by the _last_line_in
+    # calculation) does not visit comments - which
+    # means that trailing comments at the end of the
+    # file are ignored. Also, trailing comments in
+    # any given function or other block may also be
+    # ignored. Drat.
+    #
+    #   TODO: CHECK THIS.
+    #
+    # (Reason for using sys.maxsize rather than
+    # _last_line_in as was)
+    #
     setattr(root, 'da_lineno_last', sys.maxsize)
     iter_child = _iter_children_with_bodies(root)
     stack      = [(root, iter_child)]
@@ -247,8 +266,10 @@ def gen_ast_paths_depth_first(root, module_name):
     yield path
 
     while stack:
-        # Disabling W0622 redefined-builtin because assigning to '_' is
-        # how you are supposed to use it.
+        # Disabling W0622 redefined-builtin because
+        # assigning to '_' is how you are supposed
+        # to use it dammit.
+        #
         (_, iter_child) = stack[-1]                     # pylint: disable=W0622
         try:
             child = next(iter_child)
@@ -300,9 +321,10 @@ def _iter_children_with_bodies(root):
     """
     Return an iterator over those direct child nodes of root that have bodies.
 
-    Since our goal is to find function and class definitions, only nodes with
-    bodies are worth traversing, as only these nodes have children of their
-    own to explore.
+    Since our goal is to find function and class
+    definitions, only nodes with bodies are worth
+    traversing, as only these nodes have children
+    of their own to explore.
 
     """
     return (node for node in ast.iter_child_nodes(root) if _has_body(node))
@@ -439,37 +461,50 @@ def _gen_comment_and_docstr_toks(file):
     """
     Yield all comment and docstring tokens in the file as named tuples.
 
-    Regular comment lines are straightforward, as these are represented by
-    tokens of type tokenize.COMMENT, but docstrings present a bigger challenge
-    as these are represented by tokens of type tokenize.STRING and must
-    therefore be distinguished from string literal expressions.
+    Regular comment lines are straightforward,
+    as these are represented by tokens of type
+    tokenize.COMMENT, but docstrings present a
+    bigger challenge as these are represented
+    by tokens of type tokenize.STRING and must
+    therefore be distinguished from string
+    literal expressions.
 
-    To perform this separation we can use the fact that string literals occur
-    only within statements. We assume that all string tokens that occur outside
-    of statements are docstrings.
+    To perform this separation we can use the
+    fact that string literals occur only within
+    statements. We assume that all string tokens
+    that occur outside of statements are
+    docstrings.
 
-    For example, indentation inside statements is not tokenised, so a
-    preceeding tokenize.INDENT token indicates that the current token starts
-    a new statement. I.e. can be presumed to be a docstring. This seems to
-    reliably detects function and class level docstrings, but misses out module
-    level docstrings as these are not indented.
+    For example, indentation inside statements is
+    not tokenised, so a preceeding tokenize.INDENT
+    token indicates that the current token starts
+    a new statement. I.e. can be presumed to be a
+    docstring. This seems to reliably detects
+    function and class level docstrings, but
+    misses out module level docstrings as these
+    are not indented.
 
-    The documentation states that tokenize.NL indicates a non-terminating
-    newline, whereas tokenize.NEWLINE indicates the end of a logical line, so
-    if the preceeding token is tokenize.NEWLINE, we could infer that the
-    current token starts a new statement. I.e. it is a (module level)
-    docstring.
+    The documentation states that tokenize.NL
+    indicates a non-terminating newline, whereas
+    tokenize.NEWLINE indicates the end of a logical
+    line, so if the preceeding token is
+    tokenize.NEWLINE, we could infer that the
+    current token starts a new statement. I.e. it
+    is a (module level) docstring.
 
-    This doesn't seem to be reliably matched by reality, as some experiments
-    show the opposite behaviour, with a preceeding tokenize.NL indicating a
-    module level docstring.
+    This doesn't seem to be reliably matched by
+    reality, as some experiments show the opposite
+    behaviour, with a preceeding tokenize.NL
+    indicating a module level docstring.
 
-    In practice, our tests indicate that the best way to identify module
-    level docstrings is to check if the start column is zero rather than
+    In practice, our tests indicate that the best
+    way to identify module level docstrings is to
+    check if the start column is zero rather than
     to rely on preceding NEWLINE or NL tokens.
 
-    This differs from publicly available exemplars, so I am a little concerned
-    that we may be missing something here.
+    This differs from publicly available exemplars,
+    so I am a little concerned that we may be
+    missing something here.
 
     ---
     type: generator

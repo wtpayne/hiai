@@ -8,7 +8,7 @@ options:
   loglevel_console:                   DEBUG
 
   dep_build_exclusion:                Null
-  dep_build_limitation:               beautiful_soup
+  dep_build_limitation:               Null
 
 steps:
 

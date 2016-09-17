@@ -81,13 +81,13 @@ body
 }
 
 /* Hide the checkbox */
-input.accordion
+input.expand
 {
     display:                none;
 }
 
 /* Basic item in collapsed state. */
-div.accordion > label.accordion > div.accordion_content
+div.item
 {
   height:                   1.2em;
   width:                    auto;
@@ -102,38 +102,50 @@ div.accordion > label.accordion > div.accordion_content
   border-color:             var(--rgb-bg-shade-5);
 }
 
-/* Expanded */
-div.accordion > input.accordion:checked + label.accordion > div.accordion_content
-{
-  height:                   auto;
-  background-color:         var(--rgb-bg);
-}
-*/
-
-
-/*
-input.accordion_checkbox:checked + label.accordion_label
-{
-  color:                    var(--rgb-font-shade-4);
-}
-*/
-/*
-div.accordion_row:hover
-{
-  background-color:         var(--rgb-main);
-}
-*/
-
-/*
-// Even Rows
-label:nth-of-type(even) > div.accordion_row
+div.item:hover
 {
   background-color:         var(--rgb-accent);
 }
 
-// Odd Rows
-label:nth-of-type(odd) > div.accordion_row
+/* Even Rows */
+label:nth-of-type(even) > div.item
 {
-  background-color:         var(--rgb-main);
+  background-color:         var(--rgb-bg-shade-1);
+}
+
+/* Odd Rows */
+label:nth-of-type(odd) > div.item
+{
+  background-color:         var(--rgb-bg-shade-2);
+}
+
+/* Expanded */
+input:checked + label > div.item
+{
+  height:                   auto;
+  background-color:         var(--rgb-bg);
+}
+input:checked + label > div.item > div.idkey
+{
+  color:                    var(--rgb-font-shade-4);
+}
+
+
+
+/*  border-radius:            0.6em;
+  background-color:         var(--rgb-accent);
+  width:                    fit-content;
+  margin:                   -0.1em -0.5em -0.1em -0.5em;
+  padding:                  -0.2em -0.1em -0.1em -1.1em;
+*/
+/*  height:                   1.2em;
+  transition:               height 0.2s;
+  -webkit-transition:       height 0.2s;
+  padding:                  0em 0em 0em 1em;
+  border-style:             solid;
+  border-width:             1px 1px 1px 1px;
+  text-align:               top;
+  text-align:               left;
+  overflow:                 hidden;
 }
 */

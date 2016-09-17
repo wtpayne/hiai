@@ -56,7 +56,12 @@ def coro(dirpath_lwc_root, error_handler):
         build_element = (yield)
         filepath      = build_element['filepath']
 
+        # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath):
+            continue
+
+        # Ignore experimental design documents.
+        if da.lwc.file.is_experimental(filepath):
             continue
 
         _run_lint(filepath      = filepath,
@@ -103,17 +108,18 @@ def _args_for_specifications(dirpath_check):
     """
     Return pylint args suitable for linting product specification documents.
 
-    Several whitespace related rules (C0326, C0330, W0311) are disabled to
-    permit the vertical alignment of operators and operands on consecutive
-    lines. This allows us to visually group related statements and to
-    readily identify discrepanices.
+    Several whitespace related rules (C0326, C0330,
+    W0311) are disabled to permit the vertical
+    alignment of operators and operands on consecutive
+    lines. This allows us to visually group related
+    statements and to readily identify discrepanices.
 
-    Rules I0011, I0012, I0020 and W0511 are disabled pending a decision
-    about how to integrate violations of these rules into the development
-    process.
+    Rules I0011, I0012, I0020 and W0511 are disabled
+    pending a decision about how to integrate violations
+    of these rules into the development process.
 
-    Rules E1129, E0401 and W0622 are disabled because of false or
-    inappropriate alarms.
+    Rules E1129, E0401 and W0622 are disabled because
+    of false or inappropriate alarms.
 
     """
     filepath_pylintrc = os.path.join(dirpath_check, 'specification.pylintrc')
@@ -123,25 +129,35 @@ def _args_for_specifications(dirpath_check):
         '--ignore=a0_env'
         '--enable=all',
 
-        # Specification tests for the same function are grouped together
-        # in class blocks. This is done to facilitate traceability rather
-        # than to make use of object-oriented development techniques.
-        # Many class and object oriented design rules are therefore
-        # not applicable to specification documents.
+        # Specification tests for the same function
+        # are grouped together in class blocks. This
+        # is done to facilitate traceability rather
+        # than to make use of object-oriented development
+        # techniques. Many class and object oriented
+        # design rules are therefore not applicable
+        # to specification documents.
+        #
         '--disable=R0201',  # no-self-use
         '--disable=R0903',  # too-few-public-methods
 
-        # Test fixtures are bound to the test function by giving an
-        # argument the same name as the fixture function. When the
-        # fixture function sits in the same file as the test function
-        # then it will redefine the outer name (the fixture function)
-        # in the course of its normal (and exoected) operation.
+        # Test fixtures are bound to the test function
+        # by giving an argument the same name as the
+        # fixture function. When the fixture function
+        # sits in the same file as the test function
+        # then it will redefine the outer name (the
+        # fixture function) in the course of its normal
+        # (and exoected) operation.
+        #
         '--disable=W0621',  # redefined-outer-name
 
-        # Tests are clearer if we can use assert function() == True
+        # Tests are clearer if we can use assert
+        # function() == True
+        #
         '--disable=C0121',  # singleton-comparison
 
-        # Test fixtures need to access protected methods.
+        # Test fixtures need to access protected
+        # methods.
+        #
         '--disable=W0212',  # protected-access
 
 
@@ -166,17 +182,18 @@ def _args_for_design_docs(dirpath_check):
     """
     Return pylint args suitable for linting product design documents.
 
-    Several whitespace related rules (C0326, C0330, W0311) are disabled to
-    permit the vertical alignment of operators and operands on consecutive
-    lines. This allows us to visually group related statements and to
-    readily identify discrepanices.
+    Several whitespace related rules (C0326, C0330,
+    W0311) are disabled to permit the vertical
+    alignment of operators and operands on consecutive
+    lines. This allows us to visually group related
+    statements and to readily identify discrepanices.
 
-    Rules I0011, I0012, I0020 and W0511 are disabled pending a decision
-    about how to integrate violations of these rules into the development
-    process.
+    Rules I0011, I0012, I0020 and W0511 are disabled
+    pending a decision about how to integrate violations
+    of these rules into the development process.
 
-    Rules E1129, E0401 and W0622 are disabled because of false or
-    inappropriate alarms.
+    Rules E1129, E0401 and W0622 are disabled because
+    of false or inappropriate alarms.
 
     """
     filepath_pylintrc = os.path.join(dirpath_check, 'design.pylintrc')

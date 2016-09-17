@@ -61,8 +61,9 @@ def write(indices, dirpath_idxfiles):
     """
     Persist supplied index data to disk.
 
-    Build a mapping from an identifier string to the locations (file/row/col)
-    where that identifier string occurs.
+    Build a mapping from an identifier string to
+    the locations (file/row/col) where that
+    identifier string occurs.
 
     data[idclass][idstr][filepath] -> (iline, icol)
 
@@ -140,9 +141,12 @@ def index_coro(dirpath_lwc_root, indices = None):       # pylint: disable=R0912
         file          = build_element['file']
         relpath       = build_element['relpath']
 
-        # The first pass over the file is for relatively unsophisticated
-        # indexing - not accounting for any formatting of the file other
-        # than the presence of newline delimiters.
+        # The first pass over the file is for
+        # relatively unsophisticated indexing
+        # - not accounting for any formatting
+        # of the file other than the presence
+        # of newline delimiters.
+        #
         file.seek(0)
         for iline, binary_line in enumerate(file):
             text_line = binary_line.decode('utf-8')
@@ -156,13 +160,18 @@ def index_coro(dirpath_lwc_root, indices = None):       # pylint: disable=R0912
                                                      relpath,
                                                      pos))
 
-        # The second pass over the file takes account of the file format -
-        # We try to parse the file to identify the context within which
-        # each identifier is placed.
+        # The second pass over the file takes
+        # account of the file format - We try
+        # to parse the file to identify the
+        # context within which each identifier
+        # is placed.
+        #
         file.seek(0, os.SEEK_SET)
 
-        # YAML files are grist to the mill -- any part of a YAML data
-        # structure is potentially of interest to us.
+        # YAML files are grist to the mill --
+        # any part of a YAML data structure
+        # is potentially of interest to us.
+        #
         if relpath.endswith('yaml'):
             for data in yaml.load_all(file,
                                       Loader = da.util.marked_yaml.Loader):
@@ -178,8 +187,10 @@ def index_coro(dirpath_lwc_root, indices = None):       # pylint: disable=R0912
                 if maybe_obj_idx is not None:
                     objects_index    = maybe_obj_idx
 
-        # We are only really interested in YAML or JSON structures that are
-        # embedded in comments or docstrings within the Python source document.
+        # We are only really interested in YAML or
+        # JSON structures that are embedded in
+        # comments or docstrings within the Python
+        # source document.
         #
         # ---
         # i00022_store_requirements_in_python_source_documents:
@@ -264,8 +275,8 @@ def _id_matcher_coro(dirpath_lwc_root):
     """
     Yield identifier strings that have been found in the sent blocks of text.
 
-    For each text block sent to this coroutine, it yields a list of identifier
-    strings.
+    For each text block sent to this coroutine, it
+    yields a list of identifier strings.
 
     """
     exception_list = ['x86_64']
@@ -300,11 +311,15 @@ def _id_matcher_coro(dirpath_lwc_root):
                     matchlist.append((idclass, idstr, line_offset, col_offset))
                     break
 
-            # If we find something that is plausibly an identifier,
-            # but does not exactly match any of our identifier classes,
-            # then we have probably got a malformed identifier of some
-            # sort (likely due to a typo), so we raise an exception to
-            # let the developer fix it, (or else add it to the whitelist)
+            # If we find something that is plausibly
+            # an identifier, but does not exactly
+            # match any of our identifier classes,
+            # then we have probably got a malformed
+            # identifier of some sort (likely due
+            # to a typo), so we raise an exception
+            # to let the developer fix it, (or else
+            # add it to the whitelist)
+            #
             if (not is_exact) and (idstr not in exception_list):
                 raise RuntimeError(
                         'Possibly malformed id: %s', idstr)

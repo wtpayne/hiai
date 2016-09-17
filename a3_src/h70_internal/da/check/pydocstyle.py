@@ -48,22 +48,28 @@ def coro(error_handler):
     """
     ignore_list = [
 
-        'D200',  # Rule D200 (One-line docstring should fit on one line) has
-                 # been disabled so a uniform formatting can be applid to
-                 # docstrings irrespective of length. (I.e. triple-quoted
-                 # docstrings with quotes on separate lines).
+        'D200',  # Rule D200 (One-line docstring should
+                 # fit on one line) has been disabled so
+                 # a uniform formatting can be applid to
+                 # docstrings irrespective of length.
+                 # (I.e. triple-quoted docstrings with
+                 # quotes on separate lines).
 
-        'D203',  # Rule D203 (1 blank line required before class docstring)
-                 # has been disabled because it contradicts with rule D211
-                 # (No blank lines allowed before class docstring), and it
-                 # was felt that a uniform format for both class and function
-                 # docstrings was desirable.
+        'D203',  # Rule D203 (1 blank line required before
+                 # class docstring) has been disabled
+                 # because it contradicts with rule D211
+                 # (No blank lines allowed before class
+                 # docstring), and it was felt that a
+                 # uniform format for both class and
+                 # function docstrings was desirable.
 
-        'D212'   # Rule D212 (Multi-line docstring summary should start at
-                 # the first line) has been disabled so that we can put
-                 # a pep263 encoding marker above the docstring. Rule D213
-                 # (Multi-line docstring summary should start at the second
-                 # line) has been left enabled.
+        'D212'   # Rule D212 (Multi-line docstring summary
+                 # should start at the first line) has been
+                 # disabled so that we can put a pep263
+                 # encoding marker above the docstring.
+                 # Rule D213 (Multi-line docstring summary
+                 # should start at the second line) has
+                 # been left enabled.
 
     ]
     pydocstyle.log.setLevel(logging.INFO)
@@ -73,7 +79,12 @@ def coro(error_handler):
         build_element = (yield)
         filepath      = build_element['filepath']
 
+        # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath):
+            continue
+
+        # Ignore experimental design documents.
+        if da.lwc.file.is_experimental(filepath):
             continue
 
         for error in checker.check_source(build_element['content'], filepath):
