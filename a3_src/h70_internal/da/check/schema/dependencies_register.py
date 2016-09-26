@@ -60,8 +60,8 @@ def get():
         'register': {
 
             common.LOWERCASE_NAME: {
-                'desc':                 common.SUMMARY_TEXT,
-                'notes':                common.PARAGRAPH_TEXT,
+                'desc':                 Any('TBD', common.SUMMARY_TEXT),
+                'notes':                Any('TBD', common.PARAGRAPH_TEXT),
                 'dirname':              common.LOWERCASE_NAME,
                 'policy':               common.LOWERCASE_NAME,
                 'iface':                [iface_type],
@@ -81,7 +81,8 @@ def get():
                 },
                 'build': {
                     'method':           Any('automatic', 'manual'),
-                    'tool':             Any('python_setuptools',
+                    'tool':             Any('TBD',
+                                            'python_setuptools',
                                             'python_distutils',
                                             'make')
                 }

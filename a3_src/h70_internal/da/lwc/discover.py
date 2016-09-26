@@ -64,6 +64,8 @@ _LWC_TAB = {
     'capability': ('a3_src', 'h20_capability'               ),
     'product':    ('a3_src', 'h30_product'                  ),
     'project':    ('a3_src', 'h40_project'                  ),
+    'research':   ('a3_src', 'h50_research'                 ),
+    'demo':       ('a3_src', 'h60_demo'                     ),
     'internal':   ('a3_src', 'h70_internal'                 ),
     'bldcfg':     ('a3_src', 'h70_internal', 'da', 'bldcfg' ),
     'doc':        ('a3_src', 'h80_doc'                      )

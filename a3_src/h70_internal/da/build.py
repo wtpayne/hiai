@@ -551,7 +551,7 @@ def _build_monitor(cfg):
     _msg('Report:',      url_build_report)
 
     # TODO: Get estimate from some sort of cache ...
-    est_num_elem  = 119
+    est_num_elem  = 130
 
     # TODO: Configure progressbar on/off
     with open(filepath_build_report, 'wt') as file_build_report:

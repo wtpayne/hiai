@@ -97,6 +97,93 @@ def main(cfg_key, cfg_extras, dirpath_lwc_root):
         builds that run in the background at low
         priority.
 
+    In all cases, we start by taking a baseline
+    of the design configuration in its' initial
+    unmodified state. If the build fails for any
+    reason, the repository is reverted to this
+    state. This behaviour is implemented by the
+    da.vcs.rollback_context context manager.
+
+    We then load metabuild configuration from the
+    user-specified build restriction configuration
+    file. This configuration is applied to all
+    subsidiary builds.
+
+    We signal the completion of the build with
+    an empty text file in the build directory
+    named META_BUILD_COMPLETED.
+
+    """
+    cfg = da.bldcfg.load_cfg(cfg_key          = cfg_key,
+                             cfg_extras       = cfg_extras,
+                             dirpath_lwc_root = dirpath_lwc_root)
+    _signal_start_of_build(cfg)
+
+    # TODO: CONFIGURE ONLINE BUILD --
+    #       DO WE WANT IT ROLLING BACK ALL THE TIME?
+    with da.vcs.rollback_context(dirpath_root = dirpath_lwc_root):
+        _metabuild(cfg, dirpath_lwc_root)
+
+    _signal_end_of_build(cfg)
+    return da.constants.META_BUILD_COMPLETED
+
+
+# -----------------------------------------------------------------------------
+def _signal_start_of_build(cfg):
+    """
+    Delete the META_BUILD_COMPLETED signalling file.
+
+    We want a very reliable method of signalling
+    to the developer when the build is complete.
+
+    We do this with an empty text file in the
+    temporary directory named
+      'META_BUILD_COMPLETED'.
+
+    At the start of the meta-build, we must check
+    for any such files that have been left by
+    previous meta-builds and remove them.
+
+    """
+    filepath_complete_flag = os.path.join(cfg['paths']['dirpath_meta_tmp'],
+                                          'META_BUILD_COMPLETED')
+    if os.path.isfile(filepath_complete_flag):
+        os.remove(filepath_complete_flag)
+
+
+# -----------------------------------------------------------------------------
+def _signal_end_of_build(cfg):
+    """
+    Create the META_BUILD_COMPLETED signalling file.
+
+    We want a very reliable method of signalling
+    to the developer when the build is complete.
+
+    We do this with an empty text file in the
+    temporary directory named
+      'META_BUILD_COMPLETED'.
+
+    This file is created at the end of the meta
+    build.
+
+    """
+    filepath_complete_flag = os.path.join(cfg['paths']['dirpath_meta_tmp'],
+                                          'META_BUILD_COMPLETED')
+    with open(filepath_complete_flag, 'wb'):
+        pass
+
+
+# -----------------------------------------------------------------------------
+def _metabuild(cfg, dirpath_lwc_root):
+    """
+    Return COMPLETED if all subsidiary builds complete else throw an Exception.
+
+    If so configured, we automatically commit local
+    changes and take a second baseline.
+
+    and automatically commit all local
+    changes to the re
+
     A number of baselines are used to manage the
     design configuration for the duration of the
     metabuild.
@@ -111,12 +198,9 @@ def main(cfg_key, cfg_extras, dirpath_lwc_root):
 
     2. auto_commit_baseline - The state of the
                               repository head after
-                              any staged and unstaged
-                              changes have been
-                              committed. We leave
-                              the repository in this
-                              state if the build
-                              runs to completion.
+                              any changes (staged
+                              or unstaged) have
+                              been committed.
 
     3. defined_baseline     - One of a list of
                               system configurations
@@ -133,175 +217,119 @@ def main(cfg_key, cfg_extras, dirpath_lwc_root):
                               defined baselines.
 
     """
-    # Create the unmodified baseline and roll back to it if the build fails.
-    with da.vcs.rollback_context(dirpath_root = dirpath_lwc_root):
+    dirpath_meta_tmp = cfg['paths']['dirpath_meta_tmp']
 
-        # This configuration applies to all subsidiary builds in the metabuild.
-        cfg = da.bldcfg.load_cfg(cfg_key          = cfg_key,
-                                 cfg_extras       = cfg_extras,
-                                 dirpath_lwc_root = dirpath_lwc_root)
-        dirpath_meta_tmp = cfg['paths']['dirpath_meta_tmp']
-        _signal_start_of_build(dirpath_meta_tmp)
-        _tmp_dir_cleaning(cfg, dirpath_meta_tmp)
+    _tmp_dir_cleaning(cfg, dirpath_meta_tmp)
 
-        # Note changed files for incremental builds and build prioritisation.
-        cfg['changed_files'] = da.vcs.files_changed_in_lwc(dirpath_lwc_root)
+    # Note changed files for incremental builds and build prioritisation.
+    cfg['changed_files'] = da.vcs.files_changed_in_lwc(dirpath_lwc_root)
 
-        # Create the auto-commit baseline.
-        da.vcs.auto_commit(cfg, dirpath_lwc_root)
-        auto_commit_baseline_id = da.vcs.get_configuration_id(dirpath_lwc_root)
+    # Create the auto-commit baseline.
+    da.vcs.auto_commit(cfg, dirpath_lwc_root)
+    auto_commit_baseline_id = da.vcs.get_configuration_id(dirpath_lwc_root)
+    commit_info = da.vcs.commit_info(
+                                dirpath_root = dirpath_lwc_root,
+                                ref          = auto_commit_baseline_id)
+    cfg = da.util.merge_dicts(cfg, { 'auto_commit_baseline': commit_info })
+
+    # We want to be able to perform
+    # side-by-side comparisons to evaluate
+    # competing design proposals; where
+    # each proposed design is optimised
+    # and tuned so that the comparison
+    # is not confounded by poorly selected
+    # design parameters.
+    #
+    # Proposals are given by the build
+    # restriction configuration file as
+    # a list of 'defined_baselines'.
+    #
+    # We process each in turn, generating
+    # deltas and optimising as needed.
+    #
+    for defined_baseline_id in cfg['scope']['defined_baselines']:
+
         commit_info = da.vcs.commit_info(
                                     dirpath_root = dirpath_lwc_root,
-                                    ref          = auto_commit_baseline_id)
-        cfg = da.util.merge_dicts(cfg, { 'auto_commit_baseline': commit_info })
+                                    ref          = defined_baseline_id)
+        cfg = da.util.merge_dicts(cfg, { 'defined_baseline': commit_info })
+        safe_branch_name = _safe_branch_name(commit_info['branch'])
+        cfg = _set_build_paths(cfg, dirpath_meta_tmp, safe_branch_name)
 
-        # We want to be able to perform
-        # side-by-side comparisons to evaluate
-        # competing design proposals; where
-        # each proposed design is optimised
-        # and tuned so that the comparison
-        # is not confounded by poorly selected
-        # design parameters.
+        # Use the hash code as an absolute
+        # identifier for the system configuration
+        # under test. Relative references such
+        # as "HEAD" or "master" will be different
+        # for the repository clone in the isolated
+        # temporary build directory and so cannot
+        # be used.
         #
-        # Proposals are given by the build
-        # restriction configuration file as
-        # a list of 'defined_baselines'.
+        system_configuration_under_test = commit_info['hexsha']
+
+        # Isolate a clean copy of the design
+        # documents to be built.
         #
-        # We process each in turn, generating
-        # deltas and optimising as needed.
+        da.vcs.ensure_cloned(
+            dirpath_local = cfg['paths']['dirpath_isolated_src'],
+            url_remote    = dirpath_lwc_root,
+            ref           = system_configuration_under_test)
+
+        # TODO: Consider eagerly mounting
+        #       "a0_env"; "a2_dat" and "a5_cms"
+        #       so that they are in the 'correct'
+        #       position relative to the isolated
+        #       src directory. Alternatively,
+        #       consider using an idempotent
+        #       ensure-available function
+        #       that mounts resources lazily
+        #       (on demand).
+
+        # We want to be able to tune each
+        # design proposal using a configurable
+        # optimisation algorithm and objective
+        # function.
         #
-        for defined_baseline_id in cfg['scope']['defined_baselines']:
-
-            commit_info = da.vcs.commit_info(
-                                        dirpath_root = dirpath_lwc_root,
-                                        ref          = defined_baseline_id)
-            cfg = da.util.merge_dicts(cfg, { 'defined_baseline': commit_info })
-            safe_branch_name = _safe_branch_name(commit_info['branch'])
-            cfg = _set_build_paths(cfg, dirpath_meta_tmp, safe_branch_name)
-
-            # Use the hash code as an absolute
-            # identifier for the system configuration
-            # under test. Relative references such
-            # as "HEAD" or "master" will be different
-            # for the repository clone in the isolated
-            # temporary build directory and so cannot
-            # be used.
-            #
-            system_configuration_under_test = commit_info['hexsha']
-
-            # Isolate a clean copy of the design
-            # documents to be built.
-            #
-            da.vcs.ensure_cloned(
-                dirpath_local = cfg['paths']['dirpath_isolated_src'],
-                url_remote    = dirpath_lwc_root,
-                ref           = system_configuration_under_test)
-
-            # TODO: Consider eagerly mounting
-            #       "a0_env"; "a2_dat" and "a5_cms"
-            #       so that they are in the 'correct'
-            #       position relative to the isolated
-            #       src directory. Alternatively,
-            #       consider using an idempotent
-            #       ensure-available function
-            #       that mounts resources lazily
-            #       (on demand).
-
-            # We want to be able to tune each
-            # design proposal using a configurable
-            # optimisation algorithm and objective
-            # function.
-            #
-            # Both the optimisation algorithm and
-            # the objective function are provided
-            # by the "optimisation_module" specified
-            # in the configuration, which acts as
-            # an adapter to the build function
-            # itself. The build function is supplied
-            # to the optimisation module as a
-            # callback so that the system design
-            # may be rebuilt and re-evaluated after
-            # each "delta" change.
-            #
-            optimisation_module = cfg['options']['optimisation_module']
-            design_optimisation_enabled = optimisation_module is not None
-            if design_optimisation_enabled:
-
-                importlib.import_module(optimisation_module).optimise_build(
-                                        _build_and_evaluate_design, cfg)
-
-            # When system design optimisation is not configured, we only
-            # need to build the null delta.
-            #
-            else:
-
-                cfg = _set_build_id(cfg, safe_branch_name)
-                _build_and_evaluate_design(cfg)
-
-        # Once the subsidiary builds have finished,
-        # each proposal should have an associated
-        # 'local' optimum that has been discovered.
+        # Both the optimisation algorithm and
+        # the objective function are provided
+        # by the "optimisation_module" specified
+        # in the configuration, which acts as
+        # an adapter to the build function
+        # itself. The build function is supplied
+        # to the optimisation module as a
+        # callback so that the system design
+        # may be rebuilt and re-evaluated after
+        # each "delta" change.
         #
-        # We can now compare performance across
-        # these newly discovered local optima
-        # and update the management reporting
-        # that looks at development progress
-        # over time.
+        optimisation_module = cfg['options']['optimisation_module']
+        design_optimisation_enabled = optimisation_module is not None
+        if design_optimisation_enabled:
+
+            importlib.import_module(optimisation_module).optimise_build(
+                                    _build_and_evaluate_design, cfg)
+
+        # When system design optimisation is not configured, we only
+        # need to build the null delta.
         #
-        # We delay importing the report module
-        # as it has large dependencies.
-        #
-        import da.report as _report
-        _report.metabuild(cfg)
+        else:
 
-        _signal_end_of_build(dirpath_meta_tmp)
+            cfg = _set_build_id(cfg, safe_branch_name)
+            _build_and_evaluate_design(cfg)
 
-        return da.constants.META_BUILD_COMPLETED
-
-
-# -----------------------------------------------------------------------------
-def _signal_start_of_build(dirpath_meta_tmp):
-    """
-    Delete the META_BUILD_COMPLETED signalling file.
-
-    We want a very reliable method of signalling
-    to the developer when the build is complete.
-
-    We do this with an empty text file in the
-    temporary directory named
-      'META_BUILD_COMPLETED'.
-
-    At the start of the meta-build, we must check
-    for any such files that have been left by
-    previous meta-builds and remove them.
-
-    """
-    filepath_complete_flag = os.path.join(dirpath_meta_tmp,
-                                          'META_BUILD_COMPLETED')
-    if os.path.isfile(filepath_complete_flag):
-        os.remove(filepath_complete_flag)
-
-
-# -----------------------------------------------------------------------------
-def _signal_end_of_build(dirpath_meta_tmp):
-    """
-    Create the META_BUILD_COMPLETED signalling file.
-
-    We want a very reliable method of signalling
-    to the developer when the build is complete.
-
-    We do this with an empty text file in the
-    temporary directory named
-      'META_BUILD_COMPLETED'.
-
-    This file is created at the end of the meta
-    build.
-
-    """
-    filepath_complete_flag = os.path.join(dirpath_meta_tmp,
-                                          'META_BUILD_COMPLETED')
-    with open(filepath_complete_flag, 'wb'):
-        pass
+    # Once the subsidiary builds have finished,
+    # each proposal should have an associated
+    # 'local' optimum that has been discovered.
+    #
+    # We can now compare performance across
+    # these newly discovered local optima
+    # and update the management reporting
+    # that looks at development progress
+    # over time.
+    #
+    # We delay importing the report module
+    # as it has large dependencies.
+    #
+    import da.report as _report
+    _report.metabuild(cfg)
 
 
 # -----------------------------------------------------------------------------

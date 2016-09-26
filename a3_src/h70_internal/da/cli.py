@@ -529,13 +529,15 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
 #       - i00041_control_access_to_counterparty_specific_confidential_documents
 #       - i00042_organise_documents_for_reuse
 # ...
-DIRPATH_PROJECTS = da.lwc.discover.path('project')
-for prj_name in os.listdir(DIRPATH_PROJECTS):
-    dirpath_plugin  = os.path.join(DIRPATH_PROJECTS, prj_name)
-    filepath_plugin = os.path.join(DIRPATH_PROJECTS, prj_name, 'cli_plugin.py')
-    if not os.path.isfile(filepath_plugin):
-        continue
-    plugin_module = da.util.importutils.import_module_file(filepath_plugin)
-    for (key, value) in plugin_module.__dict__.items():
-        if isinstance(value, click.core.Group):
-            main.add_command(value)
+LIST_ROOTPATH_PLUGIN = [da.lwc.discover.path('project'),
+                        da.lwc.discover.path('research'),
+                        da.lwc.discover.path('demo')]
+for rootpath in LIST_ROOTPATH_PLUGIN:
+    for dirname in os.listdir(rootpath):
+        filepath_plugin = os.path.join(rootpath, dirname, 'cli_plugin.py')
+        if not os.path.isfile(filepath_plugin):
+            continue
+        module = da.util.importutils.import_module_file(filepath_plugin)
+        for (key, value) in module.__dict__.items():
+            if isinstance(value, click.core.Group):
+                main.add_command(value)

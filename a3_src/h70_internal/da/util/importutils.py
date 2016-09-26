@@ -54,28 +54,11 @@ def import_module_file(filepath):
     Import the specified module.
 
     """
-    # The first implementation of this function
-    # used the importlib.machinery.SourceFileLoader
-    # function, but this approach unfortunately
-    # caused issues for us once we started to use
-    # sys.modules to unload and reload modules to
-    # dynamically shift the LWC to the controlled
-    # area for build operations.
-    #
-    # Modules loaded with this function didn't
-    # appear to be represented with the right type
-    # in sys.modules - or at least couldn't be
-    # reloaded without throwing an exception.
-    #
-    # To work around this issue, we have had to
-    # replace the call to importlib.import_module
-    # with the higher level __import__ function.
-    # This appears to do all the book-keeping that
-    # we require.
-    #
-    (dirpath, filename) = os.path.split(filepath)
-    (module_name, _)    = os.path.splitext(filename)
-    return import_from_dir(dirpath, module_name)
+    filename  = os.path.basename(filepath)
+    (name, _) = os.path.splitext(filename)
+    loader    = importlib.machinery.SourceFileLoader(name, filepath)
+    module    = loader.load_module()
+    return module
 
 
 # -----------------------------------------------------------------------------

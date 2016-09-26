@@ -78,12 +78,15 @@ def write(indices, dirpath_idxfiles):
             (idnum, description) = idstr.split('_', maxsplit = 1)
             if idnum in set_nums:
                 raise RuntimeError(
-                        'Duplicate identifier num: "{idnum}"'.format(
-                                                                idnum = idnum))
+                    'Duplicate identifier num: "{idnum}" in "{idstr}"'.format(
+                                                        idnum = idnum,
+                                                        idstr = idstr))
             if description in set_descs:
                 raise RuntimeError(
-                        'Duplicate description: "{desc}"'.format(
-                                                        desc = description))
+                    'Duplicate description: "{desc}" in "{idstr}"'.format(
+                                                        desc  = description,
+                                                        idstr = idstr))
+
             set_nums.add(idnum)
             set_descs.add(description)
 
@@ -279,7 +282,26 @@ def _id_matcher_coro(dirpath_lwc_root):
     yields a list of identifier strings.
 
     """
-    exception_list = ['x86_64']
+    exception_list = ['x86_64',
+                      'd3_array',
+                      'd3_brush',
+                      'd3_drag',
+                      'd3_dsv',
+                      'd3_force',
+                      'd3_hcg',
+                      'd3_hexbin',
+                      'd3_hierarchy',
+                      'd3_hsv',
+                      'd3_interpolate',
+                      'd3_path',
+                      'd3_sankey',
+                      'd3_scale',
+                      'd3_selection',
+                      'd3_tile',
+                      'd3_time',
+                      'd3_timer',
+                      'd3_transition',
+                      'd3_zoom']
     regextab       = da.idclass.regex_table(dirpath_lwc_root)
     regex_generic  = re.compile(
                         r"\b[a-zA-Z]{1,2}[0-9]{1,12}_[a-zA-Z0-9_]{2,200}")

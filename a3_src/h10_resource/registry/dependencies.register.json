@@ -50,6 +50,66 @@
             }
         },
 
+        "autobahn": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "autobahn",
+            "policy":       "ver_v0.16.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/crossbario/autobahn-python.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "autoenv": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "autoenv",
+            "policy":       "ver_v0.1.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/kennethreitz/autoenv.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "autonose": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "autonose",
+            "policy":       "ver_0.2.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/timbertson/autonose.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
         "babel": {
             "desc":         "Internationalisation and localisation utilities.",
             "notes":        "Required by sphinx.",
@@ -116,6 +176,46 @@
             }
         },
 
+        "bazel": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "bazel",
+            "policy":       "ver_0.3.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/bazelbuild/bazel.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "bazelbuild_dash": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "bazelbuild_dash",
+            "policy":       "ver_fcf7599",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/bazelbuild/dash.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
         "beautiful_soup": {
             "desc":         "Beautiful Soup sits atop an HTML or XML parser, providing Pythonic idioms for iterating, searching, and modifying the parse tree.",
             "notes":        "Used for report generation.",
@@ -131,6 +231,26 @@
                 "method":   "manual",
                 "tool":     "bzr",
                 "url":      "ssh://bazaar.launchpad.net/+branch/beautifulsoup/"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
+            }
+        },
+
+        "bidict": {
+            "desc":         "Efficient, Pythonic bidirectional map implementation and related functionality.",
+            "notes":        "Used for simulation DAG reversal.",
+            "dirname":      "bidict",
+            "policy":       "ver_v0.12.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jab/bidict.git"
             },
             "build": {
                 "method":   "automatic",
@@ -399,6 +519,26 @@
             "build": {
                 "method":   "automatic",
                 "tool":     "python_distutils"
+            }
+        },
+
+        "even_more_itertools": {
+            "desc":         "Even more itertools",
+            "notes":        "Utility functions with general applicability.",
+            "dirname":      "even_more_itertools",
+            "policy":       "ver_0.0.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/nvie/even-more-itertools.git"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
             }
         },
 
@@ -798,6 +938,26 @@
             }
         },
 
+        "more_itertools": {
+            "desc":         "More itertools.",
+            "notes":        "Utility routines with wide applicability.",
+            "dirname":      "more_itertools",
+            "policy":       "ver_2.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/erikrose/more-itertools.git"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
+            }
+        },
+
         "murmurhash": {
             "desc":         "Cython bindings for MurmurHash2.",
             "notes":        "Required by SpaCy natural language processing lib.",
@@ -972,28 +1132,6 @@
             }
         },
 
-        "pep8": {
-            "desc":         "Simple python style checker.",
-            "notes":        "Used for style-checking Python language source documents.",
-            "dirname":      "pep8",
-            "policy":       "ver_1.7.0",
-            "iface":        ["lib_python2",
-                             "lib_python3"],
-            "path": {
-                "lib_python2":  "lib/python2",
-                "lib_python3":  "lib/python3"
-            },
-            "config": {
-                "method":   "automatic",
-                "tool":     "git",
-                "url":      "https://github.com/PyCQA/pep8.git"
-            },
-            "build": {
-                "method":   "automatic",
-                "tool":     "python_setuptools"
-            }
-        },
-
         "pep257": {
             "desc":         "A static analysis tool for checking docstring style.",
             "notes":        "Used for style-checking Python language source documents.",
@@ -1009,6 +1147,28 @@
                 "method":   "automatic",
                 "tool":     "git",
                 "url":      "https://github.com/GreenSteam/pep257.git"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
+            }
+        },
+
+        "pep8": {
+            "desc":         "Simple python style checker.",
+            "notes":        "Used for style-checking Python language source documents.",
+            "dirname":      "pep8",
+            "policy":       "ver_1.7.0",
+            "iface":        ["lib_python2",
+                             "lib_python3"],
+            "path": {
+                "lib_python2":  "lib/python2",
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/PyCQA/pep8.git"
             },
             "build": {
                 "method":   "automatic",
@@ -2064,6 +2224,46 @@
             }
         },
 
+        "transcrypt": {
+            "desc":         "Translate Python into Javascript",
+            "notes":        "Used to develop client-side code in Python.",
+            "dirname":      "transcrypt",
+            "policy":       "ver_c23e1c3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/JdeH/Transcrypt.git"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
+            }
+        },
+
+        "treelib": {
+            "desc":         "Tree implementation in python: simple to use for you.",
+            "notes":        "Utility library with broad applicability.",
+            "dirname":      "treelib",
+            "policy":       "ver_v1.3.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/caesar0301/treelib.git"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
+            }
+        },
+
         "ultrajson": {
             "desc":         "Ultra fast JSON encoder and decoder for Python.",
             "notes":        "Required by SpaCy natural language processing lib.",
@@ -2193,6 +2393,4328 @@
             "build": {
                 "method":   "automatic",
                 "tool":     "python_distutils"
+            }
+        },
+
+        "yapf": {
+            "desc":         "Yet Another Python Formatter.",
+            "notes":        "Used for formatting Python code.",
+            "dirname":      "yapf",
+            "policy":       "ver_v0.10.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/google/yapf.git"
+            },
+            "build": {
+                "method":   "automatic",
+                "tool":     "python_setuptools"
+            }
+        },
+
+        "boto": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "boto",
+            "policy":       "ver_2.42.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/boto/boto.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "bpython": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "bpython",
+            "policy":       "ver_0.14.1-release",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/bpython/bpython.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "brython": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "brython",
+            "policy":       "ver_3.2.7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/brython-dev/brython.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "buck": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "buck",
+            "policy":       "ver_v2016.09.02.01",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/facebook/buck.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "buildbot": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "buildbot",
+            "policy":       "ver_v0.9.0rc3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/buildbot/buildbot.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "bundler": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "bundler",
+            "policy":       "ver_5e20fa5",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/snavely/bundler_sfm.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "bundlewrap": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "bundlewrap",
+            "policy":       "ver_2.7.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/bundlewrap/bundlewrap.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "bytecode": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "bytecode",
+            "policy":       "ver_0.4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/haypo/bytecode.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "byteplay": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "byteplay",
+            "policy":       "ver_9da1744",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/serprex/byteplay.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "caf": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "caf",
+            "policy":       "ver_0.1.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/azag0/caf.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "caffe": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "caffe",
+            "policy":       "ver_rc3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/BVLC/caffe.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "cairosvg": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "cairosvg",
+            "policy":       "ver_2.0.0rc5",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Kozea/CairoSVG.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "catkin": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "catkin",
+            "policy":       "ver_0.7.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ros/catkin.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "classtoolz": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "classtoolz",
+            "policy":       "ver_c1938ff",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pytoolz/classtoolz.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "code2flow": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "code2flow",
+            "policy":       "ver_26554cc",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/scottrogowski/code2flow.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "colorpy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "colorpy",
+            "policy":       "ver_4c9e5b2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/fish2000/ColorPy"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "constantly": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "constantly",
+            "policy":       "ver_15.1.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/twisted/constantly.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "cosmic_ray": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "cosmic_ray",
+            "policy":       "ver_1c6ac71",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/sixty-north/cosmic-ray.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "cov_core": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "cov_core",
+            "policy":       "ver_v1.14.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/schlamar/cov-core"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "crab": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "crab",
+            "policy":       "ver_beb3555",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/muricoca/crab.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "curio": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "curio",
+            "policy":       "ver_0.4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/dabeaz/curio.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "curtsies": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "curtsies",
+            "policy":       "ver_18d7002",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/thomasballinger/curtsies.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "cytoolz": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "cytoolz",
+            "policy":       "ver_003cf6e",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pytoolz/cytoolz.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_array": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_array",
+            "policy":       "ver_v1.0.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-array.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_brush": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_brush",
+            "policy":       "ver_v1.0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-brush"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_drag": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_drag",
+            "policy":       "ver_v1.0.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-drag"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_dsv": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_dsv",
+            "policy":       "ver_v1.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-dsv.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_force": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_force",
+            "policy":       "ver_v1.0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-force.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_hcg": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_hcg",
+            "policy":       "ver_v0.0.7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-hcg"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_hexbin": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_hexbin",
+            "policy":       "ver_v0.2.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-hexbin.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_hierarchy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_hierarchy",
+            "policy":       "ver_v1.0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-hierarchy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_hsv": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_hsv",
+            "policy":       "ver_v0.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-hsv"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_interpolate": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_interpolate",
+            "policy":       "ver_v1.1.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-interpolate"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_path": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_path",
+            "policy":       "ver_v1.0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-path.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_sankey": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_sankey",
+            "policy":       "ver_0.4.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-sankey.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_scale": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_scale",
+            "policy":       "ver_v1.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-scale"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_selection": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_selection",
+            "policy":       "ver_v1.0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-selection.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_tile": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_tile",
+            "policy":       "ver_v0.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-tile.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_time": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_time",
+            "policy":       "ver_v1.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-time.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_timer": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_timer",
+            "policy":       "ver_v1.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-timer"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_transition": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_transition",
+            "policy":       "ver_v1.0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-transition.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3_zoom": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3_zoom",
+            "policy":       "ver_v1.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3-zoom.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "d3js": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "d3js",
+            "policy":       "ver_v4.2.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/d3/d3.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "darknet": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "darknet",
+            "policy":       "ver_89b0c68",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pjreddie/darknet.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "data_hacks": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "data_hacks",
+            "policy":       "ver_a6a5bf8",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/bitly/data_hacks.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "data_structure_zoo": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "data_structure_zoo",
+            "policy":       "ver_78304a4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/QuantumFractal/Data-Structure-Zoo.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "ddt": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "ddt",
+            "policy":       "ver_1.0.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/txels/ddt.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "decorator": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "decorator",
+            "policy":       "ver_4.0.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/micheles/decorator.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "dexml": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "dexml",
+            "policy":       "ver_v0.5.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/rfk/dexml.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "docopt": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "docopt",
+            "policy":       "ver_0.6.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/docopt/docopt.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "doit": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "doit",
+            "policy":       "ver_0.29.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pydoit/doit.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "eliot": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "eliot",
+            "policy":       "ver_0.11.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ClusterHQ/eliot.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "emmet_sublime": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "emmet_sublime",
+            "policy":       "ver_99c1be8",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/sergeche/emmet-sublime.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "envoy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "envoy",
+            "policy":       "ver_v0.0.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/kennethreitz/envoy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "errbot": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "errbot",
+            "policy":       "ver_4.3.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/errbotio/errbot.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "ethzasl_msf": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "ethzasl_msf",
+            "policy":       "ver_1.0.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ethz-asl/ethzasl_msf.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "extras": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "extras",
+            "policy":       "ver_1.0.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/testing-cabal/extras.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "fabric": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "fabric",
+            "policy":       "ver_1.12.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/fabric/fabric.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "fabricate": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "fabricate",
+            "policy":       "ver_c0fa452",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/rmatev/fabricate.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "filemagic": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "filemagic",
+            "policy":       "ver_1386490",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/aliles/filemagic.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "fixtures": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "fixtures",
+            "policy":       "ver_3.0.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/testing-cabal/fixtures.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "flexx": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "flexx",
+            "policy":       "ver_v0.4.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/zoofIO/flexx.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "fn_py": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "fn_py",
+            "policy":       "ver_df53f5d",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/kachayev/fn.py.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "funcy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "funcy",
+            "policy":       "ver_1.7.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Suor/funcy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "funktown": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "funktown",
+            "policy":       "ver_0.4.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/zhemao/funktown.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "genshi": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "genshi",
+            "policy":       "ver_75f5f3c",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/edgewall/genshi.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "gensim": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "gensim",
+            "policy":       "ver_0.13.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/RaRe-Technologies/gensim.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "gfm": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "gfm",
+            "policy":       "ver_e14b082",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/stewart/gfm.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "git_gutter": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "git_gutter",
+            "policy":       "ver_1.2.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jisaacks/GitGutter.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "go_ipfs": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "go_ipfs",
+            "policy":       "ver_v0.4.3-rc4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ipfs/go-ipfs.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "googletest": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "googletest",
+            "policy":       "ver_release-1.7.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/google/googletest.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "greenlet": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "greenlet",
+            "policy":       "ver_0.4.10",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/python-greenlet/greenlet.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "gunicorn": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "gunicorn",
+            "policy":       "ver_19.6.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/benoitc/gunicorn.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "hoedown": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "hoedown",
+            "policy":       "ver_3.0.7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/hoedown/hoedown"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "html2docx": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "html2docx",
+            "policy":       "ver_7296c20",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jlward/html2docx.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "hug": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "hug",
+            "policy":       "ver_1.9.9",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/timothycrosley/hug.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "ilastik": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "ilastik",
+            "policy":       "ver_d39f6ed",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ilastik/ilastik.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "invoke": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "invoke",
+            "policy":       "ver_0.12.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pyinvoke/invoke.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "ipdb": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "ipdb",
+            "policy":       "ver_0.10.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/gotcha/ipdb.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "ipython": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "ipython",
+            "policy":       "ver_4.1.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ipython/ipython.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "jedi": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "jedi",
+            "policy":       "ver_v0.9.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/davidhalter/jedi.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "joblib": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "joblib",
+            "policy":       "ver_0.10.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/joblib/joblib.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "jug": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "jug",
+            "policy":       "ver_release-1.2.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/luispedro/jug.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "keras": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "keras",
+            "policy":       "ver_1.1.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/fchollet/keras.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "kivy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "kivy",
+            "policy":       "ver_1.9.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/kivy/kivy"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "lapack": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "lapack",
+            "policy":       "ver_lapack-3.6.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Reference-LAPACK/lapack-release.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "lazyflow": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "lazyflow",
+            "policy":       "ver_47fd295",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ilastik/lazyflow"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "lektor": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "lektor",
+            "policy":       "ver_2.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/lektor/lektor.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "libav": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "libav",
+            "policy":       "ver_v11.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/libav/libav.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "livereload": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "livereload",
+            "policy":       "ver_f70260a",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/NickWoodhams/LiveReload.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "lz4": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "lz4",
+            "policy":       "ver_r131",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Cyan4973/lz4.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "mahotas": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "mahotas",
+            "policy":       "ver_release-1.4.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/luispedro/mahotas"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "matplotlib": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "matplotlib",
+            "policy":       "ver_v1.5.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/matplotlib/matplotlib.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "milk": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "milk",
+            "policy":       "ver_release-0.6.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/luispedro/milk.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "misaka": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "misaka",
+            "policy":       "ver_v2.0.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/FSX/misaka.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "mock": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "mock",
+            "policy":       "ver_2.0.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/testing-cabal/mock.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "mulle_bootstrap": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "mulle_bootstrap",
+            "policy":       "ver_2.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/mulle-nat/mulle-bootstrap.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "neupy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "neupy",
+            "policy":       "ver_v0.3.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/itdxer/neupy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "nose": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "nose",
+            "policy":       "ver_release_1.3.7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/nose-devs/nose.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "nose2": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "nose2",
+            "policy":       "ver_0.5.0-dev",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/nose-devs/nose2"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "nryoung_algorithms": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "nryoung_algorithms",
+            "policy":       "ver_939c1ae",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/nryoung/algorithms.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "numpydoc": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "numpydoc",
+            "policy":       "ver_v0.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/numpy/numpydoc/"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "okvis": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "okvis",
+            "policy":       "ver_v1.1.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ethz-asl/okvis.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "okvis_ros": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "okvis_ros",
+            "policy":       "ver_v1.1.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ethz-asl/okvis_ros.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "opencv": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "opencv",
+            "policy":       "ver_3.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Itseez/opencv.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "orange3": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "orange3",
+            "policy":       "ver_3.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/biolab/orange3.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "orb_slam2": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "orb_slam2",
+            "policy":       "ver_af0e902",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/raulmur/ORB_SLAM2.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pacgraph": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pacgraph",
+            "policy":       "ver_00f006b",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/keenerd/pacgraph.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "panda3d": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "panda3d",
+            "policy":       "ver_v1.9.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/panda3d/panda3d.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pandas": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pandas",
+            "policy":       "ver_v0.18.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pydata/pandas.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pants": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pants",
+            "policy":       "ver_release_1.2.0dev11",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pantsbuild/pants.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pants_docs": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pants_docs",
+            "policy":       "ver_b71c162",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pantsbuild/pantsbuild.github.io.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "patterns": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "patterns",
+            "policy":       "ver_0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Suor/patterns.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pbr": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pbr",
+            "policy":       "ver_1.10.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/openstack-dev/pbr.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "peachpy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "peachpy",
+            "policy":       "ver_fc1f4dd",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Maratyszcza/PeachPy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+
+        "pep8_naming": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pep8_naming",
+            "policy":       "ver_0.4.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/PyCQA/pep8-naming.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pluginbase": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pluginbase",
+            "policy":       "ver_0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/mitsuhiko/pluginbase.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pony": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pony",
+            "policy":       "ver_0.6.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/ponyorm/pony"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "prakhar1989_algorithms": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "prakhar1989_algorithms",
+            "policy":       "ver_ec4e068",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/prakhar1989/Algorithms.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "promise": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "promise",
+            "policy":       "ver_v0.2.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/rfk/promise.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "proselint": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "proselint",
+            "policy":       "ver_0.4.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/amperser/proselint.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "psutil": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "psutil",
+            "policy":       "ver_release-4.3.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/giampaolo/psutil.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "ptpython": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "ptpython",
+            "policy":       "ver_0.35",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jonathanslenders/ptpython.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pybrain": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pybrain",
+            "policy":       "ver_0.3.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pybrain/pybrain.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pybuilder": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pybuilder",
+            "policy":       "ver_v0.11.8",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pybuilder/pybuilder.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyclassifiers": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyclassifiers",
+            "policy":       "ver_2961cc2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/kylebgorman/pyclassifiers.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyddmon": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyddmon",
+            "policy":       "ver_a29a1a2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/objarni/pytddmon.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyenchant": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyenchant",
+            "policy":       "ver_v1.6.8",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/rfk/pyenchant.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyflakes": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyflakes",
+            "policy":       "ver_1.2.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/PyCQA/pyflakes"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pygal": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pygal",
+            "policy":       "ver_2.3.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Kozea/pygal.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pygtrie": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pygtrie",
+            "policy":       "ver_v2.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/google/pygtrie.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyinotify": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyinotify",
+            "policy":       "ver_0.9.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/seb-m/pyinotify.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pylearn2": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pylearn2",
+            "policy":       "ver_stable-201601",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/lisa-lab/pylearn2.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyml": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyml",
+            "policy":       "ver_0.2.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/rohithpr/PyML.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pymodel": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pymodel",
+            "policy":       "ver_PyModel-1.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jon-jacky/PyModel.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pymorph": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pymorph",
+            "policy":       "ver_release-0.95",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/luispedro/pymorph.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pymvpa": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pymvpa",
+            "policy":       "ver_2.4.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/PyMVPA/PyMVPA.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pypng": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pypng",
+            "policy":       "ver_pypng-0.0.17",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/drj11/pypng"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyqrcode": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyqrcode",
+            "policy":       "ver_674a77b",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/mnooner256/pyqrcode.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyrefactor": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyrefactor",
+            "policy":       "ver_441d9b0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/dnatag/PyRefactor.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyreport": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyreport",
+            "policy":       "ver_d91d19f",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/joblib/pyreport"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyristent": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyristent",
+            "policy":       "ver_v0.11.13",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/tobgu/pyrsistent.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pytest_cagoule": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pytest_cagoule",
+            "policy":       "ver_0.2.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/davidszotten/pytest-cagoule.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pytest_incremental": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pytest_incremental",
+            "policy":       "ver_0.4.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pytest-dev/pytest-incremental.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pytest_testmon": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pytest_testmon",
+            "policy":       "ver_v0.4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/tarpas/pytest-testmon.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "python_afl": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "python_afl",
+            "policy":       "ver_0.5.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jwilk/python-afl.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "python_datetutil": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "python_datetutil",
+            "policy":       "ver_2cfb879",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/paxan/python-dateutil.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "python_mimeparse": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "python_mimeparse",
+            "policy":       "ver_1.5.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/dbtsai/python-mimeparse.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "python_prompt_toolkit": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "python_prompt_toolkit",
+            "policy":       "ver_1.0.7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jonathanslenders/python-prompt-toolkit.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "python_snappy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "python_snappy",
+            "policy":       "ver_ca913c7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/andrix/python-snappy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pytrie": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pytrie",
+            "policy":       "ver_2437940",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/kylebgorman/pytrie.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pytz": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pytz",
+            "policy":       "ver_release_2016.6.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/stub42/pytz.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "pyzen": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "pyzen",
+            "policy":       "ver_87177ac",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/coderanger/pyzen.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "readability": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "readability",
+            "policy":       "ver_0b91dfe",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/burrsettles/readability"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "requs": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "requs",
+            "policy":       "ver_1.14.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/teamed/requs.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "rope": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "rope",
+            "policy":       "ver_0.10.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/python-rope/rope.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "rpg_open_remode": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "rpg_open_remode",
+            "policy":       "ver_960e1fc",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/uzh-rpg/rpg_open_remode.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sampling": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sampling",
+            "policy":       "ver_0fced1c",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pytoolz/sampling.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "schedule": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "schedule",
+            "policy":       "ver_0.3.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/dbader/schedule"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "schematics": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "schematics",
+            "policy":       "ver_v1.1.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/schematics/schematics"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "scikit_image": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "scikit_image",
+            "policy":       "ver_v0.12.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/scikit-image/scikit-image.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "scikit_learn": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "scikit_learn",
+            "policy":       "ver_0.17.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/scikit-learn/scikit-learn.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "scipy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "scipy",
+            "policy":       "ver_0.17.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/scipy/scipy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "scipy_sim": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "scipy_sim",
+            "policy":       "ver_29e105c",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/hardbyte/scipy-sim.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "seaborn": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "seaborn",
+            "policy":       "ver_v0.7.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/mwaskom/seaborn.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sentry": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sentry",
+            "policy":       "ver_3.6.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/mitsuhiko/sentry.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "shogun": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "shogun",
+            "policy":       "ver_shogun_4.1.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/shogun-toolbox/shogun.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "side_bar_enhancements": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "side_bar_enhancements",
+            "policy":       "ver_c178c12",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/titoBouzout/SideBarEnhancements.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sofi": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sofi",
+            "policy":       "ver_91c304c",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/tryexceptpass/sofi.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sortedcontainers": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sortedcontainers",
+            "policy":       "ver_v1.5.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/grantjenks/sorted_containers.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sqlalchemy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sqlalchemy",
+            "policy":       "ver_rel_1_0_15",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/zzzeek/sqlalchemy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "statsmodels": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "statsmodels",
+            "policy":       "ver_v0.8.0rc1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/statsmodels/statsmodels.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "styleguide": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "styleguide",
+            "policy":       "ver_6d3a7d8",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/google/styleguide.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_anaconda": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_anaconda",
+            "policy":       "ver_v2.0.8",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/DamnWidget/anaconda.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_anaconda_docs": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_anaconda_docs",
+            "policy":       "ver_cc50e43",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/DamnWidget/anaconda.developers.docs.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_anaconda_php": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_anaconda_php",
+            "policy":       "ver_v0.1.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/DamnWidget/anaconda_php.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_code_intel": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_code_intel",
+            "policy":       "ver_v3.0.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/SublimeCodeIntel/SublimeCodeIntel.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_git_gutter": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_git_gutter",
+            "policy":       "ver_1.3.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/jisaacks/GitGutter.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_jedi": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_jedi",
+            "policy":       "ver_0.8.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/srusskih/SublimeJEDI.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_linter": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_linter",
+            "policy":       "ver_v3.7.4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/SublimeLinter/SublimeLinter3.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_markdown_preview": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_markdown_preview",
+            "policy":       "ver_1.4.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/revolunet/sublimetext-markdown-preview.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_materialize": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_materialize",
+            "policy":       "ver_2.6.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/saadq/Materialize.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_plain_tasks": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_plain_tasks",
+            "policy":       "ver_2e19ff7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/aziz/PlainTasks.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_python_ide": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_python_ide",
+            "policy":       "ver_1.0.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/JulianEberius/SublimePythonIDE.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "sublime_repl": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "sublime_repl",
+            "policy":       "ver_2.1.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/wuub/SublimeREPL.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "subunit": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "subunit",
+            "policy":       "ver_1.1.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/testing-cabal/subunit.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "superdict": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "superdict",
+            "policy":       "ver_ad48e48",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/itdxer/superdict.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "tablib": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tablib",
+            "policy":       "ver_v0.11.3",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/kennethreitz/tablib.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "tdaemon": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tdaemon",
+            "policy":       "ver_733b5bd",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/brunobord/tdaemon.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "tdigest": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tdigest",
+            "policy":       "ver_b59ecbd",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/CamDavidsonPilon/tdigest.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "tdqm": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tdqm",
+            "policy":       "ver_v4.8.4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/tqdm/tqdm.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "tensorflow": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tensorflow",
+            "policy":       "ver_v0.10.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/tensorflow/tensorflow.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "tensorflow_models": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tensorflow_models",
+            "policy":       "ver_be7a899",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/tensorflow/models.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "testscenarios": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "testscenarios",
+            "policy":       "ver_0.5",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/testing-cabal/testscenarios.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "testtools": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "testtools",
+            "policy":       "ver_2.2.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/testing-cabal/testtools.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "theano": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "theano",
+            "policy":       "ver_rel-0.8.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Theano/Theano.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "toga": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "toga",
+            "policy":       "ver_v0.2.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pybee/toga.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "toolz": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "toolz",
+            "policy":       "ver_0.8.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pytoolz/toolz.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "tornado": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tornado",
+            "policy":       "ver_4.4.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/tornadoweb/tornado.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "trac": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "trac",
+            "policy":       "ver_1bef9d9",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/edgewall/trac.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+
+        "tup": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "tup",
+            "policy":       "ver_v0.7.5",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/gittup/tup.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "twine": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "twine",
+            "policy":       "ver_1.8.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/pypa/twine.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "twisted": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "twisted",
+            "policy":       "ver_twisted-16.4.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/twisted/twisted.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "txaio": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "txaio",
+            "policy":       "ver_v2.5.1",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/crossbario/txaio.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "unnaturalcode": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "unnaturalcode",
+            "policy":       "ver_601fbaf",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/orezpraw/unnaturalcode.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "vagrant": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "vagrant",
+            "policy":       "ver_v1.8.5",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/mitchellh/vagrant.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "vega_lite": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "vega_lite",
+            "policy":       "ver_v1.2.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/vega/vega-lite.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "vincent": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "vincent",
+            "policy":       "ver_0.4.4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/wrobstory/vincent.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "vispy": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "vispy",
+            "policy":       "ver_v0.4.0",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/vispy/vispy.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "waf": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "waf",
+            "policy":       "ver_waf-1.9.4",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/waf-project/waf.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "wdb": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "wdb",
+            "policy":       "ver_3.0.7",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Kozea/wdb.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "weasyprint": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "weasyprint",
+            "policy":       "ver_v0.31",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/Kozea/WeasyPrint.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "wsaccel": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "wsaccel",
+            "policy":       "ver_0.6",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/methane/wsaccel.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "xmutant": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "xmutant",
+            "policy":       "ver_4ad6f21",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/vrthra/xmutant.py.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
+            }
+        },
+
+        "zope_interface": {
+            "desc":         "TBD",
+            "notes":        "TBD",
+            "dirname":      "zope_interface",
+            "policy":       "ver_4.3.2",
+            "iface":        ["lib_python3"],
+            "path": {
+                "lib_python3":  "lib/python3"
+            },
+            "config": {
+                "method":   "automatic",
+                "tool":     "git",
+                "url":      "https://github.com/zopefoundation/zope.interface.git"
+            },
+            "build": {
+                "method":   "manual",
+                "tool":     "TBD"
             }
         }
     }

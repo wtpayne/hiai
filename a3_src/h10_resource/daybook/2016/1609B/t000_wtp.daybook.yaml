@@ -8,6 +8,14 @@ agenda:
       - i00007_mandate
       - i00008_development_automation
 
+  j0000040_simulation_framework:
+    - "Initial work towards a simulation framework."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
 chronicle:
 
   20160912:
@@ -34,3 +42,23 @@ chronicle:
     - j0000039_html_documentation_and_traceability:
       - "Work towards HTML documentation and traceability."
       - "Experiments with CSS only accordion UI elements."
+
+  20160921:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Node interface definitions."
+
+  20160922:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Node interface definitions."
+
+  20160924:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Node interface definitions."
+
+  20160926:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Node interface definitions."

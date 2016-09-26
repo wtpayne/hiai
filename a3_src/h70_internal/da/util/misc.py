@@ -429,7 +429,7 @@ def ensure_dir_exists(path):
 
     """
     try:
-        os.makedirs(path)
+        os.makedirs(path, exist_ok = True)
     except OSError:
         if not os.path.isdir(path):
             raise

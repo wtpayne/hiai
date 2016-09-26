@@ -314,7 +314,7 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
     # Ensure that the log directory exists
     #
     if not os.path.isdir(dirpath_log):
-        os.makedirs(dirpath_log)
+        os.makedirs(dirpath_log, exist_ok = True)
 
     # Ensure that we are performing a clean build
     # by removing the temporary in-source build
