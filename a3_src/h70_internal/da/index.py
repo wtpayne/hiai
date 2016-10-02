@@ -139,10 +139,10 @@ def index_coro(dirpath_lwc_root, indices = None):       # pylint: disable=R0912
 
     while True:
 
-        indices       = (line_index, references_index, objects_index)
-        build_element = (yield indices)
-        file          = build_element['file']
-        relpath       = build_element['relpath']
+        indices    = (line_index, references_index, objects_index)
+        build_unit = (yield indices)
+        file       = build_unit['file']
+        relpath    = build_unit['relpath']
 
         # The first pass over the file is for
         # relatively unsophisticated indexing

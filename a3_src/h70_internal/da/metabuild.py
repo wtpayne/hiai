@@ -48,6 +48,7 @@ license:
 
 import base64
 import collections
+import contextlib
 import hashlib
 import importlib
 import logging
@@ -68,8 +69,12 @@ import da.util
 import da.vcs
 
 
-# tblib enables us to pickle tracebacks so we can throw
-# exceptions across process boundaries.
+# tblib enables us to pickle tracebacks so we can
+# throw exceptions across process boundaries. This
+# allows us to throw an exception in the build
+# (sub)process and have it propagate up to the
+# the top level metabuild process.
+#
 tblib.pickling_support.install()
 
 
@@ -117,44 +122,25 @@ def main(cfg_key, cfg_extras, dirpath_lwc_root):
     cfg = da.bldcfg.load_cfg(cfg_key          = cfg_key,
                              cfg_extras       = cfg_extras,
                              dirpath_lwc_root = dirpath_lwc_root)
-    _signal_start_of_build(cfg)
 
-    # TODO: CONFIGURE ONLINE BUILD --
-    #       DO WE WANT IT ROLLING BACK ALL THE TIME?
-    with da.vcs.rollback_context(dirpath_root = dirpath_lwc_root):
-        _metabuild(cfg, dirpath_lwc_root)
+    # TODO: WHEN THE ONLINE/CONTINUOUS BUILD SERVICE
+    #       IS BEING USED, CONFIGURE THINGS SO THAT
+    #       WE DO NOT AUTOCOMMIT AND WE DO NOT ROLL
+    #       BACK. THIS SHOULD AVOID CHURNING THE GIT
+    #       REPOSITORY UNNECESSARILY...
+    #
+    with _signal_file_context(cfg):
+        with da.vcs.rollback_context(dirpath_root = dirpath_lwc_root):
+            _metabuild(cfg, dirpath_lwc_root)
 
-    _signal_end_of_build(cfg)
     return da.constants.META_BUILD_COMPLETED
 
 
-# -----------------------------------------------------------------------------
-def _signal_start_of_build(cfg):
+# ------------------------------------------------------------------------------
+@contextlib.contextmanager
+def _signal_file_context(cfg):
     """
-    Delete the META_BUILD_COMPLETED signalling file.
-
-    We want a very reliable method of signalling
-    to the developer when the build is complete.
-
-    We do this with an empty text file in the
-    temporary directory named
-      'META_BUILD_COMPLETED'.
-
-    At the start of the meta-build, we must check
-    for any such files that have been left by
-    previous meta-builds and remove them.
-
-    """
-    filepath_complete_flag = os.path.join(cfg['paths']['dirpath_meta_tmp'],
-                                          'META_BUILD_COMPLETED')
-    if os.path.isfile(filepath_complete_flag):
-        os.remove(filepath_complete_flag)
-
-
-# -----------------------------------------------------------------------------
-def _signal_end_of_build(cfg):
-    """
-    Create the META_BUILD_COMPLETED signalling file.
+    Manage the META_BUILD_COMPLETED signalling file.
 
     We want a very reliable method of signalling
     to the developer when the build is complete.
@@ -166,9 +152,16 @@ def _signal_end_of_build(cfg):
     This file is created at the end of the meta
     build.
 
+    At the start of the meta-build, we must check
+    for any such files that have been left by
+    previous meta-builds and remove them.
+
     """
     filepath_complete_flag = os.path.join(cfg['paths']['dirpath_meta_tmp'],
                                           'META_BUILD_COMPLETED')
+    if os.path.isfile(filepath_complete_flag):
+        os.remove(filepath_complete_flag)
+    (yield)
     with open(filepath_complete_flag, 'wb'):
         pass
 
@@ -177,12 +170,6 @@ def _signal_end_of_build(cfg):
 def _metabuild(cfg, dirpath_lwc_root):
     """
     Return COMPLETED if all subsidiary builds complete else throw an Exception.
-
-    If so configured, we automatically commit local
-    changes and take a second baseline.
-
-    and automatically commit all local
-    changes to the re
 
     A number of baselines are used to manage the
     design configuration for the duration of the
@@ -222,11 +209,11 @@ def _metabuild(cfg, dirpath_lwc_root):
     _tmp_dir_cleaning(cfg, dirpath_meta_tmp)
 
     # Note changed files for incremental builds and build prioritisation.
-    cfg['changed_files'] = da.vcs.files_changed_in_lwc(dirpath_lwc_root)
+    cfg['changed_files'] = da.vcs.changed_files(dirpath_lwc_root)
 
     # Create the auto-commit baseline.
-    da.vcs.auto_commit(cfg, dirpath_lwc_root)
-    auto_commit_baseline_id = da.vcs.get_configuration_id(dirpath_lwc_root)
+    auto_commit_baseline_id = da.vcs.auto_commit(cfg, dirpath_lwc_root)
+
     commit_info = da.vcs.commit_info(
                                 dirpath_root = dirpath_lwc_root,
                                 ref          = auto_commit_baseline_id)
@@ -254,6 +241,7 @@ def _metabuild(cfg, dirpath_lwc_root):
                                     ref          = defined_baseline_id)
         cfg = da.util.merge_dicts(cfg, { 'defined_baseline': commit_info })
         safe_branch_name = _safe_branch_name(commit_info['branch'])
+        cfg['safe_branch_name'] = safe_branch_name
         cfg = _set_build_paths(cfg, dirpath_meta_tmp, safe_branch_name)
 
         # Use the hash code as an absolute
@@ -269,10 +257,10 @@ def _metabuild(cfg, dirpath_lwc_root):
         # Isolate a clean copy of the design
         # documents to be built.
         #
-        da.vcs.ensure_cloned(
-            dirpath_local = cfg['paths']['dirpath_isolated_src'],
-            url_remote    = dirpath_lwc_root,
-            ref           = system_configuration_under_test)
+        da.vcs.clone_all_design_documents(
+            dirpath_lwc_root    = dirpath_lwc_root,
+            dirpath_destination = cfg['paths']['dirpath_isolated_src'],
+            configuration       = system_configuration_under_test)
 
         # TODO: Consider eagerly mounting
         #       "a0_env"; "a2_dat" and "a5_cms"
@@ -391,15 +379,15 @@ def _set_build_paths(cfg, dirpath_meta_tmp, safe_branch_name):
     incremental builds to be used.
 
     """
-    dirpath_meta_cms     = cfg['paths']['dirpath_meta_cms']
-    dirpath_branch_cms   = os.path.join(dirpath_meta_cms, safe_branch_name)
-    dirpath_branch_tmp   = os.path.join(dirpath_meta_tmp, safe_branch_name)
-    dirpath_isolated_src = os.path.join(dirpath_branch_tmp, 'src')
-    dirpath_branch_log   = os.path.join(dirpath_branch_tmp, 'log')
+    dirpath_meta_cms   = cfg['paths']['dirpath_meta_cms']
+    dirpath_branch_cms = os.path.join(dirpath_meta_cms, safe_branch_name)
+    dirpath_branch_tmp = os.path.join(dirpath_meta_tmp, safe_branch_name)
+    dirpath_branch_log = os.path.join(dirpath_branch_tmp, 'log')
+    dirpath_branch_src = os.path.join(dirpath_branch_tmp, 'src')
     cfg['paths']['dirpath_branch_cms']   = dirpath_branch_cms
     cfg['paths']['dirpath_branch_tmp']   = dirpath_branch_tmp
     cfg['paths']['dirpath_branch_log']   = dirpath_branch_log
-    cfg['paths']['dirpath_isolated_src'] = dirpath_isolated_src
+    cfg['paths']['dirpath_isolated_src'] = dirpath_branch_src
     return cfg
 
 
@@ -488,7 +476,9 @@ def _build_and_evaluate_design(cfg):
     # defined results file.
     #
     if not os.path.isfile(filepath_result):
-        raise RuntimeError('Could not find result file from build.')
+        raise RuntimeError(
+            'Could not find result file from subsidiary build process. '
+            'It seems to have terminated unexpectedly.')
     with open(filepath_result, 'rb', buffering = 1) as file_result:
         result = pickle.load(file_result)
 

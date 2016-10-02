@@ -85,6 +85,23 @@ class SpecifyGenTopLevelFunctionNames:
 
 
 # =============================================================================
+class SpecifyGenTopLevelMethodNames:
+    """
+    Specify the da.python_source.gen_top_level_method_names() function.
+
+    """
+
+    # -------------------------------------------------------------------------
+    def it_is_callable(self):
+        """
+        The gen_top_level_method_names() function is callable.
+
+        """
+        import da.python_source
+        assert callable(da.python_source.gen_top_level_method_names)
+
+
+# =============================================================================
 class Specify_GenCommentAndDocstrToks:
     """
     Specify the _gen_comment_and_docstr_toks() function.

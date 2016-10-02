@@ -32,6 +32,7 @@ license:
 
 
 import contextlib
+import itertools
 import json
 import os
 import re
@@ -40,6 +41,7 @@ import sys
 import figleaf
 import pytest
 
+import da.check.constants
 import da.lwc.file
 import da.python_source
 import da.util
@@ -50,9 +52,9 @@ _REGEX_CAMEL2UNDER = re.compile('((?<=[a-z0-9])[A-Z]|(?!^)[A-Z](?=[a-z]))')
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def coro(dirpath_src, error_handler):
+def coro(dirpath_src, build_monitor):
     """
-    Send errors to error_handler if the unit tests for supplied modules fail.
+    Send errors to build_monitor if the unit tests for supplied modules fail.
 
     """
     dirpath_internal = da.lwc.discover.path(
@@ -62,9 +64,9 @@ def coro(dirpath_src, error_handler):
 
     while True:
 
-        build_element = (yield)
+        build_unit = (yield)
 
-        filepath_module = build_element['filepath']
+        filepath_module = build_unit['filepath']
 
         # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath_module):
@@ -74,15 +76,19 @@ def coro(dirpath_src, error_handler):
         if da.lwc.file.is_experimental(filepath_module):
             continue
 
+        # Ignore documents that failed to parse..
+        if 'ast' not in build_unit:
+            continue
+
         # Check to ensure that the test files, classes and methods are present.
-        _check_static_coverage(build_element, error_handler)
+        _check_static_coverage(build_unit, build_monitor)
 
         filepath_test = da.lwc.file.specification_filepath_for(filepath_module)
         if not os.path.isfile(filepath_test):
             continue
 
         # Ensure the test results dir exists.
-        dirpath_log = build_element['dirpath_log']
+        dirpath_log = build_unit['dirpath_log']
         da.util.ensure_dir_exists(dirpath_log)
 
         # Define test result files.
@@ -101,6 +107,7 @@ def coro(dirpath_src, error_handler):
             exit_code = pytest.main(
                             [filepath_test,
                              '-p', 'da.check.pytest_da',
+                             # '-m', 'ci'
                              '--capture=no',
                              '-c='             + filepath_ini,
                              '--result-log='   + filepath_pytest_log,
@@ -113,7 +120,16 @@ def coro(dirpath_src, error_handler):
             _report_unit_test_failure(filepath_test,
                                       filepath_pytest_json,
                                       dirpath_src,
-                                      error_handler)
+                                      build_monitor)
+
+            # The coverage metric is not valid if
+            # the test aborted early due to a test
+            # criterion failing or some sort of
+            # error. We therefore only collect
+            # coverage metrics when the test
+            # passes.
+            #
+            continue
 
         # Get coverage data grouped by file.
         with open(filepath_cover_pickle, 'rb') as figleaf_pickle:
@@ -133,7 +149,7 @@ def coro(dirpath_src, error_handler):
         # Get the design elements in the current document that require
         # test coverage.
         #
-        ast_module      = build_element['ast']
+        ast_module      = build_unit['ast']
         module_name     = da.python_source.get_module_name(filepath_module)
         design_elements = list(da.python_source.gen_ast_paths_depth_first(
                                                     ast_module, module_name))
@@ -151,15 +167,12 @@ def coro(dirpath_src, error_handler):
         # level coverage and line-level coverage.
         #
         if len(design_elements) > 1 and filepath_module not in cov_by_file:
-            relpath_module = build_element['relpath']
-            error_handler.send({
-                'tool':   'pytest',
-                'msg_id': 'U101',
-                'msg':    'No test coverage for module: ' + relpath_module,
-                'file':   filepath_test,
-                'line':   1,
-                'col':    0
-            })
+            relpath_module = build_unit['relpath']
+            build_monitor.report_nonconformity(
+                tool    = 'pytest',
+                msg_id  = da.check.constants.PYTEST_NO_COVERAGE,
+                msg     = 'No test coverage for module: ' + relpath_module,
+                path    = filepath_test)
             continue
 
         # For traceability, we can gather sections
@@ -199,7 +212,7 @@ def _pytest_context(dirpath_cwd, filepath_stdout, filepath_stderr):
 def _report_unit_test_failure(filepath_test,
                               filepath_pytest_json,
                               dirpath_src,
-                              error_handler):
+                              build_monitor):
     """
     Report on the failure of a specific test case.
 
@@ -212,7 +225,7 @@ def _report_unit_test_failure(filepath_test,
         if test['outcome'] == 'passed':
             continue
 
-        for stage in (test['setup'], test['call'], test['teardown']):
+        for stage in _iter_test_stages(test):
 
             if stage['outcome'] == 'passed':
                 continue
@@ -242,18 +255,32 @@ def _report_unit_test_failure(filepath_test,
                         (relpath_err, line_err) = last_line.split(':')[0:2]
                         filepath_err = os.path.join(dirpath_src, relpath_err)
 
-            error_handler.send({
-                'tool':   'pytest',
-                'msg_id': 'U200',
-                'msg':    message,
-                'file':   filepath_err,
-                'line':   line_err,
-                'col':    0
-            })
+            build_monitor.report_nonconformity(
+                tool    = 'pytest',
+                msg_id  = da.check.constants.PYTEST_TEST_NOT_PASSED,
+                msg     = message,
+                path    = filepath_err,
+                line    = line_err)
 
 
 # -----------------------------------------------------------------------------
-def _check_static_coverage(build_element, error_handler):
+def _iter_test_stages(test):
+    """
+    Yield each test stage that is present in the specified test report.
+
+    """
+    if 'setup' in test:
+        yield test['setup']
+
+    if 'call' in test:
+        yield test['call']
+
+    if 'teardown' in test:
+        yield test['teardown']
+
+
+# -----------------------------------------------------------------------------
+def _check_static_coverage(build_unit, build_monitor):
     """
     Send an error message to the handler if static coverage is incorrect.
 
@@ -266,27 +293,26 @@ def _check_static_coverage(build_element, error_handler):
     # we don't require any tests.
     #
     top_level_functions = list(da.python_source.gen_top_level_function_names(
-                                                        build_element['ast']))
-    if not top_level_functions:
+                                                            build_unit['ast']))
+    top_level_methods   = list(da.python_source.gen_top_level_method_names(
+                                                            build_unit['ast']))
+    if not (top_level_functions or top_level_methods):
         return
 
     # If we have at least one function to be tested,
     # then we need a file to put our tests in.
     #
-    relpath_module = build_element['relpath']
-    if 'spec' not in build_element:
-        filepath_module = build_element['filepath']
+    relpath_module = build_unit['relpath']
+    if 'spec' not in build_unit:
+        filepath_module = build_unit['filepath']
         filepath_spec   = da.lwc.file.specification_filepath_for(
                                                             filepath_module)
         msg = 'No spec found for module: {name}'.format(name = relpath_module)
-        error_handler.send({
-            'tool':   'pytest_static_coverage',
-            'msg_id': 'U100',
-            'msg':    msg,
-            'file':   filepath_spec,
-            'line':   1,
-            'col':    0
-        })
+        build_monitor.report_nonconformity(
+            tool    = 'pytest_static_coverage',
+            msg_id  = da.check.constants.PYTEST_NO_SPEC,
+            msg     = msg,
+            path    = filepath_spec)
         # If we don't have a test file, then our
         # other checks are pretty much meaningless,
         # so we can return early here. This allows
@@ -296,12 +322,21 @@ def _check_static_coverage(build_element, error_handler):
         #
         return
 
+    if 'ast' not in build_unit['spec']:
+        build_monitor.report_nonconformity(
+            tool    = 'pytest_static_coverage',
+            msg_id  = da.check.constants.PYTEST_NO_SPEC,
+            msg     = 'Spec not syntactically valid.',
+            path    = build_unit['spec']['filepath'])
+        return
+
     (permitted_test_class_names,
      mandatory_test_class_names) = _get_expected_test_class_names(
-                                                        top_level_functions)
+                                                        top_level_functions,
+                                                        top_level_methods)
 
     test_classes = list(da.python_source.gen_top_level_class_names(
-                                                build_element['spec']['ast']))
+                                                    build_unit['spec']['ast']))
 
     # Check that all the class names in our test
     # suite correspond to one of the functions
@@ -312,14 +347,11 @@ def _check_static_coverage(build_element, error_handler):
             msg = 'Bad test class: {name} for: {module}'.format(
                                             name   = test_class,
                                             module = relpath_module)
-            error_handler.send({
-                'tool':   'pytest_static_coverage',
-                'msg_id': 'U200',
-                'msg':    msg,
-                'file':   build_element['spec']['filepath'],
-                'line':   1,
-                'col':    0
-            })
+            build_monitor.report_nonconformity(
+                tool    = 'pytest_static_coverage',
+                msg_id  = da.check.constants.PYTEST_BAD_TEST_CLASS,
+                msg     = msg,
+                path    = build_unit['spec']['filepath'])
 
     # Check to make sure that each public function
     # or method in the srcfile has a corresponding
@@ -333,18 +365,15 @@ def _check_static_coverage(build_element, error_handler):
     if missing_classes:
         msg = 'Missing test classes {missing}.'.format(
                                             missing = repr(missing_classes))
-        error_handler.send({
-            'tool':   'pytest_static_coverage',
-            'msg_id': 'U200',
-            'msg':    msg,
-            'file':   build_element['spec']['filepath'],
-            'line':   1,
-            'col':    0
-        })
+        build_monitor.report_nonconformity(
+            tool    = 'pytest_static_coverage',
+            msg_id  = da.check.constants.PYTEST_NO_TEST_CLASS,
+            msg     = msg,
+            path    = build_unit['spec']['filepath'])
 
 
 # -----------------------------------------------------------------------------
-def _get_expected_test_class_names(top_level_functions):
+def _get_expected_test_class_names(top_level_functions, top_level_methods):
     """
     Return permitted and mandatory test class names.
 
@@ -360,18 +389,54 @@ def _get_expected_test_class_names(top_level_functions):
     No other test classes are currently allowed.
 
     """
+    gen_test_classes = itertools.chain(
+                            _gen_method_test_classes(top_level_methods),
+                            _gen_function_test_classes(top_level_functions))
+
     permitted_test_class_names = list()
     mandatory_test_class_names = list()
 
-    for under_name in top_level_functions:
-
-        name_parts  = under_name.split('_')
-        pascal_name = ''.join(part.capitalize() or '_' for part in name_parts)
-        test_class  = 'Specify{pascal_name}'.format(pascal_name = pascal_name)
-        is_private  = under_name.startswith('_')
-
+    for (test_class, is_public) in gen_test_classes:
         permitted_test_class_names.append(test_class)
-        if not is_private:
+        if is_public:
             mandatory_test_class_names.append(test_class)
 
     return (permitted_test_class_names, mandatory_test_class_names)
+
+
+# -----------------------------------------------------------------------------
+def _gen_method_test_classes(iter_method_path):
+    """
+    Yield a class name and is-private flag for each provided method path.
+
+    """
+    for path in iter_method_path:
+        (class_name, method_name) = path.split('.')
+        test_class = 'Specify{class_name}{pascal_name}'.format(
+                        class_name  = class_name,
+                        pascal_name = _underscore_to_pascal_case(method_name))
+        is_public = not method_name.startswith('_')
+        yield (test_class, is_public)
+
+
+# -----------------------------------------------------------------------------
+def _gen_function_test_classes(iter_function_names):
+    """
+    Yield a class name and is-private flag for each provided function name.
+
+    """
+    for function_name in iter_function_names:
+        pascal_name = _underscore_to_pascal_case(function_name)
+        test_class  = 'Specify{pascal_name}'.format(pascal_name = pascal_name)
+        is_public   = not function_name.startswith('_')
+        yield (test_class, is_public)
+
+
+# -----------------------------------------------------------------------------
+def _underscore_to_pascal_case(underscore_name):
+    """
+    Return a PascalCase version of the supplied underscore delimited name.
+
+    """
+    name_parts = underscore_name.split('_')
+    return ''.join(part.capitalize() or '_' for part in name_parts)

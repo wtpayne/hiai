@@ -1,0 +1,37 @@
+title:
+  "Process register."
+
+
+introduction:
+  "Processes and procedures are registered here."
+
+
+register:
+
+  s00_agreement:
+    name:
+      "Agreement processes."
+
+  s01_organisational:
+    name:
+      "Organisational project-enabling processes."
+
+  s02_project:
+    name:
+      "Project processes."
+
+  s03_technical:
+    name:
+      "Technical processes."
+
+  s04_software_implementation:
+    name:
+      "Software implementation processes."
+
+  s05_software_support:
+    name:
+      "Software support processes."
+
+  s06_software_reuse:
+    name:
+      "Software reuse processes."

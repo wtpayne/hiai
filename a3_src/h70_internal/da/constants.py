@@ -30,8 +30,8 @@ license:
 ...
 """
 
-META_BUILD_COMPLETED = 0
-META_BUILD_ABORTED   = 1
-BUILD_COMPLETED      = 0
-BUILD_ABORTED        = 1
-PICKLE_PROTOCOL      = 4  # Highest available at time of writing.
+META_BUILD_COMPLETED    = 0
+META_BUILD_ABORTED      = 1
+BUILD_COMPLETED         = 0
+BUILD_ABORTED           = 1
+PICKLE_PROTOCOL         = 4  # Highest available at time of writing.

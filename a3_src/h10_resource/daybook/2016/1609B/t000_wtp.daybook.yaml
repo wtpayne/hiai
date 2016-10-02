@@ -16,6 +16,14 @@ agenda:
       - i00007_mandate
       - i00008_development_automation
 
+  j0000041_dependency_registration_check:
+    - "Check that all items in the dependency folder have been registered."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
 chronicle:
 
   20160912:
@@ -62,3 +70,46 @@ chronicle:
     - j0000040_simulation_framework:
       - "Initial work towards a simulation framework."
       - "Node interface definitions."
+
+  20160928:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Node interface definitions."
+
+  20160929:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Adding simulation tools to dependencies;
+        Adding validation to dependencies register;
+        Refactoring build so validation has somewhere
+        to go; Separating build monitoring out into
+        a separate module so we can support more
+        sophisticated user interfaces such as
+        the Anaconda Sublime Text plugin."
+
+  20160930:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Work through errors; Think about dependency
+        interfaces. How do we support multiple CLI
+        or GUI binaries / entry-points per dependency?"
+
+  20161001:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Work through errors; Think about dependency
+        interfaces. How do we support multiple CLI
+        or GUI binaries / entry-points per dependency?"
+
+  20161002:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Work through errors; Get dependency registry
+        back up and running. Still need to refine
+        build monitor class so we get a UI display
+        back again. Also need to figure out how we
+        can test the build monitor class. Also
+        need to figure out a way of getting a more
+        readable and uniform error and nonconformity
+        report at the CLI. Issue proper error messages
+        when syntax errors occur."

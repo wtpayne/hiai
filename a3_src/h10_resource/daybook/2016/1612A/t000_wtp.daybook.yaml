@@ -1,0 +1,66 @@
+agenda:
+
+  j0000040_simulation_framework:
+    - "Initial work towards a simulation framework."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20161128:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "System test case definition."
+
+  20161129:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Multiple repos."
+
+  20161130:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add support for multiple repos."
+
+  20161201:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add support for multiple repos."
+
+  20161202:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add support for multiple repos."
+
+  20161204:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add support for multiple repos."
+
+  20161205:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add support for multiple repos."
+
+  20161206:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add support for multiple repos."
+
+  20161207:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add support for multiple repos."
+
+  20161208:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add more support for multiple repos."
+
+  20161211:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add more support for multiple repos."

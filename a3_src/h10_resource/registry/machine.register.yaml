@@ -16,3 +16,7 @@ register:
   z0001_baron:
     hostname:   "baron"
     desc:       "Linode CI VM."
+
+  z0002_cadet:
+    hostname:   "cadet"
+    desc:       "Windows 8.1 VM."

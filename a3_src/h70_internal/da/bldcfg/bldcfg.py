@@ -43,7 +43,6 @@ import da.lwc
 import da.team
 import da.machine
 import da.timebox
-import da.vcs
 
 
 DATEFMT_DATETIME_UTC = '%Y-%m-%dT%H:%M:%S.%f'
@@ -355,24 +354,28 @@ def _create_paths_record(cfg):
     Create the filesystem paths part of the configuration structure.
 
     """
-    dirpath_lwc_root = cfg['paths']['dirpath_lwc_root']
-    rootpath_tmp     = da.lwc.discover.path(
-                                        key              = "tmp",
-                                        dirpath_lwc_root = dirpath_lwc_root)
-    rootpath_cms     = da.lwc.discover.path(
-                                        key              = "cms",
-                                        dirpath_lwc_root = dirpath_lwc_root)
+    dirpath_lwc_root  = cfg['paths']['dirpath_lwc_root']
+    dirpath_bulk_data = da.lwc.discover.path(
+                                         key              = "dat",
+                                         dirpath_lwc_root = dirpath_lwc_root)
+    rootpath_tmp      = da.lwc.discover.path(
+                                         key              = "tmp",
+                                         dirpath_lwc_root = dirpath_lwc_root)
+    rootpath_cms      = da.lwc.discover.path(
+                                         key              = "cms",
+                                         dirpath_lwc_root = dirpath_lwc_root)
 
-    cfg_name         = cfg['cfg_name']
-    dirpath_meta_tmp = os.path.join(rootpath_tmp, cfg_name)
-    dirpath_meta_log = os.path.join(dirpath_meta_tmp, 'log')
-    dirpath_meta_cms = os.path.join(rootpath_cms,
-                                    cfg['timestamp']['iso_year_id'],
-                                    cfg['timestamp']['timebox_id'],
-                                    cfg_name)
+    cfg_name          = cfg['cfg_name']
+    dirpath_meta_tmp  = os.path.join(rootpath_tmp, cfg_name)
+    dirpath_meta_log  = os.path.join(dirpath_meta_tmp, 'log')
+    dirpath_meta_cms  = os.path.join(rootpath_cms,
+                                     cfg['timestamp']['iso_year_id'],
+                                     cfg['timestamp']['timebox_id'],
+                                     cfg_name)
     return {
         'paths': {
             'dirpath_lwc_root':     dirpath_lwc_root,
+            'dirpath_bulk_data':    dirpath_bulk_data,
             'rootpath_tmp':         rootpath_tmp,
             'rootpath_cms':         rootpath_cms,
             'dirpath_meta_tmp':     dirpath_meta_tmp,

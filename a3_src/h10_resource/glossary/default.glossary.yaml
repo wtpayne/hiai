@@ -1,56 +1,104 @@
-build:
-  def:  "A process whereby a set of build output artifacts are generated
-        in accordance with a design configuration, and where the design
-        configuration is specified by a set of consistent and conformant
-        design documents."
-  alt:  ["build", "build process"]
+ad:
+  def:  "Applicable document."
+  alt:  ["AD"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
+boresight:
+  def:  "The primary axis of a sensor. For a camera,
+        this is the primary optical axis of the lens.
+        For a radar, this is the axis of maximum gain."
+  alt:  ["boresight"]
   tag:  ["noun"]
   ref:  []
 
 
-build_element:
-  def:  "A package containing design documents together with related
-        specifications, tests and build recipes."
-  alt:  ["build element"]
+build:
+  def:  "A process whereby a set of build output
+        artifacts are generated in accordance with
+        a design configuration, and where the design
+        configuration is specified by a set of
+        consistent and conformant design documents."
+  alt:  ["build", "build process"]
   tag:  ["noun"]
   ref:  []
 
 
 build_output_artifacts:
-  def:  "An item that has been generated as the result of the operation of
-        a build process. This is normally a digital file such as a binary
-        executable, a pdf, a web page, or some other document."
+  def:  "An item that has been generated as the result
+        of the operation of a build process. This is
+        normally a digital file such as a binary
+        executable, a pdf, a web page, or some other
+        document."
   alt:  ["build", "build process"]
   tag:  ["noun"]
   ref:  []
 
 
+build_unit:
+  def:  "A package containing (pre-integration) design
+        documents together with related specifications,
+        tests and build recipes."
+  alt:  ["build unit"]
+  tag:  ["noun"]
+  ref:  []
+
+
+cad:
+  def:  "Computer Aided Design."
+  alt:  ["CAD"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
 camel_case:
-  def:  "An identifier capitalisation style where the first letter of each
-        word is written in upper case, excluding the first: camelCase"
+  def:  "An identifier capitalisation style where the
+        first letter of each word is written in upper
+        case, excluding the first: camelCase"
   alt:  ["pascal case"]
   tag:  ["noun"]
   ref:  []
 
 
+com:
+  def:  "Centre of Mass."
+  alt:  ["CoM"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
+coordinate_system:
+  def:  "A method of specifying the position of a
+        point or of specifying a direction with
+        respect to a particular frame"
+  alt:  ["coordinate system"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
 design_configuration:
-  def:  "The term 'design configuration' is defined as a set of design
-        decisions which collectively specify one or more designs. A design
-        configuration is represented by a set of design documents, and is
-        identified by the git SHA-1 digest for the relevant repository
-        revision. Any act which changes a design should also result in a
-        change to the design configuration."
+  def:  "The term 'design configuration' is defined as a
+        set of design decisions which collectively specify
+        one or more designs. A design configuration is
+        represented by a set of design documents, and
+        is identified by the git SHA-1 digest for the
+        relevant repository revision. Any act which
+        changes a design should also result in a change
+        to the design configuration."
   alt:  ["design element"]
   tag:  ["noun"]
   ref:  []
 
 
 design_decision:
-  def:  "A decision made in the course of creating a design. The
-        granularity and impact of design decisions can vary wildly.
-        Some design decisions play a key role in safety or performance,
-        and are documented and tracked as part of the development process.
-        A design decision may be represented by one or more design elements
+  def:  "A decision made in the course of creating a
+        design. The granularity and impact of design
+        decisions can vary wildly. Some design decisions
+        play a key role in safety or performance, and
+        are documented and tracked as part of the
+        development process. A design decision may be
+        represented by one or more design elements
         contained within one or more design documents."
   alt:  ["design element"]
   tag:  ["noun"]
@@ -66,22 +114,156 @@ design_document:
 
 
 design_element:
-  def:  "The representation of a part of a design which is sufficiently
-        compact and small for it to be considered as if it were an
-        irreducible atom. Design elements live at the level of individual
-        parameter values; expressions; control constructs and small one or
-        two line functions."
+  def:  "The representation of a part of a design which
+        is sufficiently compact and small for it to be
+        considered as if it were an irreducible atom.
+        Design elements live at the level of individual
+        parameter values; expressions; control constructs
+        and small one or two line functions."
   alt:  ["design element"]
   tag:  ["noun"]
   ref:  []
 
 
+dof:
+  def:  "Degree of Freedom."
+  alt:  ["DoF"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
+frame:
+  def:  "A triad of axes, together with an origin"
+  alt:  ["frame"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
+inertial_frame:
+  def:  "A non-rotating frame. Inertial reference directions are fixed at
+        an epoch."
+  alt:  ["inertial frame"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
+iso:
+  def:  "International organisation for standardisation."
+  alt:  ["ISO"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
+
+
+optoelectronic_subsystem:
+  def:  "The optoelectronic subsystem consists of both the camera optical
+        components and the photosensitive electronic components. It does
+        not necessarily include camera mechanical components such as
+        housings or brackets."
+  alt:  ["Optoelectronic subsystem"]
+  tag:  ["noun"]
+  ref:  []
+
+
 pascal_case:
-  def:  "An identifier capitalisation style where the first letter of each
-        word is written in upper case, including the first: PascalCase."
+  def:  "An identifier capitalisation style where the
+        first letter of each word is written in upper
+        case, including the first: PascalCase."
   alt:  ["pascal case"]
   tag:  ["noun"]
   ref:  []
+
+
+recording:
+  def:  "A recording may consist of data from multiple
+        sensors and may be stored across multiple files.
+        The defining characteristics of a recording are
+        that it originates from a system with a single
+        defined configuration; that it has a defined
+        start point and end point, and that data is
+        collected continuously between the start point
+        and the end point."
+  alt:  ["recording"]
+  tag:  ["noun"]
+  ref:  []
+
+
+recording_stream:
+  def:  "A recording stream is part of a recording.
+        It consists of a sequence of bytes originating
+        from a single sensor. As recordings may consist
+        of data from multiple high-bandwidth sensors,
+        the aggregate bandwidth may exceed that which
+        is provided by available physical media. It
+        is therefore not unreasonable for recordings
+        to be multiplexed on a stream-by-stream basis
+        across multiple physical media devices."
+  alt:  ["recording stream"]
+  tag:  ["noun"]
+  ref:  []
+
+
+recording_expedition:
+  def:  "A recording expedition consists of a set of
+        recording sessions; possibly made using
+        different recording platforms, but planned
+        and excuted together by the same team in
+        the same geographic location. A defence
+        industry trial that is conducted in a single
+        location over a period of between one and
+        three weeks will constitute a single
+        recording expedition. Continuous recording
+        activities are also split into expeditions,
+        one for each two to three week time-box
+        period."
+  alt:  ["recording expedition"]
+  tag:  ["noun"]
+  ref:  []
+
+
+recording_platform:
+  def:  "A recording platform is a system with a
+        defined configuration that is capable of
+        generating recordings. Typically, a recording
+        platform will be synonymous with a vehicle
+        of some sort, although it is also possible
+        to manage static data recording systems and
+        bench test rigs in the same manner. If one
+        vehicle has multiple independent data recording
+        systems fitted, then it may be possible to
+        consider each data recording system as a
+        separate recording platform or recording
+        platform configuration."
+  alt:  ["recording platform"]
+  tag:  ["noun"]
+  ref:  []
+
+
+recording_platform_configuration:
+  def:  "The recording platform configuration concept
+        refers to a specific physical recording platform
+        in a particular configuration."
+  alt:  ["recording platform configuration"]
+  tag:  ["noun"]
+  ref:  []
+
+
+recording_session:
+  def:  "A recording session consists of multiple
+        recordings all originating from the same
+        configuration and all recorded on the same
+        set of physical media. All recordings in
+        a session will normally be captured on the
+        same day an in the same geographic location."
+  alt:  ["recording session"]
+  tag:  ["noun"]
+  ref:  []
+
+
+si:
+  def:  "Systeme International."
+  alt:  ["SI"]
+  tag:  ["noun"]
+  ref:  ["ecss-e-10-09a-draft-1 - Systems Engineering - Coordinate Systems"]
 
 
 specification_document:
@@ -90,5 +272,3 @@ specification_document:
          "specification file"]
   tag:  ["noun"]
   ref:  []
-
-

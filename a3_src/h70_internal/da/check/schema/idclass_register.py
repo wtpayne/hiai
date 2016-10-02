@@ -33,6 +33,7 @@ license:
 from good import (Extra,
                   Match,
                   Range,
+                  Optional,
                   Reject,
                   Schema)
 
@@ -53,8 +54,9 @@ def get():
         'register': {
             common.LOWERCASE_NAME: {
                 'desc':                 common.TITLE_TEXT,
-                'pfix':                 Match(r'[a-z]{1,3}'),
-                'dgts':                 Range(1, 12),
+                Optional('pfix'):       Match(r'[a-z]{1,3}'),
+                Optional('dgts'):       Range(1, 12),
+                Optional('expr'):       str,
                 'note':                 common.PARAGRAPH_TEXT
             }
         },

@@ -54,6 +54,7 @@ class SpecifyLoadCfg:
     """
 
     # -------------------------------------------------------------------------
+    # @pytest.mark.da
     def it_finds_configuration_when_cfg_key_matches_exactly(
                                                     self, dirpath_lwc_root):
         """

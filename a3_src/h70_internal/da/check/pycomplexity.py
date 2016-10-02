@@ -48,15 +48,15 @@ import da.lwc.discover
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def coro(error_handler):
+def coro(build_monitor):
     """
-    Send errors to error_handler if supplied files exceed complexity limits.
+    Send errors to build_monitor if supplied files exceed complexity limits.
 
     """
     while True:
-        build_element = (yield)
 
-        filepath = build_element['filepath']
+        build_unit = (yield)
+        filepath   = build_unit['filepath']
 
         # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath):
@@ -71,8 +71,8 @@ def coro(error_handler):
         module_name    = da.python_source.get_module_name(filepath)
         for function in da.python_source.gen_functions(
                                     module_name = module_name,
-                                    source_text = build_element['content'],
-                                    root_node   = build_element['ast']):
+                                    source_text = build_unit['content'],
+                                    root_node   = build_unit['ast']):
 
             (raw, mccabe, halstead, ratios) = _analyse(function)
 
@@ -82,8 +82,7 @@ def coro(error_handler):
             setattr(function, 'da_halstead', halstead)
             setattr(function, 'da_ratios',   ratios)
             setattr(function, 'da_filepath', filepath)
-            for nonconformity in _gen_nonconformities(function):
-                error_handler.send(nonconformity)
+            _report_nonconformities(build_monitor, function)
 
             # Format complexity metrics for logging.
             complexity_log[function.da_addr] = {
@@ -94,7 +93,7 @@ def coro(error_handler):
             }
 
         # Write to log file.
-        dirpath_log         = build_element['dirpath_log']
+        dirpath_log         = build_unit['dirpath_log']
         filepath_complexity = os.path.join(dirpath_log, 'complexity.jseq')
         da.util.ensure_dir_exists(dirpath_log)
         with open(filepath_complexity, 'wt') as file_log:
@@ -131,9 +130,9 @@ def _analyse(function):
 
 
 # -----------------------------------------------------------------------------
-def _gen_nonconformities(func):
+def _report_nonconformities(build_monitor, fcn):
     """
-    Yield radon  nonconformity reports for function.
+    Report complexity nonconformities to the build_monitor.
 
     Raw metrics:
     ===========
@@ -171,26 +170,29 @@ def _gen_nonconformities(func):
     bugs              - scaled volume.
 
     """
-    for (err_id, name, metric, limit) in (
-            ('r01', 'Logical lines',     func.da_raw.lloc,               60),
-            ('r02', 'McCabe complexity', func.da_mccabe.complexity,      18),
-            ('r03', 'Halstead vocab.',   func.da_halstead.vocabulary,    50),
-            ('r04', 'Halstead length',   func.da_halstead.length,        50),
-            ('r05', 'Halstead effort',   func.da_halstead.effort,       800),
-            ('r05', 'Halstead time',     func.da_halstead.time,         100),
-            ('r06', 'Halstead bugs',     func.da_halstead.bugs,        0.08),
-            ('r07', 'lloc/comment',      func.da_ratios.lloc_pcl,      25.0),
-            ('r08', 'mmcabe/comment',    func.da_ratios.mccabe_pcl,     7.0),
-            ('r09', 'effort/comment',    func.da_ratios.effort_pcl,   300.0)):
+    # PyLint style msg_ig (in range not used by PyLint) R for Refactor: R####.
+    for (msg_id, name, metric, limit) in (
+            ('R0961', 'Logical lines',     fcn.da_raw.lloc,               60),
+            ('R0962', 'McCabe complexity', fcn.da_mccabe.complexity,      18),
+            ('R0963', 'Halstead vocab.',   fcn.da_halstead.vocabulary,    50),
+            ('R0964', 'Halstead length',   fcn.da_halstead.length,        50),
+            ('R0965', 'Halstead effort',   fcn.da_halstead.effort,       800),
+            ('R0965', 'Halstead time',     fcn.da_halstead.time,         100),
+            ('R0966', 'Halstead bugs',     fcn.da_halstead.bugs,        0.08),
+            ('R0967', 'lloc/comment',      fcn.da_ratios.lloc_pcl,      25.0),
+            ('R0968', 'mmcabe/comment',    fcn.da_ratios.mccabe_pcl,     7.0),
+            ('R0969', 'effort/comment',    fcn.da_ratios.effort_pcl,   300.0)):
         if metric > limit:
-            yield {
-                'tool':     'radon',
-                'msg_id':   err_id,
-                'msg':      '{name} {metric} > {limit} in {fcn}'.format(
-                                              name   = name,
-                                              metric = metric,
-                                              limit  = limit,
-                                              fcn    = func.da_addr),
-                'file':     func.da_filepath,
-                'line':     func.lineno
-            }
+
+            msg = '{name} {metric} > {limit} in {fcn}'.format(
+                                                      name   = name,
+                                                      metric = metric,
+                                                      limit  = limit,
+                                                      fcn    = fcn.da_addr)
+
+            build_monitor.report_nonconformity(
+                tool    = 'da.check.pycomplexity',
+                msg_id  = msg_id,
+                msg     = msg,
+                path    = fcn.da_filepath,
+                line    = fcn.lineno)

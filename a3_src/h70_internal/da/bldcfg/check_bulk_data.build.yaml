@@ -1,0 +1,109 @@
+title:
+  Configuration file for a bulk data integrity check build.
+
+scope:
+
+  defined_baselines:
+    - HEAD
+
+  environment:
+    - e00_x86_64_linux_ubuntu_xenial
+
+  restriction: []
+
+
+options:
+
+  clean_tmp_dir:                            False
+  auto_commit:                              True
+
+  # loglevel is one of: CRITICAL; ERROR; WARNING; INFO; DEBUG
+  loglevel_overall:                         WARNING
+  loglevel_file:                            WARNING
+  loglevel_console:                         ERROR
+
+  enable_build_profiling:                   False
+  enable_build_debugger:                    False
+
+  enable_cms_registration:                  False
+  enable_cms_delete_old_builds:             False
+  cms_expiration_days:                      1
+
+  # Set TRUE to limit design standards verification checks to files and
+  # modules which have changed. This is appropriate for testing scenarios
+  # where fast feedback is given priority over comprehensive test coverage.
+  # This parameter should be set TRUE for continuous development builds
+  # and FALSE for baseline and release builds.
+  check_changed_files_only:                 True
+
+  # Set TRUE to make the build abort as soon as the first test failure
+  # is detected. This is appropriate for continuously running development
+  # testing where we need to surface failures as soon as we can. Otherwise
+  # we wait until the end of the build to report errors, which is an
+  # approach that is suitable for unattended / non-interactive builds.
+  errors_abort_immediately:                 False
+
+  # A regular expression string to exclude specific modules from the
+  # dependencies build. A Null value is interpreted such that no restrictions
+  # are imposed.
+  dep_build_exclusion:                      Null
+
+  # Regular expression string to limit the dependencies build to specific
+  # modules. A Null value is interpreted such that no restrictions are imposed.
+  dep_build_limitation:                     Null
+
+  # A string identifying the system design optimisation module to use.
+  # optimisation_module:                    da.default_design_optimisation
+  optimisation_module:                      Null
+
+
+steps:
+
+  # Set TRUE to enable the dependencies configuration phase (fetch & update
+  # the dependency repositories to the configured version).
+  enable_dep_fetch_src:                     False
+
+  # Set TRUE to enable the dependencies build phase.
+  enable_dep_build:                         False
+
+  # Set TURE to enable the main build.
+  enable_main_build:                        True
+
+  # Set TRUE to enable the python unit test phase.
+  enable_test_python_unittest:              False
+
+  # Set TRUE to enable source-embedded data validation (in static analysis)
+  enable_static_data_validation:            False
+
+  # Set TRUE to enable indexing (in static analysis)
+  enable_static_indexing:                   False
+
+  # Set TRUE to enable python complexity metric checking (in static analysis)
+  enable_static_test_python_complexity:     False
+
+  # Set TRUE to enable PEP8 style checking (in static analysis)
+  enable_static_test_python_codestyle:      False
+
+  # Set TRUE to enable PEP257 documentation checking (in static analysis)
+  enable_static_test_python_docstyle:       False
+
+  # Set TRUE to enable pylint linting (in static analysis)
+  enable_static_test_python_pylint:         False
+
+  # Set TRUE to enable mypy type checking (in static analysis)
+  enable_static_test_python_typecheck:      False
+
+  # Set TRUE to enable gcc compilation phase.
+  enable_compile_gcc:                       False
+
+  # Set TRUE to enable clang compilation phase.
+  enable_compile_clang:                     False
+
+  # Set TRUE to enable design documentation generation.
+  enable_generate_design_docs:              False
+
+  # Set TRUE to enable build reports generation.
+  enable_report_generation:                 False
+
+  # Set TRUE to enable checks on the mass data store.
+  enable_bulk_data_checks:                  True

@@ -44,5 +44,6 @@ class SpecifyCoro:
         The coro() function returns a value that is not None.
 
         """
+        cfg = {'paths': {'dirpath_branch_log': None}}
         import da.docgen.design
-        assert da.docgen.design.coro(None) is not None
+        assert da.docgen.design.coro(cfg) is not None

@@ -39,6 +39,7 @@ from good import (Any,
                   Required,
                   Schema)
 
+import da.check.constants
 import da.util
 
 
@@ -112,9 +113,9 @@ def _gen_section_content(section, path = ''):
 
 
 # -----------------------------------------------------------------------------
-def validate(filepath, error_handler):
+def validate(filepath, build_monitor):
     """
-    Send errors to the error_handler if sent files are not schema-compliant.
+    Send errors to the build_monitor if sent files are not schema-compliant.
 
     Return False if no validation schema exists for the supplied file type.
 
@@ -131,14 +132,11 @@ def validate(filepath, error_handler):
         try:
             schema(data)
         except Invalid as validation_failure:
-            error_handler.send({
-                'tool':   'da.check.schema',
-                'msg_id': 'V100',
-                'msg':    str(validation_failure),
-                'file':   filepath,
-                'line':   1,
-                'col':    0
-            })
+            build_monitor.report_nonconformity(
+                tool    = 'da.check.schema',
+                msg_id  = da.check.constants.ENGDOC_SCHEMA_FAILURE,
+                msg     = str(validation_failure),
+                path    = filepath)
         return True
 
     # Validate content
@@ -151,12 +149,9 @@ def validate(filepath, error_handler):
             msg = 'Error in: {path}\n{error}'.format(
                                             path  = path,
                                             error = str(validation_failure))
-            error_handler.send({
-                'tool':   'da.check.schema',
-                'msg_id': 'V100',
-                'msg':    msg,
-                'file':   filepath,
-                'line':   1,
-                'col':    0
-            })
+            build_monitor.report_nonconformity(
+                tool    = 'da.check.schema',
+                msg_id  = da.check.constants.ENGDOC_SCHEMA_FAILURE,
+                msg     = msg,
+                path    = filepath)
     return True

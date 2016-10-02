@@ -50,10 +50,12 @@ def regex_table(dirpath_lwc_root):
                                 dirpath_lwc_root = dirpath_lwc_root)
     tab = {}
     for (idclass, spec) in register.items():
-        pfix = spec['pfix']
-        dgts = spec['dgts']
-        expr = r"\b{pfx}[0-9]{{{dgt}}}_[a-z0-9_]{{2,100}}".format(pfx = pfix,
-                                                                  dgt = dgts)
+        if 'expr' in spec:
+            expr = spec['expr']
+        else:
+            expr = r"\b{pfx}[0-9]{{{dgt}}}_[a-z0-9_]{{2,100}}".format(
+                                                            pfx = spec['pfix'],
+                                                            dgt = spec['dgts'])
         tab[idclass] = expr
     tab = {key: re.compile(val) for key, val in tab.items()}
     return tab

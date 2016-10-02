@@ -62,9 +62,16 @@ def build(dirpath_lwc_root, dirpath_log, dep_build_cfg):
     # dependencies_register.
     #
     # To the best of my knowledge, the host
-    # environment will also need the python-dev
-    # package; lxml; and lapack/blas installed.
-    # Maybe others too that I am not aware of.
+    # environment will also need the following
+    # packages to be installed:
+    #
+    #   - lapack/blas
+    #   - lxml
+    #   - python-dev
+    #   - vagrant
+    #   - virtualbox
+    #
+    # (Maybe others too that I am not aware of.)
     #
     # As soon as we get our virtualisation solution
     # working we will have to do some experiments
@@ -170,7 +177,7 @@ def _git_update(dep):
     try:
 
         da.util.ensure_dir_exists(dep['dirpath_src'])
-        _vcs.delete_untracked_files(dep['dirpath_src'])
+        _vcs.delete_untracked(dep['dirpath_src'])
         _vcs.ensure_cloned(dirpath_local = dep['dirpath_src'],
                            url_remote    = dep['config']['url'],
                            ref           = _get_version(dep))
@@ -336,13 +343,13 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
                                         dep  = dep_id,
                                         path = filepath_setup_script))
 
-    for interface in ('lib_python2', 'lib_python3'):
-        logging.debug('Attempt to build python interface: %s', interface)
-        if interface not in dep['iface']:
+    for api_name in dep['api'].keys():
+        if api_name not in ('lib_python2', 'lib_python3'):
             continue
-        if interface == 'lib_python2':
+        logging.debug('Attempt to build python interface: %s', api_name)
+        if api_name == 'lib_python2':
             python_fcn = da.lwc.run.python2
-        elif interface == 'lib_python3':
+        elif api_name == 'lib_python3':
             python_fcn = da.lwc.run.python3
 
         # If we already have files in the output
@@ -350,7 +357,7 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
         # reduce the risk of unwanted files
         # contaminating our output.
         #
-        dirpath_dst = os.path.join(dirpath_dep, dep['path'][interface])
+        dirpath_dst = os.path.join(dirpath_dep, dep['api'][api_name])
         if os.path.isdir(dirpath_dst):
             logging.debug('Remove previous installation directory.')
             shutil.rmtree(dirpath_dst)
@@ -360,7 +367,7 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
                                                             dir = dirpath_dst))
         os.makedirs(dirpath_dst)
 
-        log_files = _prep_log_files(dirpath_log, dep_id, interface)
+        log_files = _prep_log_files(dirpath_log, dep_id, api_name)
 
         # Select the right python binary to use.
         logging.debug('Build & install %s to: %s', dep_id, dirpath_dst)
@@ -388,7 +395,7 @@ def _build_python_library(dep, dirpath_log, extra_args, dirpath_lwc_root):
 
 # -----------------------------------------------------------------------------
 @da.log.trace
-def _prep_log_files(dirpath_log, dep_id, interface):
+def _prep_log_files(dirpath_log, dep_id, api_name):
     """
     Return a tuple of build log filepaths.
 
@@ -399,19 +406,19 @@ def _prep_log_files(dirpath_log, dep_id, interface):
     # Delete old log-files (if any exist) so we
     # won't be confused or misled by them.
     filepath_log_stderr = os.path.join(dirpath_log,
-                                '{dep}.{iface}.stderr.log'.format(
-                                                        dep   = dep_id,
-                                                        iface = interface))
+                                '{dep}.{api}.stderr.log'.format(
+                                                            dep = dep_id,
+                                                            api = api_name))
 
     filepath_log_stdout = os.path.join(dirpath_log,
-                                '{dep}.{iface}.stdout.log'.format(
-                                                        dep   = dep_id,
-                                                        iface = interface))
+                                '{dep}.{api}.stdout.log'.format(
+                                                            dep = dep_id,
+                                                            api = api_name))
 
     filepath_log_files  = os.path.join(dirpath_log,
-                                '{dep}.{iface}.install_files.log'.format(
-                                                        dep   = dep_id,
-                                                        iface = interface))
+                                '{dep}.{api}.install_files.log'.format(
+                                                            dep = dep_id,
+                                                            api = api_name))
 
     if os.path.isfile(filepath_log_stderr):
         os.unlink(filepath_log_stderr)

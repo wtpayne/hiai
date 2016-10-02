@@ -89,6 +89,25 @@ def gen_top_level_function_names(ast_root):
 
 
 # -----------------------------------------------------------------------------
+def gen_top_level_method_names(ast_root):
+    """
+    Yield method names from classes at the top level of the specified AST.
+
+    Methods from classes defined inside functions are not returned.
+
+    """
+    for child in _iter_children_with_bodies(ast_root):
+        if isinstance(child, ast.ClassDef):
+            class_node = child
+            for class_child in _iter_children_with_bodies(class_node):
+                if isinstance(class_child, ast.FunctionDef):
+                    method = class_child
+                    yield '{classname}.{methodname}'.format(
+                                                classname  = class_node.name,
+                                                methodname = method.name)
+
+
+# -----------------------------------------------------------------------------
 def iter_embedded_data(module_name, root, file):
     """
     Yield each piece of embedded data in the file, with associated AST nodes.

@@ -1,0 +1,74 @@
+agenda:
+
+  j0000040_simulation_framework:
+    - "Initial work towards a simulation framework."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000042_process_foundations:
+    - "Lay the foundations for a mature process."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20161031:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161101:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161102:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161103:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161104:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161107:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161108:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161109:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161110:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161112:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."
+
+  20161113:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Example machine vision application - using openCV."

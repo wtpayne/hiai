@@ -49,18 +49,28 @@ from good import (All,
                   Required,
                   Schema)
 
+import da.check.constants
 import da.check.schema.build_config
+import da.check.schema.bulk_data_catalog
+import da.check.schema.bulk_data_label
 import da.check.schema.codeword_register
 import da.check.schema.common
+import da.check.schema.coordinate_systems_register
+import da.check.schema.dataflow
 import da.check.schema.daybook_schema         # (daybook is already a module)
 import da.check.schema.dependencies_register
+import da.check.schema.design_document_repository_register
 import da.check.schema.engdoc
 import da.check.schema.glossary
 import da.check.schema.hilcfg
 import da.check.schema.idclass_register
+import da.check.schema.lifecycle_product_register
+import da.check.schema.lifecycle_product_class_register
 import da.check.schema.machine_register
 import da.check.schema.milcfg
 import da.check.schema.mnemonic_register
+import da.check.schema.process_register
+import da.check.schema.process_class_register
 import da.check.schema.python_embedded
 import da.check.schema.requirements_spec
 import da.check.schema.silcfg
@@ -70,15 +80,15 @@ import da.util
 
 
 # -----------------------------------------------------------------------------
-def _validate_data_file(build_element, schema_map, error_handler):
+def _validate_data_file(build_unit, schema_map, build_monitor):
     """
-    Send errors to the error_handler if sent files are not schema-compliant.
+    Send errors to the build_monitor if sent files are not schema-compliant.
 
     Return False if no validation schema exists for the supplied file type.
 
     """
     # Select which schema to use.
-    filepath = build_element['filepath']
+    filepath = build_unit['filepath']
     schema = [schema_map[key] for key in schema_map if filepath.endswith(key)]
     if len(schema) == 0:
         return False
@@ -91,26 +101,23 @@ def _validate_data_file(build_element, schema_map, error_handler):
     try:
         schema(data)
     except (Invalid, MultipleInvalid) as validation_failure:
-        error_handler.send({
-            'tool':   'da.check.schema',
-            'msg_id': 'V100',
-            'msg':    str(validation_failure),
-            'file':   filepath,
-            'line':   1,
-            'col':    0
-        })
+        build_monitor.report_nonconformity(
+            tool    = 'da.check.schema',
+            msg_id  = da.check.constants.SCHEMA_FAILURE_DATA_FILE,
+            msg     = str(validation_failure),
+            path    = filepath)
     return True
 
 
 # -----------------------------------------------------------------------------
-def _validate_embedded_data(build_element, schema_map, error_handler):
+def _validate_embedded_data(build_unit, schema_map, build_monitor):
     """
-    Send errors to the error_handler if sent files are not schema-compliant.
+    Send errors to the build_monitor if sent files are not schema-compliant.
 
     """
-    file          = build_element['file']
-    relpath       = build_element['relpath']
-    filepath      = build_element['filepath']
+    file          = build_unit['file']
+    relpath       = build_unit['relpath']
+    filepath      = build_unit['filepath']
     filename      = os.path.basename(relpath)
     (_, name_ext) = os.path.splitext(filename)
 
@@ -120,7 +127,7 @@ def _validate_embedded_data(build_element, schema_map, error_handler):
         module_name = da.python_source.get_module_name(filepath)
         for (item, context) in da.python_source.iter_embedded_data(
                                             module_name = module_name,
-                                            root        = build_element['ast'],
+                                            root        = build_unit['ast'],
                                             file        = file):
             try:
 
@@ -140,14 +147,12 @@ def _validate_embedded_data(build_element, schema_map, error_handler):
                                                     file = relpath))
 
             except Invalid as validation_failure:
-                error_handler.send({
-                    'tool':   'da.check.schema',
-                    'msg_id': 'V200',
-                    'msg':    str(validation_failure),
-                    'file':   filepath,
-                    'line':   1,
-                    'col':    0
-                })
+                build_monitor.report_nonconformity(
+                    tool    = 'da.check.schema',
+                    msg_id  = da.check.constants.SCHEMA_FAILURE_EMBEDDED_DATA,
+                    msg     = str(validation_failure),
+                    path    = filepath)
+
         return True
 
     else:  # No validation schema found for this file
@@ -156,14 +161,14 @@ def _validate_embedded_data(build_element, schema_map, error_handler):
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def coro(error_handler, dirpath_lwc_root = None):
+def coro(build_monitor, dirpath_lwc_root = None):
     """
-    Send errors to the error_handler if sent files are not schema-compliant.
+    Send errors to the build_monitor if sent files are not schema-compliant.
 
     After instantiation, for each (file, relpath, filepath) triple that is
     sent to this coroutine, any data structures held in the corresponding
     file are validated against the appropriate schema. Any errors found are
-    sent to the error_handler coroutine.
+    sent to the build_monitor coroutine.
 
     """
     common      = da.check.schema.common
@@ -172,19 +177,66 @@ def coro(error_handler, dirpath_lwc_root = None):
     # Schema for data files
     sch = da.check.schema
     datfile_schema = {
-        '.build.yaml':                  sch.build_config.get(idclass_tab),
-        '.daybook.yaml':                sch.daybook_schema.get(idclass_tab),
-        '.glossary.yaml':               sch.glossary.get(),
-        '.hilcfg.yaml':                 sch.hilcfg.get(),
-        '.milcfg.yaml':                 sch.milcfg.get(),
-        '.rspec.yaml':                  sch.requirements_spec.get(idclass_tab),
-        '.silcfg.yaml':                 sch.silcfg.get(),
-        'codeword.register.yaml':       sch.codeword_register.get(idclass_tab),
-        'dependencies.register.json':   sch.dependencies_register.get(),
-        'idclass.register.yaml':        sch.idclass_register.get(),
-        'machine.register.yaml':        sch.machine_register.get(idclass_tab),
-        'mnemonic.register.yaml':       sch.mnemonic_register.get(),
-        'team.register.yaml':           sch.team_register.get(idclass_tab),
+
+        '.build.yaml':
+            sch.build_config.get(idclass_tab),
+
+        '.dataflow.yaml':
+            da.check.schema.dataflow.get(),
+
+        '.daybook.yaml':
+            sch.daybook_schema.get(idclass_tab),
+
+        '.glossary.yaml':
+            sch.glossary.get(),
+
+        '.hilcfg.yaml':
+            sch.hilcfg.get(),
+
+        '.milcfg.yaml':
+            sch.milcfg.get(),
+
+        '.rspec.yaml':
+            sch.requirements_spec.get(idclass_tab),
+
+        '.silcfg.yaml':
+            sch.silcfg.get(),
+
+        'codeword.register.yaml':
+            sch.codeword_register.get(idclass_tab),
+
+        'coordinate_systems.register.yaml':
+            sch.coordinate_systems_register.get(idclass_tab),
+
+        'dependencies.register.json':
+            sch.dependencies_register.get(),
+
+        'design_document_repository.register.yaml':
+            sch.design_document_repository_register.get(),
+
+        'idclass.register.yaml':
+            sch.idclass_register.get(),
+
+        'lifecycle_product.register.yaml':
+            sch.lifecycle_product_register.get(idclass_tab),
+
+        'lifecycle_product_class.register.yaml':
+            sch.lifecycle_product_class_register.get(idclass_tab),
+
+        'machine.register.yaml':
+            sch.machine_register.get(idclass_tab),
+
+        'mnemonic.register.yaml':
+            sch.mnemonic_register.get(),
+
+        'process.register.yaml':
+            sch.process_register.get(idclass_tab),
+
+        'process_class.register.yaml':
+            sch.process_class_register.get(idclass_tab),
+
+        'team.register.yaml':
+            sch.team_register.get(idclass_tab),
     }
 
     # Schema for data embedded in python files
@@ -197,8 +249,8 @@ def coro(error_handler, dirpath_lwc_root = None):
 
     while True:
 
-        build_element = (yield)
-        filepath      = build_element['filepath']
+        build_unit = (yield)
+        filepath   = build_unit['filepath']
 
         if da.lwc.file.is_test_data(filepath):
             continue
@@ -210,18 +262,27 @@ def coro(error_handler, dirpath_lwc_root = None):
         if filepath.endswith('.css'):
             continue
 
-        if da.check.schema.engdoc.validate(filepath, error_handler):
+        # No checking for bash scripts.
+        if filepath.endswith('.bash'):
             continue
 
-        if _validate_data_file(build_element, datfile_schema, error_handler):
+        # No checking for HTML templates.
+        if filepath.endswith('.template.html'):
+            continue
+
+        if da.check.schema.engdoc.validate(filepath, build_monitor):
+            continue
+
+        if _validate_data_file(build_unit, datfile_schema, build_monitor):
             continue
 
         if _validate_embedded_data(
-                            build_element, embed_schema, error_handler):
+                            build_unit, embed_schema, build_monitor):
             continue
 
-        raise da.exception.AbortWithoutStackTrace(
-            message     = 'No data validation method for: {file}'.format(
-                                            file = build_element['relpath']),
-            filepath    = filepath,
-            line_number = 1)
+        build_monitor.report_nonconformity(
+            tool    = 'da.check.schema',
+            msg_id  = da.check.constants.SCHEMA_MISSING,
+            msg     = 'No data validation method or schema for: {file}'.format(
+                                                            file = filepath),
+            path    = filepath)

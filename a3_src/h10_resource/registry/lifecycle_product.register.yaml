@@ -1,0 +1,300 @@
+title:
+  "Lifecycle product register."
+
+
+introduction:
+  "This registry contains a definitive list of engineering lifecycle products
+  and provides a mapping between individual lifecycle products and lifecycle
+  product classes. In this manner the registry facilitates the systematic and
+  universal application of class specific registration, validation and
+  tracking processes."
+
+
+register:
+
+  r000_com:
+    name:
+      "Computer operation manual."
+    mnemonic:
+      "com"
+    class:
+      "l03_procedure"
+    purpose:
+      "Document the operation of a computer system supplied as part of a
+      deliverable."
+    reference:
+      ["milstd_0498"]
+
+  r001_cpm:
+    name:
+      "Computer programming manual."
+    mnemonic:
+      "cpm"
+    class:
+      "l03_procedure"
+    purpose:
+      "Document the operation of a programmable computer system supplied
+      as part of a deliverable."
+    reference:
+      ["milstd_0498"]
+
+
+  r002_dbdd:
+    name:
+      "Database design description."
+    mnemonic:
+      "dbdd"
+    class:
+      "l01_description"
+    purpose:
+      "Document the design of a database"
+    reference:
+      ["milstd_0498"]
+
+
+  r003_fsm:
+    name:
+      "Firmware support manual."
+    mnemonic:
+      "fsm"
+    class:
+      "l03_procedure"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r004_idd:
+    name:
+      "Interface design description."
+    mnemonic:
+      "idd"
+    class:
+      "l01_description"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r005_irs:
+    name:
+      "Interface requirements specification."
+    mnemonic:
+      "irs"
+    class:
+      "l06_specification"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r006_ocd:
+    name:
+      "Operational concept description."
+    mnemonic:
+      "ocd"
+    class:
+      "l01_description"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r007_scom:
+    name:
+      "Software center operator manual."
+    mnemonic:
+      "scom"
+    class:
+      "l03_procedure"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r008_sdd:
+    name:
+      "Software design description."
+    mnemonic:
+      "sdd"
+    class:
+      "l01_description"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r009_sdp:
+    name:
+      "Software development plan."
+    mnemonic:
+      "sdp"
+    class:
+      "l02_plan"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r010_siom:
+    name:
+      "Software input output manual."
+    mnemonic:
+      "siom"
+    class:
+      "l03_procedure"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r011_sip:
+    name:
+      "Software installation plan."
+    mnemonic:
+      "sip"
+    class:
+      "l02_plan"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r012_sps:
+    name:
+      "Software product specification."
+    mnemonic:
+      "sps"
+    class:
+      "l06_specification"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r013_srs:
+    name:
+      "Software requirement specification."
+    mnemonic:
+      "srs"
+    class:
+      "l06_specification"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r014_ssdd:
+    name:
+      "System subsystem design description."
+    mnemonic:
+      "ssdd"
+    class:
+      "l01_description"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r015_sss:
+    name:
+      "System subsystem specification."
+    mnemonic:
+      "sss"
+    class:
+      "l06_specification"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r016_std:
+    name:
+      "Software test description."
+    mnemonic:
+      "std"
+    class:
+      "l01_description"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r017_stp:
+    name:
+      "Software test plan."
+    mnemonic:
+      "stp"
+    class:
+      "l02_plan"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r018_str:
+    name:
+      "Software test report."
+    mnemonic:
+      "str"
+    class:
+      "l04_report"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r019_strp:
+    name:
+      "Software transition plan."
+    mnemonic:
+      "strp"
+    class:
+      "l02_plan"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r020_sum:
+    name:
+      "Software user manual."
+    mnemonic:
+      "sum"
+    class:
+      "l03_procedure"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+
+
+  r021_svd:
+    name:
+      "Software version description"
+    mnemonic:
+      "svd"
+    class:
+      "l01_description"
+    purpose:
+      "TBD"
+    reference:
+      ["milstd_0498"]
+

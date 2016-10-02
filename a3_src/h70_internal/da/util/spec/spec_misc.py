@@ -208,6 +208,22 @@ class SpecifyLoad:
 
 
 # =============================================================================
+class SpecifySave:
+    """
+    Specify the da.util.misc.save() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The save() function is callable
+
+        """
+        import da.util.misc
+        assert callable(da.util.misc.save)
+
+
+# =============================================================================
 class SpecifyEnsureDirExists:
     """
     Specify the da.util.misc.ensure_dir_exists() function.
@@ -301,3 +317,51 @@ class SpecifyIterFiles:
         """
         import da.util.misc
         assert callable(da.util.misc.iter_files)
+
+
+# =============================================================================
+class SpecifySha256:
+    """
+    Specify the da.util.misc.sha256() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The sha256() function is callable
+
+        """
+        import da.util.misc
+        assert callable(da.util.misc.sha256)
+
+
+# =============================================================================
+class SpecifySysPathContext:
+    """
+    Specify the da.util.misc.sys_path_context() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The sys_path_context() function is callable
+
+        """
+        import da.util.misc
+        assert callable(da.util.misc.sys_path_context)
+
+
+# =============================================================================
+class SpecifySysArgvContext:
+    """
+    Specify the da.util.misc.sys_argv_context() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The sys_argv_context() function is callable
+
+        """
+        import da.util.misc
+        assert callable(da.util.misc.sys_argv_context)

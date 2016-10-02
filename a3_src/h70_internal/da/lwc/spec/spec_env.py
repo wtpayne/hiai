@@ -32,19 +32,51 @@ license:
 
 
 # =============================================================================
-class SpecifyDependencyPath:
+class SpecifyApiPath:
     """
-    Specify the da.lwc.env.dependency_path() function.
+    Specify the da.lwc.env.api_path() function.
 
     """
 
     def it_is_callable(self):
         """
-        The dependency_path() function is callable.
+        The api_path() function is callable.
 
         """
         import da.lwc.env
-        assert callable(da.lwc.env.dependency_path)
+        assert callable(da.lwc.env.api_path)
+
+
+# =============================================================================
+class SpecifyCliPath:
+    """
+    Specify the da.lwc.env.cli_path() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The cli_path() function is callable.
+
+        """
+        import da.lwc.env
+        assert callable(da.lwc.env.cli_path)
+
+
+# =============================================================================
+class SpecifyGuiPath:
+    """
+    Specify the da.lwc.env.gui_path() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The gui_path() function is callable.
+
+        """
+        import da.lwc.env
+        assert callable(da.lwc.env.gui_path)
 
 
 # =============================================================================

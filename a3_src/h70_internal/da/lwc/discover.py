@@ -42,14 +42,20 @@ LWC_DIR_EXCLUDE_EXPR_LIST = [r'^\..*$',
                              r'^\.vagrant',
                              r'^__pycache__']
 
-LWC_EXT_INCLUDE_EXPR_LIST = [r'^.*py$',
-                             r'^.*md$',
-                             r'^.*json$',
-                             r'^.*yaml$']
+LWC_EXT_INCLUDE_EXPR_LIST = [r'^.*\.bash$',
+                             r'^.*\.css$',
+                             r'^.*\.template.html$',
+                             r'^.*\.template.docx$',
+                             r'^.*\.py$',
+                             r'^.*\.md$',
+                             r'^.*\.json$',
+                             r'^.*\.yaml$']
 
 LWC_PROJECT_DIR_EXPR      = r'^.*p[0-9]{4}_[a-z0-9_]{2,64}$'
 
 LWC_COUNTERPARTY_DIR_EXPR = r'^.*c[0-9]{3}_[a-z0-9_]{2,64}$'
+
+LWC_RESEARCHER_DIR_EXPR   = r'^.*t[0-9]{3}_[a-z0-9_]{2,64}$'
 
 _LWC_TAB = {
     'env':        ('a0_env',                                ),
@@ -73,9 +79,23 @@ _LWC_TAB = {
 
 
 # -----------------------------------------------------------------------------
+def gen_product_dirs(dirpath_lwc_root = None):
+    """
+    Generate all product dirs in the local working copy.
+
+    """
+    return da.lwc.search.filtered_dirpath_generator(
+                        root     = path(key              = 'product',
+                                        dirpath_lwc_root = dirpath_lwc_root),
+                        direxcl  = da.lwc.discover.LWC_DIR_EXCLUDE_EXPR_LIST,
+                        pathincl = None,
+                        pathexcl = None)
+
+
+# -----------------------------------------------------------------------------
 def gen_counterparty_dirs(dirpath_lwc_root = None):
     """
-    Generate all project dirs in the local working copy.
+    Generate all project counterparty dirs in the local working copy.
 
     """
     return da.lwc.search.filtered_dirpath_generator(
@@ -97,6 +117,34 @@ def gen_project_dirs(dirpath_lwc_root = None):
                                         dirpath_lwc_root = dirpath_lwc_root),
                         direxcl  = da.lwc.discover.LWC_DIR_EXCLUDE_EXPR_LIST,
                         pathincl = [da.lwc.discover.LWC_PROJECT_DIR_EXPR],
+                        pathexcl = None)
+
+
+# -----------------------------------------------------------------------------
+def gen_research_dirs(dirpath_lwc_root = None):
+    """
+    Generate all research (per team member) dirs in the local working copy.
+
+    """
+    return da.lwc.search.filtered_dirpath_generator(
+                        root     = path(key              = 'research',
+                                        dirpath_lwc_root = dirpath_lwc_root),
+                        direxcl  = da.lwc.discover.LWC_DIR_EXCLUDE_EXPR_LIST,
+                        pathincl = [da.lwc.discover.LWC_RESEARCHER_DIR_EXPR],
+                        pathexcl = None)
+
+
+# -----------------------------------------------------------------------------
+def gen_demo_dirs(dirpath_lwc_root = None):
+    """
+    Generate all demo dirs in the local working copy.
+
+    """
+    return da.lwc.search.filtered_dirpath_generator(
+                        root     = path(key              = 'demo',
+                                        dirpath_lwc_root = dirpath_lwc_root),
+                        direxcl  = da.lwc.discover.LWC_DIR_EXCLUDE_EXPR_LIST,
+                        pathincl = None,
                         pathexcl = None)
 
 

@@ -63,4 +63,61 @@ def load(register_name, dirpath_lwc_root = None):
         with open(filepath_json, 'r') as file:
             return json.load(file)['register']
 
-    raise RuntimeError('Could not find register: ' + register_name)
+    raise RuntimeError('Could not find register: {name} in {dirpath}'.format(
+                                                name    = register_name,
+                                                dirpath = dirpath_registry))
+
+
+# -----------------------------------------------------------------------------
+def update(register_name, register_data, dirpath_lwc_root = None):
+    """
+    Write data to the specified register.
+
+    All registers use YAML as their serialisation
+    format; excepting the dependencies register
+    which uses JSON.
+
+    This function supports writing to YAML format
+    registers only. Attempting to write to a JSON
+    format register will raise a RuntimeError.
+
+    """
+    if register_data is None:
+        return
+
+    dirpath_registry = da.lwc.discover.path(
+                                        key              = 'registry',
+                                        dirpath_lwc_root = dirpath_lwc_root)
+
+    filename_yaml    = '{name}.register.yaml'.format(name = register_name)
+    filepath_yaml    = os.path.join(dirpath_registry, filename_yaml)
+    if os.path.isfile(filepath_yaml):
+        import ruamel.yaml
+        with open(filepath_yaml, 'rt') as file:
+
+            str_yaml = file.read()
+            data     = ruamel.yaml.load(
+                                str_yaml, ruamel.yaml.RoundTripLoader)
+
+            for (key, value) in register_data.items():
+                data['register'][key] = value
+
+            str_yaml = ruamel.yaml.dump(
+                                data, Dumper = ruamel.yaml.RoundTripDumper)
+
+        with open(filepath_yaml, 'wt') as file:
+            file.write(str_yaml)
+
+        return
+
+    # We cannot write to a JSON file.
+    filename_json = '{name}.register.json'.format(name = register_name)
+    filepath_json = os.path.join(dirpath_registry, filename_json)
+    if os.path.isfile(filepath_json):
+        raise RuntimeError('Cannot write to JSON register: {path}'.format(
+                                                        path = filepath_json))
+
+    # Unknown register.
+    raise RuntimeError('Could not find register: {name} in {dirpath}'.format(
+                                                name    = register_name,
+                                                dirpath = dirpath_registry))

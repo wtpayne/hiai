@@ -12,14 +12,20 @@ register:
 
     orion:      [c000_orion]
     legend:     [c001_legend]
+    chicago:    [c002_chicago]
+    viking:     [c003_viking]
+    dragon:     [c004_dragon]
+    cipher:     [c005_cipher]
+    griffin:    [c006_griffin]
+    pinball:    [c007_pinball]
+    atomic:     [z0000_atomic]
+    baron:      [z0001_baron]
+    cadet:      [z0002_cadet]
     mother:     Null
     atlas:      Null
     senator:    Null
     invicta:    Null
-    chicago:    Null
     benny:      Null
-    cipher:     Null
-    pinball:    Null
     mama:       Null
     battery:    Null
     bank:       Null
@@ -71,7 +77,6 @@ register:
     textile:    Null
     airline:    Null
     craft:      Null
-    griffin:    Null
     magnum:     Null
     john:       Null
     billy:      Null
@@ -79,7 +84,6 @@ register:
     cabaret:    Null
     level:      Null
     wheel:      Null
-    viking:     Null
     lola:       Null
     forward:    Null
     orlando:    Null
@@ -339,7 +343,6 @@ register:
     samuel:     Null
     zero:       Null
     aspect:     Null
-    dragon:     Null
     except:     Null
     ocean:      Null
     sample:     Null
@@ -578,7 +581,6 @@ register:
     siren:      Null
     rhino:      Null
     caramel:    Null
-    atomic:     Null
     prefix:     Null
     tape:       Null
     convert:    Null
@@ -767,7 +769,6 @@ register:
     costume:    Null
     small:      Null
     salute:     Null
-    cadet:      Null
     ballad:     Null
     swing:      Null
     jumbo:      Null
@@ -1217,7 +1218,6 @@ register:
     jeep:       Null
     visible:    Null
     denver:     Null
-    baron:      Null
     ticket:     Null
     rent:       Null
     vincent:    Null

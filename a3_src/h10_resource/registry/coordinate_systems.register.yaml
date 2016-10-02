@@ -1,0 +1,413 @@
+title:
+  "Coordinate Systems Register."
+
+introduction:
+  "Clear definition of reference directions, coordinate systems and their
+  inter-relationships is a key part of any systems engineering process.
+
+  A non-trivial system will involve the definition of dozens of coordinate
+  systems for various purposes. Each needs to be rapidly and clearly defined
+  and communicated.
+
+  This registry assists in this process by providing a central list of
+  (abstract) coordinate system definitions, each of which may be rapidly
+  selected and specialised for a particular component, subsystem or platform."
+
+register:
+
+
+  x00_aph:
+    name:
+      "Focal plane array physical coordinate system."
+    mnemonic:
+      "aph"
+    description:
+      "This coordinate system is intended to represent the position of
+      mechanical and optical components relative to the geometric centre
+      of the focal plane array."
+    definition:
+      "This coordinate system is physical, cartesian, right-handed and three
+      dimensional.
+
+      The origin is located at the geometric centre of the photosensitive
+      (active) part of the focal plane array. It sits in front of all of the
+      electronic components, but behind any transparent protective covering
+      (glass layer).
+
+      The x axis runs parallel to the rows of pixels on the focal plane array;
+      its positive direction extends towards the right hand side of the camera.
+
+      The positive direction of the y axis runs vertically upwards towards the
+      top of the camera.
+
+      The z axis completes the right-handed triad: It is oriented orthogonally
+      to the plane of the focal plane array, and the positive direction extends
+      towards the rear of the camera."
+
+
+  x01_arc:
+    name:
+      "Focal plane array row-column coordinate system."
+    mnemonic:
+      "arc"
+    description:
+      "This coordinate system addresses pixels across the entirety of the
+      focal plane array pixel grid, and is intended to be used for reasoning
+      about rolling shutter line-readout timing; vignette and fixed pattern
+      electronic interference.
+
+      All pixels physically present in the focal plane array are taken into
+      consideration; including those that are not part of the active read-out
+      area. It is not a physical coordinate system, so the fine physical
+      arrangement of pixels is not taken into consideration and negative and
+      non-integral values are not meaningful."
+    definition:
+      "This coordinate system is logical, cartesian, right-handed and two
+      dimensional.
+
+      The origin sits at the extreme top left hand corner of the (entire)
+      physical pixel grid.
+
+      The positive direction of the first 'R' axis (row) extends downwards,
+      incrementing by one for each row of pixels.
+
+      The positive direction of the second 'C' axis (col) extends rightwards,
+      incrementing by one for each column of pixels passed."
+
+
+  x02_irc:
+    name:
+      "Image row-column coordinate system."
+    mnemonic:
+      "irc"
+    description:
+      "This coordinate system addresses pixels in the active, image-forming
+      portion of the focal plane array pixel grid.
+
+      Only pixels present in the image are taken into consideration. It is
+      not a physical coordinate system, so the fine physical arrangement of
+      pixels is not taken into consideration and negative and non-integral
+      values are not meaningful."
+    definition:
+      "This coordinate system is logical, cartesian, right-handed and two
+      dimensional.
+
+      The origin sits at the extreme top left hand corner of the pixel grid
+      from which the current image was formed.
+
+      The positive direction of the first 'R' axis (row) extends downwards,
+      incrementing by one for each row of pixels.
+
+      The positive direction of the second 'C' axis (col) extends rightwards,
+      incrementing by one for each column of pixels passed."
+
+
+  x03_ixy:
+    name:
+      "Image optical-axis centric coordinate system."
+    mnemonic:
+      "ixy"
+    description:
+      "This is a hybrid coordinate system used as a half-way house when
+      converting from a (logical) image row-column coordinate system to
+      a physical sensor-centric coordinate system.
+
+      The only calibration information required for conversion to this
+      system is the IXY row and column of the pixel closest to the point
+      where optical axis intersects the focal plane array.
+
+      It is not a physical coordinate system, so the fine physical arrangement
+      of pixels is not taken into consideration and non-integral values are
+      not meaningful."
+    definition:
+      "This coordinate system is logical, cartesian, right-handed and two
+      dimensional.
+
+      The origin sits at the pixel closest to the point at which the primary
+      optical axis intersects the pixel grid.
+
+      The positive direction of the x axis extends rightwards in the same
+      direction as the 'C' axis of x02_irc.
+
+      The positive direction of the y axis extends upwards in the
+      opposite direction to the 'R' axis of x02_irc."
+
+
+  x04_oea:
+    name:
+      "Optoelectronic subsystem aligned coordinate system."
+    mnemonic:
+      "oea"
+    description:
+      "This is a physical coordinate system used to represent real-world
+      bearings relative to the Optoelectronic subsystem. (i.e. the optics
+      and the focal plane array considered together as a single unit.)"
+    definition:
+      "This coordinate system is physical, cartesian, right-handed and three
+      dimensional.
+
+      The origin sits at the point at which the primary optical axis
+      intersects the focal plane array.
+
+      The z axis is aligned in the opposite direction to the primary optical
+      axis, with the positive direction extending towards the rear of the
+      camera.
+
+      The x axis is oriented parallel to the rows of pixels in the focal
+      plane array, with the positive direction extending towards the right
+      hand side of the camera.
+
+      The z axis completes the right-handed-triad with the positive direction
+      extending towards the top of the camera."
+
+
+  x05_mea:
+    name:
+      "Camera mechanical assembly aligned coordinate system."
+    mnemonic:
+      "mea"
+    description:
+      "This is a physical coordinate system used to represent real-world
+      bearings relative to the camera mechanical assembly. (i.e. the parts
+      connecting and containing the optical and electronic components of the
+      camera).
+
+      The camera intrinsic calibration should provde sufficient information
+      for converting between x02_irc (row, col) values and x05_mea (x, y, z)
+      values.
+
+      The difference between the x05_mea coordinate system and the x04_oea
+      coordinate system is a measure of the misalignment of the optical and
+      optoelectronic conponents. If the lens and the focal plane array are
+      perfectly aligned and centered then the two coordinate systems should
+      be identical."
+
+    definition:
+      "This coordinate system is physical, cartesian, right-handed and three
+      dimensional.
+
+      The origin sits at the point at which the primary optical axis
+      intersects the focal plane array.
+
+      The z axis is oriented along the nominal primary optical axis, with the
+      positive direction extending towards the rear of the camera.
+
+      The x axis is oriented parallel to the nominal orientation of the rows
+      of pixels in the focal plane array, with the positive direction extending
+      towards the right hand side of the camera.
+
+      The y axis completes the right-handed-triad with the positive direction
+      extending towards the top of the camera."
+
+
+  x06_scp:
+    name:
+      "Sensor centric platform aligned coordinate system."
+    mnemonic:
+      "scp"
+    description:
+      "This is a physical coordinate system used to represent real-world
+      bearings relative to a sensor mounted on a platform (i.e. a moving
+      object - vehicle or appendage - to which the sensor is rigidly
+      attatched). It is related to the body frame of the platform by
+      a pure translation."
+
+    definition:
+      "This coordinate system is physical, cartesian, right-handed and three
+      dimensional.
+
+      The origin sits at the point at which the primary optical axis
+      intersects the focal plane array.
+
+      The z axis is oriented along the platform primary axis, with the
+      positive direction extending towards the rear of the platform.
+
+      The y axis is oriented towards the top of the platform.
+
+      The x axis completes the right-handed-triad with the positive direction
+      extending towards the right hand side of the platform."
+
+
+  x07_scv:
+    name:
+      "Sensor centric vehicle aligned coordinate system."
+    mnemonic:
+      "scv"
+    description:
+      "This is a physical coordinate system used to represent real-world
+      bearings relative to a sensor mounted on a vehicle, and is related
+      to the body frame of the vehicle by a pure translation.
+
+      x06_scp and x07_scv will be identical If the sensor is mounted directly
+      and rigidly to the vehicle."
+    definition:
+      "This coordinate system is physical, cartesian, right-handed and three
+      dimensional.
+
+      The origin sits at the point at which the primary optical axis
+      intersects the focal plane array.
+
+      The z axis is oriented along the vehicle primary axis, with the
+      positive direction extending towards the rear of the vehicle.
+
+      The y axis is oriented towards the top of the vehicle.
+
+      The x axis completes the right-handed-triad with the positive direction
+      extending towards the right hand side of the vehicle."
+
+
+  x08_scd:
+    name:
+      "Sensor centric displacement aligned coordinate system."
+    mnemonic:
+      "scd"
+    description:
+      "This is a physical coordinate system used to represent real-world
+      bearings relative to the displacement vector of the sensor, and is
+      intended to be used for the computation of epipolar flow lines and
+      triangulation based on sensor ego-motion."
+
+    definition:
+      "This coordinate system is physical, cartesian, right-handed and three
+      dimensional.
+
+      The origin sits at the point at which the primary optical axis
+      intersects the focal plane array.
+
+      The z axis is oriented along the motion vector of the sensor, with the
+      positive direction extending in the opposite direction to the motion
+      vector.
+
+      The y axis is oriented in the direction of the local geo-centric
+      vertical.
+
+      The x axis completes the right-handed-triad with the positive direction
+      extending towards the right hand side relative to the direction of sensor
+      motion"
+
+
+  x09_scg:
+    name:
+      "Sensor centric geo-aligned (north-east-down) coordinate system."
+    mnemonic:
+      "scg"
+    description:
+      "This is a physical coordinate system used to represent bearings from
+      the sensor relative to the local geographic tangent plane; i.e. local
+      North, local East and the local vertical."
+
+    definition:
+      "This coordinate system is physical, cartesian, right-handed and three
+      dimensional.
+
+      The origin sits at the point at which the primary optical axis
+      intersects the focal plane array.
+
+      The positive direction of the x axis is oriented towards local
+      geographic north.
+
+      The positive direction of the y axis is oriented towards local
+      geographic east.
+
+      The positive direction of the z axis is oriented downwards."
+
+
+  x10_ticks:
+    name:
+      "Internal monotonic clock ticks."
+    mnemonic:
+      "ticks"
+    description:
+      "This is a free-running, unsynchronised internal system clock,
+      monotonically counting the number of 'ticks' since the previous
+      system start or reset. It is a purely internal clock-counter; not
+      synchronised or adjusted. This means that it is guaranteed to always
+      be available and to count monotonically upwards at a steady rate;
+      but not guaranteed to be free from drift nor to bear any particular
+      relationship with external time standards (UTC etc).
+
+      This value is intended to be used to calculate small time deltas
+      accurately rather than to be used for absolute time values or for
+      synchronisation.
+
+      To preserve data-flow semantics, this clock is not directly accessible
+      at the application layer. Instead, messages are timestamped as they are
+      recieved into the system. For a particular data-flow node, the effective
+      'current' time is obtained by looking at the highest clock-counter value
+      recieved by that node (taking wrapping into consideration).
+
+      The tick frequency will vary from system to system."
+
+    definition:
+      "This coordinate system is physical and one dimensional.
+
+      Following system start or reset, the first possible value is zero.
+      Subsequent ticks occur at fixed intervals and increment the value
+      by one."
+
+
+  x11_utc:
+    name:
+      "External global UTC time."
+    mnemonic:
+      "utc"
+    description:
+      "This is a global timestamp, synchronised with an external time
+      source. It is intended to be used for synchronisation with external
+      events and data sources.
+
+
+      It is not guaranteed to be always available (due to the reliance on
+      an external time source), but when it is available it will be synchronised
+      is guaranteed to be synchronised with a global time source. (e.g. GPS
+      time).
+
+      If it is not synchronised, it is zero.
+
+      To preserve data-flow semantics, this clock is not directly
+      accessible at the application layer. Instead, messages are timestamped
+      as they are recieved into the system. For a particular data-flow node,
+      the effective 'current' time is obtained by looking at the highest
+      timestamp value recieved by that node (taking wrapping into
+      consideration)."
+
+    definition:
+      "This coordinate system is physical and one dimensional.
+
+      milliseconds since 1st January 1970."
+
+
+  x12_msg_num:
+    name:
+      "System message number."
+    mnemonic:
+      "msg_num"
+    description:
+      "This is a non-negative integral value that represents the order in
+      which messages (of any type) were recieved by the application layer
+      of the system or subsystem under consideration.
+
+      The first message recieved after system start or reset is assigned
+      message number zero. The value assigned increments by one for each
+      subsequent message.
+
+      This is an application-layer concept. Corrupt messages rejected by
+      transmission protocols before they enter the application layer boundary
+      of the system under consideration should not be counted.
+
+      This value is intended to be used to sequence replay of recorded
+      data streams through a (Khan) data flow network to support resimulation
+      for systems development and verification.
+
+      For practical work, this value will be represented by a finite
+      precision unsigned integer and the value can be expected to wrap
+      periodically."
+
+    definition:
+      "This coordinate system is logical and one dimensional.
+
+      Following system start or reset, the first message crossing the system
+      boundary at the application layer is assigned message number zero.
+      Subsequent messages are assigned incrementally increasing message
+      numbers."
+

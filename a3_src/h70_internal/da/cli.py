@@ -32,18 +32,19 @@ license:
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License."
+
 ...
 """
 
 
 import datetime
+import importlib
 import os
 import warnings
 
 import click
 
 import da.lwc.discover
-import da.util.importutils
 
 
 # =============================================================================
@@ -253,52 +254,10 @@ def main(click_ctx):
 
 
 # -----------------------------------------------------------------------------
-@main.command(cls  = ExplicitInfoNameCommand,
-              name = 'bash')
-@pass_custom_ctx
-def bash(da_ctx):
-    """
-    Bash configured for the current LWC.
-
-    """
-    import da.lwc.run as _run
-    return _run.bash(dirpath_lwc_root = da_ctx['dirpath_lwc_root'])
-
-
-# -----------------------------------------------------------------------------
-@main.command(cls  = ExplicitInfoNameCommand,
-              name = 'repl')
-@pass_custom_ctx
-def repl(da_ctx):
-    """
-    Read Eval Print Loop for the current LWC.
-
-    """
-    import code
-    os.chdir(da_ctx['dirpath_lwc_root'])
-    code.interact()
-
-
-# -----------------------------------------------------------------------------
-@main.command(cls  = ExplicitInfoNameCommand,
-              name = 'python',
-              context_settings = {'ignore_unknown_options': True,
-                                  'allow_extra_args':       True})
-@pass_custom_ctx
-def python(da_ctx):
-    """
-    Python 3 interpreter for the current LWC.
-
-    """
-    import da.lwc.run as _run
-    return _run.python3(arglist          = da_ctx['args'][1:],
-                        dirpath_lwc_root = da_ctx['dirpath_lwc_root'])
-
-
-# -----------------------------------------------------------------------------
-@main.command(cls  = ExplicitInfoNameCommand,
-              name = 'build',
-              context_settings = {'allow_extra_args': True})
+@main.command(
+    cls  = ExplicitInfoNameCommand,
+    name = 'build',
+    context_settings = {'allow_extra_args': True})
 @pass_custom_ctx
 @click.pass_context
 @click.argument(
@@ -374,14 +333,17 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
         # The build either returns _metabuild.COMPLETED or throws an exception.
         assert exit_code == _constants.META_BUILD_COMPLETED
 
+    except _exception.AbortSilently:
+        pass
+
     except _exception.AbortWithoutStackTrace as abort:
 
         # We often want to abort the build in circumstances which do not
         # warrant the display of a stack trace.
         #
         click.secho(
-            '{title}\n\n{message}\n'.format(title   = 'Nonconformity:',
-                                            message = abort.message),
+            '\n{title}\n\n{message}\n'.format(title   = 'Nonconformity:',
+                                              message = abort.message),
             fg = 'red')
 
         if os.path.isfile(abort.filepath):
@@ -429,7 +391,7 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
         # In the first instance, we simply open
         # the editor at the location where the
         # exception was thrown, but in future we
-        # may do something more sophisticated
+        # may do something more sophisticated7
         # here.
         #
         # TODO: Review and extend IDE integration.
@@ -441,6 +403,128 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
 
     finally:
         exit_application(exit_code)
+
+
+# -----------------------------------------------------------------------------
+@main.command(
+    cls  = ExplicitInfoNameCommand,
+    name = 'run')
+@click.argument(
+    'appname',
+    type     = click.Choice(['bash', 'subl']),
+    required = True)
+@pass_custom_ctx
+def run(da_ctx, appname):
+    """
+    Run app configured for the current LWC.
+
+    """
+    import da.lwc.run as _run
+    if appname == 'bash':
+        return _run.bash(dirpath_lwc_root = da_ctx['dirpath_lwc_root'])
+
+    if appname == 'subl':
+        return _run.subl(dirpath_lwc_root = da_ctx['dirpath_lwc_root'])
+
+
+# -----------------------------------------------------------------------------
+@main.command(
+    cls  = ExplicitInfoNameCommand,
+    name = 'repl')
+@click.argument(
+    'type',
+    type     = click.Choice(['ptpy', 'ipy', 'bpy', 'cpy']),
+    required = False,
+    default  = 'ptpy',
+    envvar   = 'DA_REPL_TYPE')
+def repl(type):
+    """
+    Read Eval Print Loop for the current LWC.
+
+    TYPE can be one of: ptpy, ipy, bpy, cpy.
+
+    ptpy is the ptpython enhanced curses repl.
+
+    ipy  is the ptpython repl in ipython mode.
+
+    bpy  is the bpython enhanced curses repl.
+
+    cpy is the vanilla cpython repl.
+
+    """
+    if type == 'ptpy':
+        import ptpython.repl
+        ptpython.repl.embed(globals(), locals())
+
+    if type == 'ipy':
+        import ptpython.ipython
+        ptpython.ipython.embed()
+
+    elif type == 'bpy':
+        import bpython
+        bpython.embed()
+
+    elif type == 'cpy':
+        import code
+        code.interact()
+
+
+# -----------------------------------------------------------------------------
+@main.group()
+def sim():
+    """
+    Run a simulation.
+
+    This group of commands
+
+    """
+    pass
+
+
+# -----------------------------------------------------------------------------
+@sim.command(
+    cls  = ExplicitInfoNameCommand,
+    name = 'vtx')
+@click.argument(
+    'logic',
+    required = True,
+    type     = click.STRING)
+@click.argument(
+    'cfg',
+    required = True,
+    type     = click.File(mode = 'rt'))
+@click.argument(
+    'inputs',
+    required = True,
+    type     = click.File(mode = 'rt'))
+@click.argument(
+    'outputs',
+    required = True,
+    type     = click.File(mode   = 'wt', atomic = True))
+def vtx(logic, cfg, inputs, outputs):
+    """
+    Simulate a single application vertex.
+
+    This script is used to simulate a single algorithm module on its own
+    using a pre-recorded sequence of inputs.
+
+    Simulating algorithm modules independently dramatically reduce the
+    amount of computation required to tune the paramters of modules in
+    the latter stages of the processing pipeline.
+
+    """
+    import json
+    import yaml
+    import runtime.mil
+
+    vertex = runtime.mil.Vertex(cfg         = yaml.safe_load(cfg),
+                                module_name = logic)
+
+    for (iline, line) in enumerate(inputs):
+        print(iline)
+        vertex.inputs = json.loads(line)
+        vertex.iter()
+        outputs.write(json.dumps(vertex.outputs))
 
 
 # -----------------------------------------------------------------------------
@@ -529,15 +613,119 @@ def build(click_ctx, da_ctx, cfg_name, datetime_utc):
 #       - i00041_control_access_to_counterparty_specific_confidential_documents
 #       - i00042_organise_documents_for_reuse
 # ...
-LIST_ROOTPATH_PLUGIN = [da.lwc.discover.path('project'),
-                        da.lwc.discover.path('research'),
-                        da.lwc.discover.path('demo')]
-for rootpath in LIST_ROOTPATH_PLUGIN:
-    for dirname in os.listdir(rootpath):
-        filepath_plugin = os.path.join(rootpath, dirname, 'cli_plugin.py')
-        if not os.path.isfile(filepath_plugin):
-            continue
-        module = da.util.importutils.import_module_file(filepath_plugin)
-        for (key, value) in module.__dict__.items():
-            if isinstance(value, click.core.Group):
-                main.add_command(value)
+def _gen_plugin_subgroups(rootpath, relpath = None):
+    """
+    Yield all CLI plugin command (sub) groups in the given directory.
+
+    ---
+    type: generator
+
+    args:
+        rootpath:
+            The directory path to the import root.
+
+        relpath:
+            The relative path to the directory where
+            a cli_plugin.py module may be found. This
+            is used to generate the first part of the
+            name under which the cli plugin module
+            will be imported.
+
+    yields:
+        All click.core.Group objects that are found
+        in the plugin module's namespace.
+
+    ...
+
+    """
+    if relpath is None:
+        relpath = ''
+
+    filepath_plugin = os.path.join(rootpath, relpath, 'cli_plugin.py')
+
+    if not os.path.isfile(filepath_plugin):
+        return
+
+    filename         = os.path.basename(filepath_plugin)
+    (module_name, _) = os.path.splitext(filename)
+    path_parts       = relpath.split(os.sep)
+    fullname         = '.'.join(path_parts + [module_name])
+    loader           = importlib.machinery.SourceFileLoader(fullname,
+                                                            filepath_plugin)
+    module           = loader.load_module()
+
+    for value in module.__dict__.values():
+        if isinstance(value, click.core.Group):
+            subgroup = value
+            yield subgroup
+
+
+# -----------------------------------------------------------------------------
+def _load_cli_plugin_group(parent, group_name, group_help, dirpath_root):
+    """
+    Load all CLI plugins in the specified directory.
+
+    This function will iterate over all subdirectories
+    in dirpath_root, loading all cli_plugin.py modules
+    that are encountered.
+
+    ---
+    type: function
+
+    args:
+        parent:
+            Click command group within which the plugins will live.
+
+        group_name:
+            The name used to invoke this group in the CLI.
+
+        group_help:
+            Help text for plugins.
+
+        dirpath_root:
+            Directory path containing the plugins.
+
+    returns:
+        None
+
+    ...
+
+    """
+    def no_op():
+        """
+        No-op callback function for generated CLI groups.
+
+        """
+        pass
+
+    group = click.group(name = group_name,
+                        help = group_help)(no_op)
+    parent.add_command(group)                           # pylint: disable=E1101
+
+    filepath_plugin = os.path.join(dirpath_root, 'cli_plugin.py')
+    if os.path.isfile(filepath_plugin):
+        for subgroup in _gen_plugin_subgroups(dirpath_root):
+            group.add_command(subgroup)                 # pylint: disable=E1101
+
+    for dirname in os.listdir(dirpath_root):
+        for subgroup in _gen_plugin_subgroups(dirpath_root, dirname):
+            group.add_command(subgroup)                 # pylint: disable=E1101
+
+
+_load_cli_plugin_group(
+    parent       = main,
+    group_name   = 'res',
+    group_help   = 'Run a research utility or test.',
+    dirpath_root = da.lwc.discover.path('research'))
+
+_load_cli_plugin_group(
+    parent       = main,
+    group_name   = 'prj',
+    group_help   = 'Run a project specific utility or test.',
+    dirpath_root = da.lwc.discover.path('project'))
+
+_load_cli_plugin_group(
+    parent       = main,
+    group_name   = 'demo',
+    group_help   = 'Run a demo.',
+    dirpath_root = da.lwc.discover.path('demo'))

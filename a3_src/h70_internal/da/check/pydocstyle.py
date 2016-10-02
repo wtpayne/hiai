@@ -41,9 +41,9 @@ import da.util
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def coro(error_handler):
+def coro(build_monitor):
     """
-    Send errors to error_handler if supplied files not compliant with pep257.
+    Send errors to build_monitor if supplied files not compliant with pep257.
 
     """
     ignore_list = [
@@ -76,8 +76,8 @@ def coro(error_handler):
     checker = pydocstyle.PEP257Checker()
     while True:
 
-        build_element = (yield)
-        filepath      = build_element['filepath']
+        build_unit = (yield)
+        filepath   = build_unit['filepath']
 
         # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath):
@@ -87,17 +87,20 @@ def coro(error_handler):
         if da.lwc.file.is_experimental(filepath):
             continue
 
-        for error in checker.check_source(build_element['content'], filepath):
+        for error in checker.check_source(build_unit['content'], filepath):
             if error.code in ignore_list:
                 continue
-            error_handler.send({
-                'tool':   'pydocstyle',
-                'msg_id': error.code,
-                'msg':    error.short_desc,
-                'file':   filepath,
-                'line':   error.line,
-                'col':    0,
-                'doc':    error.explanation,
-                'lines':  error.lines,
-                'def':    error.definition
-            })
+
+            message = '{short_desc}\n{explanation}'.format(
+                                            short_desc  = error.short_desc,
+                                            explanation = error.explanation)
+
+            build_monitor.report_nonconformity(
+                tool    = 'da.check.pydocstyle',
+                msg_id  = error.code,
+                msg     = message,
+                path    = filepath,
+                line    = error.line)
+            #   doc     = error.explanation
+            #   lines   = error.lines
+            #   def     = error.definition

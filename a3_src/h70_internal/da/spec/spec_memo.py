@@ -31,6 +31,17 @@ license:
 """
 
 
+from . import spec_memo
+
+
+num_calls = 0
+
+
+# -----------------------------------------------------------------------------
+def count_calls():
+    spec_memo.num_calls += 1
+
+
 # =============================================================================
 class SpecifyVar:
     """
@@ -39,13 +50,23 @@ class SpecifyVar:
     """
 
     # -------------------------------------------------------------------------
-    def it_is_callable(self):
+    def it_calls_the_wrapped_function_once(self):
         """
-        The var() function is callable.
+        The var() function only calls the wrapped function once.
 
         """
-        import da.vcs
-        assert callable(da.vcs.files_changed_in_lwc)
+        import da.memo
+        @da.memo.var
+        def return_42():
+            count_calls()
+            return 42
+
+        spec_memo.num_calls = 0
+        assert return_42() == 42
+        assert spec_memo.num_calls == 1
+
+        assert return_42() == 42
+        assert spec_memo.num_calls == 1
 
 
 # =============================================================================
@@ -54,13 +75,21 @@ class SpecifyConst:
     Specify the da.memo.const() function
 
     """
+    # -------------------------------------------------------------------------
+    def it_calls_the_wrapped_function_once(self):
+        """
+        The const() function only calls the wrapped function once.
 
+        """
+        import da.memo
+        @da.memo.const
+        def return_42():
+            count_calls()
+            return 42
 
-# -----------------------------------------------------------------------------
-def it_exists():
-    """
-    Placeholder test case.
+        spec_memo.num_calls = 0
+        assert return_42() == 42
+        assert spec_memo.num_calls == 1
 
-    """
-    import da.memo
-    assert True
+        assert return_42() == 42
+        assert spec_memo.num_calls == 1

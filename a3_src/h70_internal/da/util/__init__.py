@@ -50,12 +50,16 @@ flatten_ragged     = misc.flatten_ragged                # pylint: disable=C0103
 decompose_map      = misc.decompose_map                 # pylint: disable=C0103
 write_jseq         = misc.write_jseq                    # pylint: disable=C0103
 load               = misc.load                          # pylint: disable=C0103
+save               = misc.save                          # pylint: disable=C0103
 ensure_dir_exists  = misc.ensure_dir_exists             # pylint: disable=C0103
 ensure_file_exists = misc.ensure_file_exists            # pylint: disable=C0103
 merge_dicts        = misc.merge_dicts                   # pylint: disable=C0103
 iter_yaml_docs     = misc.iter_yaml_docs                # pylint: disable=C0103
 iter_files         = misc.iter_files                    # pylint: disable=C0103
 iter_dirs          = misc.iter_dirs                     # pylint: disable=C0103
+sha256             = misc.sha256                        # pylint: disable=C0103
+sys_path_context   = misc.sys_path_context              # pylint: disable=C0103
+sys_argv_context   = misc.sys_argv_context              # pylint: disable=C0103
 import_fcn         = importutils.import_fcn             # pylint: disable=C0103
 import_module_file = importutils.import_module_file     # pylint: disable=C0103
 import_from_dir    = importutils.import_from_dir        # pylint: disable=C0103

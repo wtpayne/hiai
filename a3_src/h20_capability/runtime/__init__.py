@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Package containing MIL HIL and SIL runtime support packages.
+Package with support for MIL HIL and SIL runtimes.
 
 ---
 type:
@@ -29,3 +29,5 @@ license:
     limitations under the License."
 ...
 """
+
+__all__ = ()

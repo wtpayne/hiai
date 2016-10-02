@@ -4,7 +4,7 @@ The build module is responsible for top level control over the build process.
 
 The build process is responsible for generating a
 set of built output artifacts in accordance with a
-single specific design configuration.
+single specified design configuration.
 
 If a nonconformity in the design is detected, the
 build halts and a report is issued.
@@ -13,7 +13,7 @@ The build module supports compilation; testing;
 documentation generation; running simulations for
 performance analysis and any operation which takes
 a set of input files and processes them to produce
-a set of output files, and is particularly applicable
+a set of output files. It is particularly applicable
 when the input and output files need to be
 configuration-controlled and the operation itself
 needs to be reproduceable.
@@ -24,7 +24,7 @@ of design documents and identified by the git SHA-1
 digest.)
 
 This contrasts with the metabuild module, which is
-responsible for generating and comparing multiple
+responsible for generating and evaluating multiple
 competing design configurations.
 
 ---
@@ -59,19 +59,20 @@ license:
 import ast
 import contextlib
 import datetime
-import itertools
 import json
 import logging
 import os
 
-import click
-
 import da.bldcfg
+import da.check.bulk_data
+import da.check.constants
+import da.check.dependencies
 import da.check.pycodestyle
+import da.check.pycomplexity
 import da.check.pydocstyle
 import da.check.pylint
 import da.check.pytest
-import da.check.pycomplexity
+import da.check.pytype
 import da.check.schema
 import da.cms
 import da.compile.clang
@@ -84,6 +85,7 @@ import da.index
 import da.log
 import da.lwc
 import da.lwc.file
+import da.monitor
 import da.team
 
 
@@ -99,7 +101,7 @@ def main(cfg):
     The build process takes as input a set of design
     documents. If any nonconformities are detected,
     it issues a report and halts; else it produces
-    or  updates a set of built artifacts.
+    or updates a set of built artifacts.
 
     The build.main() function can be configured to
     restrict the set of design documents used as
@@ -111,66 +113,131 @@ def main(cfg):
     specific processing steps that we choose, which
     enables us to get rapid feedback on areas that
     are giving us problems. Even when performing
-    full builds, build inputs and processing steps
-    are sequenced to maximise the probability of
-    discovering nonconformities early.
+    complete builds, build inputs and processing
+    steps are sequenced to maximise the probability
+    of discovering nonconformities early.
 
-    The _build_inputs() generator function selects
+    Build processing steps are grouped into two
+    sequential phases: The first phase consists of
+    steps which accept build units individually,
+    and the second phase consists of steps which
+    cannot be decomposed down to the level of
+    individual units.
+
+    For the first phase of the build, the
+    _sequence_build_inputs() generator selects
     design documents from the current configuration
-    and sequences them to detect nonconformities
-    as early as possible.
+    and sequences them so that the build detects
+    nonconformities as early as possible. The
+    _unit_processing() coroutine then configures
+    and applies unit-by-unit processing steps
+    such as static analysis and unit testing.
 
-    The _build_process() coroutine selects the
-    processing steps applied by the build and and
-    sequences them to detect nonconformities as
-    early as possible.
+    For the second phase of the build, the
+    _integrated_processing() function selects and
+    applies build processing steps which are not
+    tied to individual build units, such as report
+    generation and test data validation.
 
     Errors and nonconformities are handled by the
-    _error_handler coroutine, which contains logic
-    for selcting between Jidoka (fail-fast) or robust
-    (comprehensive reporting) nonconformity response
-    strategies.
+    da.monitor.BuildMonitor class, which contains
+    logic for selcting between Jidoka (fail-fast)
+    or robust (comprehensive reporting) nonconformity
+    response strategies.
 
     ---
     type: function
+
     args:
-        cfg: A mapping holding the build configuration.
+        cfg:    A mapping holding the build configuration.
+
+    returns:
+        status: The value da.constants.BUILD_COMPLETED
+                is returned upon successful completion.
+                An exception is thrown otherwise.
     ...
+
     """
     _log_build_configuration(cfg)
+    build_monitor = da.monitor.BuildMonitor(cfg)
 
-    build_monitor = _build_monitor(cfg)
-    error_handler = _error_handler(cfg)
-    build_inputs  = _build_inputs(cfg)
-    build_process = _build_process(cfg, error_handler)
-    build_data    = None
+    # First build phase -- process individual build units / design documents.
+    build_inputs    = _sequence_build_inputs(cfg, build_monitor)
+    unit_processing = _unit_processing(cfg, build_monitor)
+    build_data      = None
+    for unit in build_inputs:
+        build_monitor.report_progress(unit)
+        build_data = unit_processing.send(unit)
 
-    # Pass design documents through the build process.
-    for build_element in build_inputs:
-        build_monitor.send(build_element)
-        build_data = build_process.send(build_element)
+    # Second build phase -- process the design as an integrated whole.
+    _integrated_processing(cfg, build_monitor, build_data)
 
-    if cfg['steps']['enable_report_generation']:
-        # Delay importing the report module as it has heavyweight dependencies.
-        import da.report as _report
-        _report.build(cfg, build_data)
-        error_handler.send('PHASE_END')
-
-    # Iff the build ran to completion, register artifacts with the local CMS.
-    if cfg['options']['enable_cms_registration']:
-        da.cms.register(cfg)
-
-    error_handler.send('BUILD_END')
-    build_monitor.send('BUILD_END')
     logging.debug('Build process ran to completion')
-
+    build_monitor.notify_build_end()
     return da.constants.BUILD_COMPLETED
 
 
 # -----------------------------------------------------------------------------
-def _build_inputs(cfg):
+def _log_build_configuration(cfg):
     """
-    Yield filtered and prioritised build elements.
+    Log the build configuration to a file.
+
+    ---
+    type: function
+
+    args:
+        cfg: A mapping holding the build configuration.
+
+    ...
+
+    """
+    dirpath_branch_log = cfg['paths']['dirpath_branch_log']
+    filepath_cfg_log   = os.path.join(dirpath_branch_log, 'cfg.log.json')
+    with open(filepath_cfg_log, 'w') as file:
+        json.dump(
+            obj       = cfg,
+            fp        = file,
+            default   = cfgserialiser,
+            indent    = 4,
+            sort_keys = True)
+    return None
+
+
+# -----------------------------------------------------------------------------
+def cfgserialiser(date_obj):
+    """
+    JSON Serialiser for CFG objects.
+
+    This function is used by json.dump to serialise
+    build configuration data. It is required because
+    the build configuration data structure contains
+    datetime objects which are not supported by the
+    standard JSON serialiser function.
+
+    ---
+    type: function
+
+    args:
+        date_obj:   An instance of a datetime.datetime
+                    object.
+
+    returns:
+        date_str:   A ISO-8601 string representation of
+                    the supplied date.
+    ...
+
+    """
+    if isinstance(date_obj, datetime.datetime):
+        date_str = date_obj.isoformat()
+        return date_str
+    else:
+        raise TypeError
+
+
+# -----------------------------------------------------------------------------
+def _sequence_build_inputs(cfg, build_monitor):
+    """
+    Yield filtered and prioritised build units.
 
     The build process is a little unusual in that
     it is *not* designed to minimise the overall
@@ -178,7 +245,7 @@ def _build_inputs(cfg):
     taken to detect a nonconformity after an
     incremental change. A key design goal is to
     detect 95% of nonconformities within the first
-    5 seconds of the build.
+    5 seconds of a development build.
 
     This frees the developer from actively monitoring
     the build after the first few seconds; he may
@@ -196,37 +263,71 @@ def _build_inputs(cfg):
     at or close to the 'unit' level in the V model
     (both static and dynamic).
 
-    Each build element consists of a single design
+    Each build unit consists of a single design
     document plus all of it's supporting documents:
     specifications, tests, header files and so on.
 
-    Build elements are selected and prioritised
-    based on when they were last modified and by
-    the assessed risk of a nonconformity or error.
+    Build unit are selected and prioritised based
+    on when they were last modified and by the
+    assessed risk of a nonconformity or error.
 
     The build can be configured to limit the build
-    elements that are generated so that only particular
+    units that are generated so that only particular
     products or projects are built.
 
-    Yielded build elements will often include open
+    Yielded build units will often include open
     file handles. This generator ensures that each
     of these handles will be closed at the end of
     each iteration.
 
+    ---
+    type: generator
+
+    args:
+        cfg:            A mapping holding the build configuration.
+
+        build_monitor:  A reference to the build monitoring and
+                        progress reporting coroutine.
+
+
+    yields:
+        build_unit:     A mapping with information about a single
+                        detailed design document (source file)
+                        together with it's supporting specifications
+                        and tests. The sequence of yielded build
+                        units determines how the build is prioritised.
+    ...
+
     """
     iter_prioritised = _gen_prioritised_filepaths(cfg)
-    iter_normalised  = _normalise_filepaths(iter_prioritised)
+    iter_normalised  = _normalise_filepaths(iter_prioritised, build_monitor)
     iter_restricted  = _restrict_filepaths(cfg, iter_normalised)
     for filepath_design_doc in iter_restricted:
-        with _load_design_doc(cfg, filepath_design_doc) as part_loaded:
-            with _load_supporting_docs(cfg, part_loaded) as build_element:
-                yield build_element
+
+        with _load_design_doc(
+                cfg, filepath_design_doc, build_monitor) as part_loaded:
+
+            with _load_supporting_docs(
+                    cfg, part_loaded, build_monitor) as build_unit:
+
+                yield build_unit
 
 
 # -----------------------------------------------------------------------------
 def _gen_prioritised_filepaths(cfg):
     """
     Yield a sequence of candidate build input filepaths in priority order.
+
+    ---
+    type: generator
+
+    args:
+        cfg:            A mapping holding the build configuration.
+
+    yields:
+        filepath:       A filepath string pointing to a file in the
+                        build isolation area (isolated_src).
+    ...
 
     """
     # Files most recently changed in LWC. (Very short list)
@@ -239,7 +340,8 @@ def _gen_prioritised_filepaths(cfg):
                                  new         = dirpath_isolated_src)
 
     for filepath in changed_files:
-        yield filepath
+        if not os.path.isdir(filepath):
+            yield filepath
 
     # build_date = datetime.datetime.strptime(cfg['timestamp']['datetime_utc'],
     #                                         da.bldcfg.DATEFMT_DATETIME_UTC)
@@ -263,12 +365,28 @@ def _replace_all(string_list, old, new):
     """
     Call the string replace function on all strings in a list.
 
+    ---
+    type: function
+
+    args:
+        string_list:    A list of strings.
+
+        old:            The string to be replaced.
+
+        new:            The string to replace it with.
+
+    returns:
+        modified_list:  A list of strings where, for each string
+                        in the list, all instances of the old string
+                        have been replaced by the new string.
+    ...
+
     """
     return [string.replace(old, new) for string in string_list]
 
 
 # -----------------------------------------------------------------------------
-def _normalise_filepaths(iter_filepaths):
+def _normalise_filepaths(iter_filepaths, build_monitor):
     """
     Yield a sequence of normalised (design document) filepaths.
 
@@ -279,11 +397,29 @@ def _normalise_filepaths(iter_filepaths):
     Duplicates are then removed, leaving a sequence
     of filepaths of design documents which are to
     be included in the build; one for each build
-    element.
+    unit.
 
     Files which are not design documents or do not
     support a design document (i.e. are not part
-    of any build element) are skipped.
+    of any build unit) are skipped.
+
+    ---
+    type: generator
+
+    args:
+        iter_filepaths: An iterable yielding a sequence of filepaths.
+                        These filepaths may refer either to primary
+                        design documents or to secondary supporting
+                        documents such as tests or specifications.
+
+        build_monitor:  A reference to the build monitoring and
+                        progress reporting coroutine.
+
+    yields:
+        filepath:       A design document filepath. Duplicate
+                        filepaths are removed and supporting
+                        document filepaths are normalised.
+    ...
 
     """
     deduplication = set()
@@ -298,16 +434,19 @@ def _normalise_filepaths(iter_filepaths):
         # converted into the filepath of the design
         # document that they support. This gives
         # us a string that we can use to identify
-        # each unique build element.
+        # each unique build unit.
         #
         if da.lwc.file.is_specification_file(filepath):
             filepath_design = da.lwc.file.design_filepath_for(filepath)
             if os.path.isfile(filepath_design):
                 filepath = filepath_design
             else:
-                raise RuntimeError(
-                        'Missing design file for spec: {filepath}'.format(
-                                                        filepath = filepath))
+                build_monitor.report_nonconformity(
+                    tool   = 'da.build',
+                    msg_id = da.check.constants.BUILD_MISSING_DESIGN_FILE,
+                    msg    = 'Missing design file for spec: {path}'.format(
+                                                            path = filepath),
+                    path   = filepath)
 
         # Ignore duplicates.
         if filepath in deduplication:
@@ -316,14 +455,31 @@ def _normalise_filepaths(iter_filepaths):
             deduplication.add(filepath)
             yield filepath
 
+    return
+
 
 # -----------------------------------------------------------------------------
 def _restrict_filepaths(cfg, iter_filepaths):
     """
-    Yield filepaths, skipping those eliminated by any in-force resrtrictions.
+    Yield filepaths, skipping those eliminated by any in-force restrictions.
 
     If no restriction is specified, all supplied
     filespaths are yielded unchanged and in order.
+
+    ---
+    type: coroutine
+
+    args:
+        cfg:            A mapping holding the build configuration.
+
+        iter_filepaths: An iterable yielding a sequence of design document
+                        filepaths.
+
+    yields:
+        filepath:       A design document filepath. Filepaths which
+                        are excluded by the configuration (cfg) are
+                        skipped.
+    ...
 
     """
     restriction = cfg['scope']['restriction']
@@ -341,9 +497,27 @@ def _restrict_filepaths(cfg, iter_filepaths):
 
 # -----------------------------------------------------------------------------
 @contextlib.contextmanager
-def _load_design_doc(cfg, filepath):
+def _load_design_doc(cfg, filepath, build_monitor):
     """
-    Context manager to load the design document into a build element.
+    Context manager to load the design document into a build unit.
+
+    ---
+    type: context_manager
+
+    args:
+        cfg:            A mapping holding the build configuration.
+
+        filepath:       A design document filepath.
+
+        build_monitor:  A reference to the build monitoring and
+                        progress reporting coroutine.
+
+    yields:
+        build_unit:     A mapping with information about a single
+                        detailed design document (source file)
+                        together with it's supporting specifications
+                        and tests.
+    ...
 
     """
     rootpath_log = cfg['paths']['dirpath_branch_log']
@@ -352,13 +526,17 @@ def _load_design_doc(cfg, filepath):
     #       files, so PEP 263 encoding markers are interpreted.
     #       We will need to go through and update all the processes
     #       that make use of the file handle though ...
+    #
     with open(filepath, 'rb') as file:
         content       = file.read().decode('utf-8')
         relpath       = os.path.relpath(filepath,
                                         cfg['paths']['dirpath_isolated_src'])
-        dirpath_log   = os.path.join(rootpath_log,
-                                     os.path.splitext(relpath)[0])
-        build_element = {
+        (relpath_dir, filename) = os.path.split(relpath)
+        dirpath_log             = os.path.join(
+                                            rootpath_log,
+                                            relpath_dir,
+                                            filename.replace('.', '_'))
+        build_unit = {
             'filepath':     filepath,
             'relpath':      relpath,
             'file':         file,
@@ -366,20 +544,44 @@ def _load_design_doc(cfg, filepath):
             'dirpath_log':  dirpath_log
         }
 
-        if da.lwc.file.is_python_file(filepath):
-            build_element['ast'] = ast.parse(content)
+        # Add build_unit['ast'] if file parses OK...
+        build_unit = _try_parse(build_unit, build_monitor)
 
-        yield build_element
+        # Yield with open filepath...
+        yield build_unit
+
+    return
 
 
 # -----------------------------------------------------------------------------
 @contextlib.contextmanager
-def _load_supporting_docs(cfg, build_element):
+def _load_supporting_docs(cfg, build_unit, build_monitor):
     """
-    Context manager to load supporting documents into a build element.
+    Context manager to load supporting documents into a build unit.
+
+    ---
+    type: context_manager
+
+    args:
+        cfg:            A mapping holding the build configuration.
+
+        build_unit:     A mapping with information about a single
+                        detailed design document (source file)
+                        together with it's supporting specifications
+                        and tests.
+
+        build_monitor:  A reference to the build monitoring and
+                        progress reporting coroutine.
+
+    yields:
+        build_unit:     A mapping with information about a single
+                        detailed design document (source file)
+                        together with it's supporting specifications
+                        and tests.
+    ...
 
     """
-    filepath             = build_element['filepath']
+    filepath             = build_unit['filepath']
     filepath_spec        = da.lwc.file.specification_filepath_for(filepath)
     has_supporting_docs  = (     da.lwc.file.is_design_file(filepath)
                              and os.path.isfile(filepath_spec))
@@ -387,7 +589,7 @@ def _load_supporting_docs(cfg, build_element):
     if has_supporting_docs:
         with open(filepath_spec, 'rb') as file:
             content = file.read().decode('utf-8')
-            build_element['spec'] = {
+            build_unit['spec'] = {
                 'filepath': filepath_spec,
                 'relpath':  os.path.relpath(
                                         filepath_spec,
@@ -395,39 +597,100 @@ def _load_supporting_docs(cfg, build_element):
                 'file':     file,
                 'content':  content
             }
-            if da.lwc.file.is_python_file(filepath_spec):
-                build_element['spec']['ast'] = ast.parse(content)
-            yield build_element
+
+            # Add build_unit['spec']['ast'] if file parses OK...
+            build_unit['spec'] = _try_parse(build_unit['spec'], build_monitor)
+
+            # Yield with open filepath_spec...
+            yield build_unit
 
     else:
-        yield build_element
+
+        yield build_unit
+
+    return
+
+
+# -----------------------------------------------------------------------------
+def _try_parse(build_unit_part, build_monitor):
+    """
+    Return build_unit_part with added 'ast' field, else report a nonconformity.
+
+    This function attempts to parse the file specified
+    by build_unit_part['filepath']. If it is successful,
+    it stores the resulting AST in build_unit_part['ast'].
+    If it is not successful, it reports a nonconformity
+    via the supplied build_monitor reference. In either
+    case, a reference to the supplied build_unit_part
+    dict is returned.
+
+    The build_unit_part can either be a reference to
+    an entire build_unit structure or a reference to
+    the build_unit['spec'] part.
+
+    ---
+    type: function
+
+    args:
+
+        build_unit_part:    Either a reference to an entire
+                            build_unit struct, or a reference
+                            to the build_unit['spec'] part.
+
+        build_monitor:      A reference to the build monitoring and
+                            progress reporting coroutine.
+
+    returns:
+
+        build_unit_part:    Either a reference to an entire
+                            build_unit struct, or a reference
+                            to the build_unit['spec'] part.
+    ...
+
+    """
+    filepath = build_unit_part['filepath']
+    if da.lwc.file.is_python_file(filepath):
+
+        try:
+
+            build_unit_part['ast'] = ast.parse(build_unit_part['content'])
+
+        except SyntaxError as err:
+
+            # Draw a caret under the error location
+            # so it is easy for the user to spot
+            # where the error is.
+            #
+            idx_newline = str(err.text)[0:int(err.offset)].rfind('\n')
+            col = err.offset - (idx_newline + 1)
+            location_indicator = (' ' * col) + '^'
+            msg = 'Syntax error:\n{msg}\n{loc}'.format(
+                                            msg = err.text,
+                                            loc = location_indicator)
+
+            build_monitor.report_nonconformity(
+                tool   = 'da.build',
+                msg_id = da.check.constants.BUILD_SPEC_SYNTAX_ERROR,
+                msg    = msg,
+                path   = filepath,
+                line   = err.lineno,
+                col    = col)
+
+    return build_unit_part
 
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def _build_process(cfg, error_handler):                 # pylint: disable=R0912
+def _unit_processing(cfg, build_monitor):               # pylint: disable=R0912
     """
-    Configure and return the build function (a closure).
+    Recieve and process individual build units.
 
-    Build steps are implemented as coroutines, all
-    of which are initialised when the _build_process()
-    function is called at the start of the build
-    process.
-
-    This function returns a closure, _build_function(),
-    which has access to all of the initialised
-    build steps.
-
-    When called with a build_element argument,
-    _build_function() will pass the build_element
-    to each of the build steps in turn, allowing
-    the build element to be validated, documented
-    and compiled.
-
-    Most build_elements represent individual units
-    and their associated tests, but some will also
-    represent subsystems and systems at less fine-
-    grained levels of integration.
+    This coroutine is a key component in the build
+    system. It is responsible for the selection,
+    configuration and sequencing of those processing
+    steps which are applied to individual build
+    units. The processing steps themselves are
+    implemented as a set of subsidiary coroutines.
 
     Pylint rule R0912 (too many branches) is disabled
     for this function because the use of if statements
@@ -435,286 +698,157 @@ def _build_process(cfg, error_handler):                 # pylint: disable=R0912
     and legible and I do not believe that it poses
     any obstacle to either maintenance or test.
 
+    ---
+    type: coroutine
+
+    args:
+        cfg:            A mapping holding the build configuration.
+
+        build_monitor:  A reference to the build monitoring and
+                        progress reporting coroutine.
+
+    yields:
+        build_data:     A mapping holding build data accumulated
+                        during the preceeding unit processing
+                        phase (e.g. incremental index data for
+                        reports and traceability).
+    ...
+
     """
     dirpath_src = cfg['paths']['dirpath_isolated_src']
     steps       = cfg['steps']
 
     chk_pytest  = da.check.pytest.coro(
                                     dirpath_src      = dirpath_src,
-                                    error_handler    = error_handler)
+                                    build_monitor    = build_monitor)
 
     chk_pylint  = da.check.pylint.coro(
                                     dirpath_lwc_root = dirpath_src,
-                                    error_handler    = error_handler)
+                                    build_monitor    = build_monitor)
+
+    chk_pytype  = da.check.pytype.coro(
+                                    dirpath_lwc_root = dirpath_src,
+                                    build_monitor    = build_monitor)
 
     indexer     = da.index.index_coro(
                                     dirpath_lwc_root = dirpath_src)
 
-    chk_data    = da.check.schema.coro(error_handler)
-    chk_complex = da.check.pycomplexity.coro(error_handler)
-    chk_pycode  = da.check.pycodestyle.coro(error_handler)
-    chk_pydoc   = da.check.pydocstyle.coro(error_handler)
-    bld_gcc     = da.compile.gcc.coro(error_handler)
-    bld_clang   = da.compile.clang.coro(error_handler)
+    chk_deps    = da.check.dependencies.coro(
+                                    dirpath_lwc_root = dirpath_src,
+                                    build_monitor    = build_monitor)
+
+    bld_clang   = da.compile.clang.coro(build_monitor)
+    bld_gcc     = da.compile.gcc.coro(build_monitor)
+    chk_complex = da.check.pycomplexity.coro(build_monitor)
+    chk_data    = da.check.schema.coro(build_monitor)
+    chk_pycode  = da.check.pycodestyle.coro(build_monitor)
+    chk_pydoc   = da.check.pydocstyle.coro(build_monitor)
     doc_design  = da.docgen.design.coro(cfg)
 
     report_data = None
     while True:
 
-        build_element = (yield report_data)
+        build_unit = (yield report_data)
 
         # We run unit tests first to make the
         # test-modify-test loop as tight as
         # possible.
         if steps['enable_test_python_unittest']:
-            chk_pytest.send(build_element)
+            chk_pytest.send(build_unit)
 
         if steps['enable_static_test_python_complexity']:
-            chk_complex.send(build_element)
+            chk_complex.send(build_unit)
 
         if steps['enable_static_test_python_codestyle']:
-            chk_pycode.send(build_element)
+            chk_pycode.send(build_unit)
 
         if steps['enable_static_test_python_docstyle']:
-            chk_pydoc.send(build_element)
+            chk_pydoc.send(build_unit)
 
-        # Pylint is the slowest python-specific step,
-        # so we leave it until last.
+        # Pylint static analysis and MyPy type
+        # checking are the slowest python-specific
+        # steps, so we leave them until after the
+        # other python-specific stuff.
         if steps['enable_static_test_python_pylint']:
-            chk_pylint.send(build_element)
+            chk_pylint.send(build_unit)
+
+        if steps['enable_static_test_python_typecheck']:
+            chk_pytype.send(build_unit)
 
         # C/C++ compilation with gcc.
         if steps['enable_compile_gcc']:
-            bld_gcc.send(build_element)
+            bld_gcc.send(build_unit)
 
         # C/C++ compilation with clang.
         if steps['enable_compile_clang']:
-            bld_clang.send(build_element)
+            bld_clang.send(build_unit)
 
         # Generate design documentation.
         if steps['enable_generate_design_docs']:
-            doc_design.send(build_element)
+            doc_design.send(build_unit)
 
         # Data validation has to come before
         # indexing -- perhaps both should be
         # enabled together?
         if steps['enable_static_data_validation']:
-            chk_data.send(build_element)
+            chk_data.send(build_unit)
 
-        # Static indexing comes quite early
+        # Static indexing... early or late?
         # TODO: Consider switching this on/off with reporting??
         if steps['enable_static_indexing']:
-            report_data = indexer.send(build_element)
+            report_data = indexer.send(build_unit)
         else:
             report_data = None
 
-        error_handler.send('PHASE_END')
+        chk_deps.send(build_unit)
 
 
 # -----------------------------------------------------------------------------
-def cfgserialiser(obj):
+def _integrated_processing(cfg,
+                           build_monitor,
+                           build_data):                 # pylint: disable=R0912
     """
-    JSON Serialiser for CFG objects.
+    Carry out build steps which treat the design as an integrated whole.
 
-    This function is used by json.dump to serialise
-    build configuration data. It is required because
-    the build configuration data structure contains
-    datetime objects which are not supported by the
-    standard JSON serialiser function.
+    This function implements the second major phase
+    of the build process. It is responsible for the
+    selection, configuration and sequencing of those
+    processing steps which are applied to the design
+    as an integrated whole. The processing steps
+    themselves are implemented as a set of subsidiary
+    functions.
 
-    """
-    if isinstance(obj, datetime.datetime):
-        return obj.isoformat()
-    raise TypeError
+    These non-decomposable functions include test
+    data integrity checking; report generation and
+    the registration of built artifacts with the
+    configuration management system.
 
+    ---
+    type: function
 
-# -----------------------------------------------------------------------------
-@da.util.coroutine
-def _build_monitor(cfg):
-    """
-    Coroutine to handle build monitoring and progress reporting.
+    args:
+        cfg:            A mapping holding the build configuration.
 
-    This coroutine is responsible for updating dashboards and other
-    progress reporting mechanisms.
+        build_monitor:  A reference to the build monitoring and
+                        progress reporting coroutine.
 
-    """
-    dirpath_branch_log    = cfg['paths']['dirpath_branch_log']
-    filepath_build_report = os.path.join(dirpath_branch_log, 'index.html')
-    url_build_report      = 'file://{filepath}'.format(
-                                            filepath = filepath_build_report)
-    da.util.ensure_dir_exists(dirpath_branch_log)
-
-    # Print a hyperlink so we can go look at the log files.
-    click.clear()
-    _msg('Build id:',    cfg['build_id'])
-    _msg('Last commit:', cfg['defined_baseline']['commit_summary'])
-    _msg('Report:',      url_build_report)
-
-    # TODO: Get estimate from some sort of cache ...
-    est_num_elem  = 130
-
-    # TODO: Configure progressbar on/off
-    with open(filepath_build_report, 'wt') as file_build_report:
-        file_build_report.write('<html>\n')
-        file_build_report.write('<head>\n')
-        file_build_report.write('</head>\n')
-        file_build_report.write('<body>\n')
-
-    with click.progressbar(length = est_num_elem,
-                           label = _pad_key('Progress:')) as progressbar:
-
-        ielement = 0
-        for ielement in itertools.count(0):
-
-            progressbar.update(1)
-            build_element = (yield)
-            if build_element == 'BUILD_END':
-                break
-
-            relpath      = build_element['relpath']
-            dirpath_doc  = os.path.join(dirpath_branch_log, relpath)
-            filepath_doc = os.path.join(dirpath_doc, 'design.html')
-            url_doc      = 'file://{filepath}'.format(filepath = filepath_doc)
-            link         = '<a href="{url}">{name}</a>'.format(url  = url_doc,
-                                                               name = relpath)
-
-            with open(filepath_build_report, 'at') as file_build_report:
-                file_build_report.write(link + '<br>\n')
-            os.sync()
-
-    # Finalise
-    with open(filepath_build_report, 'at') as file_build_report:
-        file_build_report.write('</body>\n')
-        file_build_report.write('</html>\n')
-    if ielement > est_num_elem:
-        raise RuntimeError(
-            'Est. num. build elem. {est} < {act} (actual)'.format(
-                                                est = est_num_elem,
-                                                act = ielement))
-    os.sync()
-    start_time = cfg['timestamp']['datetime_utc']
-    end_time   = datetime.datetime.utcnow()
-    delta_secs = (end_time - start_time).total_seconds()
-    _msg('Completed in:', '{secs:0.0f}s.'.format(secs = delta_secs))
-
-    # Suppress StopIteration...
-    _ = (yield)
-
-
-# -----------------------------------------------------------------------------
-def _msg(key, value = None):
-    """
-    Write a key: value pair to the console.
+        build_data:     A mapping holding build data accumulated
+                        during the preceeding unit processing
+                        phase (e.g. incremental index data for
+                        reports and traceability).
+    ...
 
     """
-    print('{key}  {value}'.format(key   = _pad_key(key),
-                                  value = value if value else ''))
+    if cfg['steps']['enable_bulk_data_checks']:
+        da.check.bulk_data.check_all(cfg, build_monitor)
 
+    if cfg['steps']['enable_report_generation']:
+        # Delay importing the report module as it has heavyweight dependencies.
+        import da.report as _report
+        _report.build(cfg, build_data)
 
-# -----------------------------------------------------------------------------
-def _pad_key(key):
-    """
-    Return a key string padded out to 15 characters.
+    # Iff the build ran to completion, register artifacts with the local CMS.
+    if cfg['options']['enable_cms_registration']:
+        da.cms.register(cfg)
 
-    """
-    return '{key:14s}'.format(key = key)
-
-
-# -----------------------------------------------------------------------------
-def _log_build_configuration(cfg):
-    """
-    Log the build configuration to a file.
-
-    """
-    dirpath_branch_log = cfg['paths']['dirpath_branch_log']
-    filepath_cfg_log   = os.path.join(dirpath_branch_log, 'cfg.log.json')
-    with open(filepath_cfg_log, 'w') as file:
-        json.dump(
-            obj       = cfg,
-            fp        = file,
-            default   = cfgserialiser,
-            indent    = 4,
-            sort_keys = True)
-
-
-# -----------------------------------------------------------------------------
-@da.util.coroutine
-def _error_handler(cfg):
-    """
-    Coroutine to handle errors and nonconformities identified during the build.
-
-    This coroutine is responsible for deciding how
-    the build process should respond to errors,
-    and enables us to configure either a fail-fast
-    policy (the first error terminates the build)
-    or a robust policy (Waiting until either the
-    end of the current build phase or the end of
-    the entire build before failing).
-
-    The coroutine expects to be sent either error
-    items or control messages.
-
-    Error items are dicts containing information
-    about the error. If the system has been
-    configured with a fail-fast policy, then the
-    first error will terminate the build. Otherwise,
-    the errors are accumulated in a list until the
-    appropriate time for them to be collectively
-    processed.
-
-    Control messages are strings, either 'PHASE_END'
-    or 'BUILD_END'. The receipt of a control message
-    may trigger the termination of the build if the
-    build is so configured.
-
-    """
-    errors = []
-    while True:
-        msg = (yield)
-        if msg == 'PHASE_END':
-            if errors and cfg['options']['errors_abort_at_phase_end']:
-                _log_and_abort(cfg, errors)
-            else:
-                pass  # Silently consume PHASE_END message.
-
-        elif msg == 'BUILD_END':
-            if errors and cfg['options']['errors_abort_at_build_end']:
-                _log_and_abort(cfg, errors)
-            else:
-                pass  # Silently consume BUILD_END message.
-
-        else:
-            errors.append(msg)
-            if cfg['options']['errors_abort_immediately']:
-                _log_and_abort(cfg, errors)
-
-
-# -----------------------------------------------------------------------------
-def _log_and_abort(cfg, errors):
-    """
-    Log every error in the list and raise an exception.
-
-    """
-    # TODO: LOG ERROR IN A FILE SOMEWHERE
-    # Translate path strings from isolation-dir strings to their original
-    # locations.
-    message = ''
-    for err in errors:
-        filepath_raw = err['file']
-        filepath_mod = filepath_raw.replace(
-                                        cfg['paths']['dirpath_isolated_src'],
-                                        cfg['paths']['dirpath_lwc_root'])
-        message += ('{tool}:{msg_id}: {msg:40s} - {file}:{line}\n'.format(
-            tool    = err['tool'],
-            msg_id  = err['msg_id'],
-            msg     = err['msg'],
-            file    = filepath_mod,
-            line    = err['line']))
-
-    filepath_raw = errors[0]['file']
-    filepath_mod = filepath_raw.replace(
-                                    cfg['paths']['dirpath_isolated_src'],
-                                    cfg['paths']['dirpath_lwc_root'])
-    raise da.exception.AbortWithoutStackTrace(message     = message,
-                                              filepath    = filepath_mod,
-                                              line_number = errors[0]['line'])
+    return

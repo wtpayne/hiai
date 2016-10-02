@@ -46,16 +46,16 @@ from good import (All,
 TITLE_TEXT          = Schema(Match(r'[A-Z]{1}[\w,. -]{2,74}\.',
                              expected = 'Title text'))
 
-SUMMARY_TEXT        = Schema(Match(r'[A-Z]{1}[\w,.\n -]{8,256}',
+SUMMARY_TEXT        = Schema(Match(r'[A-Z]{1}[\w,.\n -]{3,256}',
                              expected = 'Summary text'))
 
-PARAGRAPH_TEXT      = Schema(Match(r'[A-Z]{1}[\w,.\n :;-]{8,1024}',
+PARAGRAPH_TEXT      = Schema(Match(r'[A-Z]{1}[\w,.\n :;-]{6,1024}',
                              expected = 'Paragraph text'))
 
 LOWERCASE_NAME      = Schema(Match(r'[a-z0-9_ ]',
                              expected = 'Lowercase underscore delimited name'))
 
-LOWERCASE_PATH      = Schema(Match(r'[a-z0-9_/]',
+LOWERCASE_PATH      = Schema(Match(r'[.a-z0-9_/]',
                              expected = 'Lowercase file path'))
 
 URL                 = Schema(Match(r'[A-Za-z0-9_/:]',
@@ -68,6 +68,15 @@ EMAIL_ADDRESS       = Schema(Match(
 GIT_COMMIT_ISH      = Schema(Match(r'[A-Za-z0-9_]',
                              expected = 'Git commit-ish'))
 
+LOWERCASE_HEX       = Schema(Match(r'[a-f0-9]',
+                             expected = 'Lowercase hexadecimal string'))
+
+NUMERIC_STRING      = Match(r'^[0-9]{1,30}',
+                            expected = 'Numeric decimal string.')
+
+EXTERNAL_DOC_REF    = Schema(Match(r'[a-z0-9_ ]',
+                             expected = 'External document reference'))
+
 BUILD_RESTRICTION   = Schema([str])
 
 LOG_LEVEL           = Schema(Any('CRITICAL',
@@ -76,9 +85,24 @@ LOG_LEVEL           = Schema(Any('CRITICAL',
                                  'INFO',
                                  'DEBUG'))
 
-DATE_YYYYMMDD       = All(int,
+TIMEBOX             = Schema(Match(r'[0-9]{4}[AB]',
+                             expected = 'Timebox id: YYMMA/B'))
+
+DATE_YYYYMMDD       = All(Any(int, str),
                           Coerce(str),
                           Match(r'[0-9]{8}', expected = 'yyyymmdd'))
+
+YEAR_YYYY           = All(Any(int, str),
+                          Coerce(str),
+                          Match(r'[0-9]{4}', expected = 'yyyy'))
+
+DATE_MMDD           = All(Any(int, str),
+                          Coerce(str),
+                          Match(r'[0-9]{4}', expected = 'mmdd'))
+
+TIME_HHMMSS         = All(Any(int, str),
+                          Coerce(str),
+                          Match(r'[0-9]{6}', expected = 'hhmmss'))
 
 
 # -----------------------------------------------------------------------------

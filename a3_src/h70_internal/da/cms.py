@@ -2,6 +2,10 @@
 """
 Configuration Management System.
 
+This module is responsible for the build and release
+process whereby built artifacts are deployed to UAT
+and PRD and/or archived for future reference.
+
 ---
 type:
     python_module
@@ -38,7 +42,6 @@ import re
 import shutil
 
 import da
-import da.vcs
 import da.bldcfg
 import da.expiration
 import da.util

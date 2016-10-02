@@ -38,10 +38,62 @@ import da.register
 
 
 # -----------------------------------------------------------------------------
-def dependency_path(dependency_id,
-                    interface,
-                    register         = None,
-                    dirpath_lwc_root = None):
+def api_path(dependency_id,
+             iface_name       = 'lib_python3',
+             register         = None,
+             dirpath_lwc_root = None):
+    """
+    Return the path to the specified api.
+
+    """
+    return _iface_path(
+                dependency_id    = dependency_id,
+                iface_type       = 'api',
+                iface_name       = iface_name,
+                register         = register,
+                dirpath_lwc_root = dirpath_lwc_root)
+
+
+# -----------------------------------------------------------------------------
+def cli_path(dependency_id,
+             application_name,
+             register         = None,
+             dirpath_lwc_root = None):
+    """
+    Return the path to the specified cli binary.
+
+    """
+    return _iface_path(
+                dependency_id    = dependency_id,
+                iface_type       = 'cli',
+                iface_name       = application_name,
+                register         = register,
+                dirpath_lwc_root = dirpath_lwc_root)
+
+
+# -----------------------------------------------------------------------------
+def gui_path(dependency_id,
+             application_name,
+             register         = None,
+             dirpath_lwc_root = None):
+    """
+    Return the path to the specified gui binary.
+
+    """
+    return _iface_path(
+                dependency_id    = dependency_id,
+                iface_type       = 'gui',
+                iface_name       = application_name,
+                register         = register,
+                dirpath_lwc_root = dirpath_lwc_root)
+
+
+# -----------------------------------------------------------------------------
+def _iface_path(dependency_id,
+                iface_type,
+                iface_name,
+                register         = None,
+                dirpath_lwc_root = None):
     """
     Return the path for the specified interface type and dependency id.
 
@@ -50,35 +102,29 @@ def dependency_path(dependency_id,
         register = dependencies_register(
                                     dirpath_lwc_root = dirpath_lwc_root)
 
-    if dependency_id not in register:
+    try:
+        dependency_data = register[dependency_id]
+    except KeyError:
         raise RuntimeError(
                 'Could not identify dependency: "{dep}".'.format(
-                                    dep = dependency_id))
+                                                        dep = dependency_id))
 
-    dependency_data = register[dependency_id]
-    if interface not in dependency_data['iface']:
+    dirpath_env = da.lwc.discover.path('current_env',
+                                       dirpath_lwc_root = dirpath_lwc_root)
+
+    try:
+        relpath_cli = dependency_data[iface_type][iface_name]
+    except KeyError:
         raise RuntimeError(
-                ('Dependency: "{dep}" ' +
-                 'does not support interface "{iface}".').format(
-                                    iface = interface,
-                                    dep   = dependency_id))
+            'Dependency "{dep}" has no {type} with "{name}".'.format(
+                                                        dep  = dependency_id,
+                                                        type = iface_type,
+                                                        name = iface_name))
 
-    if interface not in dependency_data['path']:
-        raise RuntimeError(
-                ('Dependency: "{dep}" ' +
-                 'does not declare a path for interface "{iface}".').format(
-                                    iface = interface,
-                                    dep   = dependency_id))
-
-    dirpath_env = da.lwc.discover.path(
-                                    'current_env',
-                                    dirpath_lwc_root = dirpath_lwc_root)
-
-    return os.path.normpath(os.path.join(
-                                    dirpath_env,
-                                    dependency_data['dirname'],
-                                    dependency_data['policy'],
-                                    dependency_data['path'][interface]))
+    return os.path.normpath(os.path.join(dirpath_env,
+                                         dependency_data['dirname'],
+                                         dependency_data['policy'],
+                                         relpath_cli))
 
 
 # -----------------------------------------------------------------------------
@@ -109,7 +155,7 @@ def dependencies_register(dirpath_lwc_root = None):
 # TODO: Refactor to reduce number of branches.
 #       (Rule disabled to facilitate tightening of the threshold)
 @da.memo.var
-def python_import_path(interface = None,                # pylint: disable=R0912
+def python_import_path(iface_name       = None,         # pylint: disable=R0912
                        dirpath_lwc_root = None):
     """
     Return a list of Python import paths configured for the local working copy.
@@ -120,8 +166,8 @@ def python_import_path(interface = None,                # pylint: disable=R0912
     python slibraries for python2 and python3.
 
     """
-    if interface is None:
-        interface = _iface_for_current_python_rt()
+    if iface_name is None:
+        iface_name = _iface_for_current_python_rt()
 
     dirpath_env = da.lwc.discover.path(
                                 'current_env',
@@ -136,14 +182,16 @@ def python_import_path(interface = None,                # pylint: disable=R0912
     #
     python_path = []
     for (_, dependency_data) in register.items():
-        if interface not in dependency_data['iface']:
+        try:
+            relpath_iface = dependency_data['api'][iface_name]
+        except KeyError:
             continue
         dirpath_package = os.path.normpath(
                                 os.path.join(
                                     dirpath_env,
                                     dependency_data['dirname'],
                                     dependency_data['policy'],
-                                    dependency_data['path'][interface]))
+                                    relpath_iface))
         if not os.path.isdir(dirpath_package):
             continue
         eggs = [os.path.join(dirpath_package, name)
@@ -165,8 +213,11 @@ def python_import_path(interface = None,                # pylint: disable=R0912
             python_path.append(os.path.join(dirpath_src, name))
         break
 
-    # # Add system python as well. !WARNING! !DANGEROUS! !REMOVE WHEN POSSIBLE!
-    if interface == 'lib_python3':
+    # Add system python as well.
+    #
+    # TODO: !WARNING! !DANGEROUS! !REMOVE AS SOON AS POSSIBLE!
+    #
+    if iface_name == 'lib_python3':
         python_path.append('/usr/lib/python3.4')
         python_path.append('/usr/lib/python3.4/plat-x86_64-linux-gnu')
         python_path.append('/usr/lib/python3.4/lib-dynload')

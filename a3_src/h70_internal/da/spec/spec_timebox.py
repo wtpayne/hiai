@@ -65,7 +65,7 @@ class SpecifyTimeboxYear:
         The timebox_year() function is callable.
 
         """
-        import da.build
+        import da.timebox
         assert callable(da.timebox.timebox_year)
 
 
@@ -82,7 +82,7 @@ class SpecifyTimeboxDatesForMonth:
         The timebox_dates_for_month() function is callable.
 
         """
-        import da.build
+        import da.timebox
         assert callable(da.timebox.timebox_dates_for_month)
 
 
@@ -99,5 +99,5 @@ class SpecifyTimeboxStartDate:
         The timebox_start_date() function is callable.
 
         """
-        import da.build
+        import da.timebox
         assert callable(da.timebox.timebox_start_date)

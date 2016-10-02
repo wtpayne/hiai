@@ -59,7 +59,7 @@ def python2(arglist,                                    # pylint: disable=R0913
     """
     return _python(
                 arglist,
-                python_version      = 'pyrun2',
+                dependency_id       = 'pyrun2',
                 libraries_interface = 'lib_python2',
                 stdout              = stdout,
                 stderr              = stderr,
@@ -83,7 +83,7 @@ def python3(arglist,                                    # pylint: disable=R0913
     """
     return _python(
                 arglist,
-                python_version      = 'pyrun3',
+                dependency_id       = 'pyrun3',
                 libraries_interface = 'lib_python3',
                 stdout              = stdout,
                 stderr              = stderr,
@@ -94,7 +94,7 @@ def python3(arglist,                                    # pylint: disable=R0913
 
 # -----------------------------------------------------------------------------
 def _python(arglist,                                    # pylint: disable=R0913
-            python_version,
+            dependency_id,
             libraries_interface,
             stdout           = None,
             stderr           = None,
@@ -109,16 +109,16 @@ def _python(arglist,                                    # pylint: disable=R0913
     """
     if env is None:
         python_import_path = da.lwc.env.python_import_path(
-                                interface        = libraries_interface,
+                                iface_name       = libraries_interface,
                                 dirpath_lwc_root = dirpath_lwc_root)
         env = copy.copy(os.environ)
         env['PYTHONPATH'] = os.pathsep.join(python_import_path)
         # env['PATH']       = ''
 
-    filepath_python = os.path.join(da.lwc.env.dependency_path(
-                                dependency_id    = python_version,
-                                interface        = 'cli',
-                                dirpath_lwc_root = dirpath_lwc_root), 'pyrun')
+    filepath_python = os.path.join(da.lwc.env.cli_path(
+                                dependency_id    = dependency_id,
+                                application_name = 'pyrun',
+                                dirpath_lwc_root = dirpath_lwc_root))
     try:
         return _subprocess_call(
                     [filepath_python] + arglist,
@@ -149,13 +149,14 @@ def bash(dirpath_lwc_root = None):
     path_cli    = []
 
     for dependency_data in register.values():
-        if 'cli' not in dependency_data['iface']:
-            continue
-        path_cli.append(os.path.normpath(os.path.join(
-                                dirpath_env,
-                                dependency_data['dirname'],
-                                dependency_data['policy'],
-                                dependency_data['path']['cli'])))
+        for app_name in dependency_data['cli']:
+            relpath_app  = dependency_data['cli'][app_name]
+            filepath_app = os.path.join(dirpath_env,
+                                        dependency_data['dirname'],
+                                        dependency_data['policy'],
+                                        relpath_app)
+            dirpath_app = os.path.normpath(os.path.dirname(filepath_app))
+            path_cli.append(dirpath_app)
 
     env               = copy.copy(os.environ)
     env['PYTHONPATH'] = os.pathsep.join(sys.path)
@@ -174,9 +175,9 @@ def subl(filepath = None, line_number = 1, dirpath_lwc_root = None):
     if dirpath_lwc_root is None:
         dirpath_lwc_root = da.lwc.discover.path(key = 'root')
 
-    filepath_subl = da.lwc.env.dependency_path(
+    filepath_subl = da.lwc.env.cli_path(
                                 dependency_id    = 'subl',
-                                interface        = 'cli',
+                                application_name = 'sublime_text',
                                 dirpath_lwc_root = dirpath_lwc_root)
 
     if filepath is None:

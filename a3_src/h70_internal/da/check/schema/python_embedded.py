@@ -31,7 +31,8 @@ license:
 """
 
 
-from good import (Any,
+from good import (All,
+                  Any,
                   Extra,
                   Optional,
                   Reject,
@@ -52,6 +53,9 @@ def file_metadata_schema(idclass_tab):
 
     hashdist_copyright = Schema(
         'Copyright 2012, Dag Sverre Seljebotn and Ondrej Certik')
+
+    copyright_notice = Any(hiai_copyright,
+                           hashdist_copyright)
 
     apache_license_v2 = Schema(
         'Licensed under the Apache License, Version 2.0 '
@@ -97,24 +101,32 @@ def file_metadata_schema(idclass_tab):
         'ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE '
         'POSSIBILITY OF SUCH DAMAGE.')
 
-    protection_level = idclass_tab['protection_level']
-    validation_level = idclass_tab['validation_level']
+    counterparty_confidential = Schema(
+        'This document is not intended for redistribution. '
+        'Counterparty confidentiality should be taken '
+        'into consideration when handling this document. '
+        'Nondisclosure agreements or other similar '
+        'contractual obligations may be in force.')
+
+    license_notice = Any(apache_license_v2,
+                         bsd_3_clause_license,
+                         counterparty_confidential)
+
+    protection_level = All(idclass_tab['protection_level'],
+                           Any('k00_public',
+                               'k01_counterparty_confidential'))
+
+    validation_level = All(idclass_tab['validation_level'],
+                           Any('v00_minimum'))
 
     return Schema({
 
         Required('type'):               Any('python_module',
                                             'python_package'),
-
         Required('validation_level'):   validation_level,
-
         Required('protection'):         protection_level,
-
-        Required('copyright'):          Any(hiai_copyright,
-                                            hashdist_copyright),
-
-        Required('license'):            Any(apache_license_v2,
-                                            bsd_3_clause_license),
-
+        Required('copyright'):          copyright_notice,
+        Required('license'):            license_notice,
         Extra:                          Reject
 
     })
@@ -126,14 +138,16 @@ def function_metadata_schema():
     Return the data validation schema for python function metadata.
 
     """
+    key_value_pair = Schema({da.check.schema.common.LOWERCASE_NAME: str})
     return Schema({
-        'type':                     Any('function',
-                                        'generator',
-                                        'constructor'),
-        'args': {
-                                    da.check.schema.common.LOWERCASE_NAME: str
-        },
-        Optional('yields'):         str,
+        'type':                     Any('constructor',
+                                        'context_manager',
+                                        'coroutine',
+                                        'function',
+                                        'generator'),
+        'args':                     key_value_pair,
+        Optional('yields'):         Any(key_value_pair, str),
+        Optional('returns'):        Any(key_value_pair, str),
         Optional('preconditions'):  [str],
         Optional('side_effects'):   [str],
     })

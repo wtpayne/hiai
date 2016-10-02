@@ -50,3 +50,40 @@ class SpecifyCreateNodeClass:
         import da.util.marked_yaml
         DictNode = da.util.marked_yaml.create_node_class(dict)
         assert inspect.isclass(DictNode)
+
+
+# =============================================================================
+class SpecifyNodeConstructorConstructYamlMap:
+    """
+    Specify the NodeConstructor.construct_yaml_map() method.
+
+    """
+
+    # -------------------------------------------------------------------------
+    def it_returns_a_class(self):
+        """
+        It returns a DictNode object.
+
+        """
+        import yaml
+        import da.util.marked_yaml
+        node_ctor = da.util.marked_yaml.NodeConstructor()
+        node      = yaml.nodes.MappingNode(tag   = 'tag',
+                                           value = ())
+        assert isinstance(node_ctor.construct_yaml_map(node),
+                          da.util.marked_yaml.DictNode)
+
+
+# =============================================================================
+class SpecifyNodeConstructorConstructYamlSeq:
+    """
+    Specify the NodeConstructor.construct_yaml_seq() method.
+
+    """
+
+# =============================================================================
+class SpecifyNodeConstructorConstructYamlStr:
+    """
+    Specify the NodeConstructor.construct_yaml_str() method.
+
+    """

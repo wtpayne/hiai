@@ -1,0 +1,398 @@
+title:
+  "Process register."
+
+
+introduction:
+  "Processes and procedures are registered here."
+
+
+register:
+
+  q00000_acquisition:
+    name:
+      "Acquisition process."
+    class:
+      "s00_agreement"
+    reference:
+      - "iso_12207_2008_clause_6.1.1"
+      - "iso_15288_2008_clause_6.1.1"
+
+  q00001_supply:
+    name:
+      "Supply process."
+    class:
+      "s00_agreement"
+    reference:
+      - "iso_12207_2008_clause_6.1.2"
+      - "iso_15288_2008_clause_6.1.2"
+
+  q00002_life_cycle_model_management:
+    name:
+      "Life cycle model management process."
+    class:
+      "s01_organisational"
+    reference:
+      - "iso_12207_2008_clause_6.2.1"
+      - "iso_15288_2008_clause_6.2.1"
+
+  q00003_infrastructure_management:
+    name:
+      "Infrastructure management process."
+    class:
+      "s01_organisational"
+    reference:
+      - "iso_12207_2008_clause_6.2.2"
+      - "iso_15288_2008_clause_6.2.2"
+
+  q00004_project_portfolio_management:
+    name:
+      "Project portfolio management process."
+    class:
+      "s01_organisational"
+    reference:
+      - "iso_12207_2008_clause_6.2.3"
+      - "iso_15288_2008_clause_6.2.3"
+
+  q00005_human_resource_management:
+    name:
+      "Human resource management process."
+    class:
+      "s01_organisational"
+    reference:
+      - "iso_12207_2008_clause_6.2.4"
+      - "iso_15288_2008_clause_6.2.4"
+
+  q00006_quality_management:
+    name:
+      "Quality management process."
+    class:
+      "s01_organisational"
+    reference:
+      - "iso_12207_2008_clause_6.2.5"
+      - "iso_15288_2008_clause_6.2.5"
+
+  q00007_project_planning:
+    name:
+      "Project planning process."
+    class:
+      "s02_project"
+    reference:
+      - "iso_12207_2008_clause_6.3.1"
+      - "iso_15288_2008_clause_6.3.1"
+
+  q00008_project_control:
+    name:
+      "Project assessment and control process."
+    class:
+      "s02_project"
+    reference:
+      - "iso_12207_2008_clause_6.3.2"
+      - "iso_15288_2008_clause_6.3.2"
+
+  q00009_decision_management:
+    name:
+      "Project decision management process."
+    class:
+      "s02_project"
+    reference:
+      - "iso_12207_2008_clause_6.3.3"
+      - "iso_15288_2008_clause_6.3.3"
+
+  q00010_risk_management:
+    name:
+      "Project risk management process."
+    class:
+      "s02_project"
+    reference:
+      - "iso_12207_2008_clause_6.3.4"
+      - "iso_15288_2008_clause_6.3.4"
+
+  q00011_configuration_management:
+    name:
+      "Project configuration management process."
+    class:
+      "s02_project"
+    reference:
+      - "iso_12207_2008_clause_6.3.5"
+      - "iso_15288_2008_clause_6.3.5"
+
+  q00012_information_management:
+    name:
+      "Project information management process."
+    class:
+      "s02_project"
+    reference:
+      - "iso_12207_2008_clause_6.3.6"
+      - "iso_15288_2008_clause_6.3.6"
+
+  q00013_measurement:
+    name:
+      "Project measurement process."
+    class:
+      "s02_project"
+    reference:
+      - "iso_12207_2008_clause_6.3.7"
+      - "iso_15288_2008_clause_6.3.7"
+
+  q00014_stakeholder_requirements_definition:
+    name:
+      "Stakeholder requirements definition process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.1"
+      - "iso_15288_2008_clause_6.4.1"
+
+  q00015_system_requirements_analysis:
+    name:
+      "System requirements analysis process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.2"
+      - "iso_15288_2008_clause_6.4.2"
+
+  q00016_system_architectural_design:
+    name:
+      "System architectural design process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.3"
+      - "iso_15288_2008_clause_6.4.3"
+
+  q00017_system_implementation:
+    name:
+      "System implementation process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.4"
+      - "iso_15288_2008_clause_6.4.4"
+
+  q00018_system_integration:
+    name:
+      "System integration process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.5"
+      - "iso_15288_2008_clause_6.4.5"
+
+  q00019_system_qualification_testing:
+    name:
+      "System qualification testing process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.6"
+      - "iso_15288_2008_clause_6.4.6"
+
+  q00020_software_installation:
+    name:
+      "Software installation process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.7"
+      - "iso_15288_2008_clause_6.4.7"
+
+  q00021_software_acceptance_support:
+    name:
+      "Software acceptance support process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.8"
+      - "iso_15288_2008_clause_6.4.8"
+
+  q00022_software_operation:
+    name:
+      "Software operation process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.9"
+      - "iso_15288_2008_clause_6.4.9"
+
+  q00023_software_maintenance:
+    name:
+      "Software maintenance process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.10"
+      - "iso_15288_2008_clause_6.4.10"
+
+  q00024_software_disposal:
+    name:
+      "Software disposal process."
+    class:
+      "s03_technical"
+    reference:
+      - "iso_12207_2008_clause_6.4.11"
+      - "iso_15288_2008_clause_6.4.11"
+
+  q00025_software_implementation:
+    name:
+      "Software implementation process."
+    class:
+      "s04_software_implementation"
+    reference:
+      - "iso_12207_2008_clause_7.1.1"
+      - "iso_15288_2008_clause_7.1.1"
+
+  q00026_software_requirements_analysis:
+    name:
+      "Software requirements analysis process."
+    class:
+      "s04_software_implementation"
+    reference:
+      - "iso_12207_2008_clause_7.1.2"
+      - "iso_15288_2008_clause_7.1.2"
+
+  q00027_software_architectural_design:
+    name:
+      "Software architectural design process."
+    class:
+      "s04_software_implementation"
+    reference:
+      - "iso_12207_2008_clause_7.1.3"
+      - "iso_15288_2008_clause_7.1.3"
+
+  q00028_software_detailed_design:
+    name:
+      "Software detailed design process."
+    class:
+      "s04_software_implementation"
+    reference:
+      - "iso_12207_2008_clause_7.1.4"
+      - "iso_15288_2008_clause_7.1.4"
+
+  q00029_software_construction:
+    name:
+      "Software construction process."
+    class:
+      "s04_software_implementation"
+    reference:
+      - "iso_12207_2008_clause_7.1.5"
+      - "iso_15288_2008_clause_7.1.5"
+
+  q00030_software_integration:
+    name:
+      "Software integration process."
+    class:
+      "s04_software_implementation"
+    reference:
+      - "iso_12207_2008_clause_7.1.6"
+      - "iso_15288_2008_clause_7.1.6"
+
+  q00031_software_qualification_testing:
+    name:
+      "Software qualification testing process."
+    class:
+      "s04_software_implementation"
+    reference:
+      - "iso_12207_2008_clause_7.1.7"
+      - "iso_15288_2008_clause_7.1.7"
+
+  q00032_software_documentation_management_process:
+    name:
+      "Software documentation management process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.1"
+      - "iso_15288_2008_clause_7.2.1"
+
+  q00033_software_configuration_management_process:
+    name:
+      "Software configuration management process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.2"
+      - "iso_15288_2008_clause_7.2.2"
+
+  q00034_software_quality_assurance_process:
+    name:
+      "Software quality assurance process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.3"
+      - "iso_15288_2008_clause_7.2.3"
+
+  q00035_software_verification_process:
+    name:
+      "Software verification process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.4"
+      - "iso_15288_2008_clause_7.2.4"
+
+  q00036_software_validation_process:
+    name:
+      "Software validation process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.5"
+      - "iso_15288_2008_clause_7.2.5"
+
+  q00037_software_review_process:
+    name:
+      "Software review process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.6"
+      - "iso_15288_2008_clause_7.2.6"
+
+  q00038_software_audit_process:
+    name:
+      "Software audit process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.7"
+      - "iso_15288_2008_clause_7.2.7"
+
+  q00039_software_problem_resolution_process:
+    name:
+      "Software problem resolution process."
+    class:
+      "s05_software_support"
+    reference:
+      - "iso_12207_2008_clause_7.2.8"
+      - "iso_15288_2008_clause_7.2.8"
+
+  q00040_domain_engineering_process:
+    name:
+      "Domain engineering process."
+    class:
+      "s06_software_reuse"
+    reference:
+      - "iso_12207_2008_clause_7.3.1"
+      - "iso_15288_2008_clause_7.3.1"
+
+  q00041_reuse_asset_management_process:
+    name:
+      "Reuse asset management process."
+    class:
+      "s06_software_reuse"
+    reference:
+      - "iso_12207_2008_clause_7.3.2"
+      - "iso_15288_2008_clause_7.3.2"
+
+  q00042_reuse_program_management_process:
+    name:
+      "Reuse program management process."
+    class:
+      "s06_software_reuse"
+    reference:
+      - "iso_12207_2008_clause_7.3.3"
+      - "iso_15288_2008_clause_7.3.3"
+
+

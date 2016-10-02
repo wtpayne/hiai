@@ -39,9 +39,9 @@ import da.util
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def coro(error_handler):
+def coro(build_monitor):
     """
-    Send errors to error_handler if supplied files not compliant with pep8.
+    Send errors to build_monitor if supplied files not compliant with pep8.
 
     """
     # Several whitespace related rules are relaxed
@@ -72,20 +72,18 @@ def coro(error_handler):
 
         def get_file_results(self):
             """
-            Redirect error messages to the error_handler coroutine.
+            Redirect error messages to the build_monitor coroutine.
 
             """
             for (line, col, msg_id, msg, doc) in self._deferred_print:
-                doc   = '    ' + doc.strip()  # Fixup indentation
-                error_handler.send({
-                    'tool':   'pycodestyle',
-                    'msg_id': msg_id,
-                    'msg':    msg,
-                    'file':   filepath,
-                    'line':   line,
-                    'col':    col,
-                    'doc':    doc
-                })
+                doc = '    ' + doc.strip()  # Fixup indentation
+                build_monitor.report_nonconformity(
+                    tool    = 'da.check.pycodestyle',
+                    msg_id  = msg_id,
+                    msg     = msg + '\n\n' + doc,
+                    path    = filepath,
+                    line    = line,
+                    col     = col)
 
     style = pycodestyle.StyleGuide(quiet = False, ignore = ignore_list)
     style.init_report(reporter = ReportAdapter)  # Inject custom reporting.
@@ -96,8 +94,8 @@ def coro(error_handler):
     #
     while True:
 
-        build_element = (yield)
-        filepath      = build_element['filepath']
+        build_unit = (yield)
+        filepath   = build_unit['filepath']
 
         # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath):

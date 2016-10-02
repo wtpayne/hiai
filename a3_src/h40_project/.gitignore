@@ -11,16 +11,17 @@
 # -----------------------------------------------------------------------------
 # Blacklist
 
+c000_orion/
+c001_legend/
+c002_chicago/
+c003_viking/
+c004_dragon/
+c005_cipher/
+c006_griffin/
+c007_pinball/
+
 
 # -----------------------------------------------------------------------------
-# Whitelist specific progam logic design document file types.
-
-
-# -----------------------------------------------------------------------------
-# Whitelist specific manually created YAML data file sub-types.
-
-
-# -----------------------------------------------------------------------------
-# Whitelist specific files
+# Whitelist
 
 !.gitignore

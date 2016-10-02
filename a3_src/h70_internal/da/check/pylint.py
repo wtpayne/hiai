@@ -42,19 +42,19 @@ import da.util
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def coro(dirpath_lwc_root, error_handler):
+def coro(dirpath_lwc_root, build_monitor):
     """
-    Send errors to error_handler if supplied files not compliant with pylint.
+    Send errors to build_monitor if supplied files not compliant with pylint.
 
     """
     dirpath_internal = da.lwc.discover.path(
                                     key = 'internal',
                                     dirpath_lwc_root = dirpath_lwc_root)
-    dirpath_check    = os.path.join(dirpath_internal, 'da', 'check')
+    dirpath_check = os.path.join(dirpath_internal, 'da', 'check')
 
     while True:
-        build_element = (yield)
-        filepath      = build_element['filepath']
+        build_unit = (yield)
+        filepath   = build_unit['filepath']
 
         # Ignore non-python design documents.
         if not da.lwc.file.is_python_file(filepath):
@@ -66,16 +66,16 @@ def coro(dirpath_lwc_root, error_handler):
 
         _run_lint(filepath      = filepath,
                   pylint_args   = _args_for_design_docs(dirpath_check),
-                  error_handler = error_handler)
+                  build_monitor = build_monitor)
 
-        if 'spec' in build_element:
-            _run_lint(filepath      = build_element['spec']['filepath'],
+        if 'spec' in build_unit:
+            _run_lint(filepath      = build_unit['spec']['filepath'],
                       pylint_args   = _args_for_specifications(dirpath_check),
-                      error_handler = error_handler)
+                      build_monitor = build_monitor)
 
 
 # -----------------------------------------------------------------------------
-def _run_lint(filepath, pylint_args, error_handler):
+def _run_lint(filepath, pylint_args, build_monitor):
     """
     Run pylint.
 
@@ -84,14 +84,13 @@ def _run_lint(filepath, pylint_args, error_handler):
     reporter = pylint.reporters.CollectingReporter()
     pylint.lint.Run(pylint_args, reporter = reporter, exit = False)
     for msg in reporter.messages:
-        error_handler.send({
-            'tool':   'pylint',
-            'msg_id': msg.msg_id,
-            'msg':    msg.symbol,
-            'file':   filepath,
-            'line':   msg.line,
-            'col':    msg.column
-        })
+        build_monitor.report_nonconformity(
+            tool    = 'da.check.pylint',
+            msg_id  = msg.msg_id,
+            msg     = msg.msg,
+            path    = filepath,
+            line    = msg.line,
+            col     = msg.column)
 
         # TODO: Consider additional fields for customised reporting
         #       for each tool
@@ -163,7 +162,6 @@ def _args_for_specifications(dirpath_check):
 
         '--disable=C0103',  # invalid-name        - TBD
         '--disable=C0111',  # missing-docstring   - TBD
-
 
         '--disable=C0326',  # bad-whitespace      - Vertical alignment.
         '--disable=C0330',  # bad-continuation    - Vertical alignment.

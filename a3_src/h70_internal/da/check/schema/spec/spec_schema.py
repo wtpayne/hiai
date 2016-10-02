@@ -65,6 +65,6 @@ class SpecifyCoro:
 
         """
         import da.check.schema
-        coro = da.check.schema.coro(error_handler    = None,
+        coro = da.check.schema.coro(build_monitor    = None,
                                     dirpath_lwc_root = dirpath_lwc_root)
         assert coro is not None

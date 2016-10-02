@@ -57,6 +57,19 @@ class ImplementationNotPresentError(RuntimeError):
 
 
 # =============================================================================
+class AbortSilently(Exception):
+    """
+    Exception to be raised when the display of a message is undesirable.
+
+    This exception is raised when we have already displayed an error
+    message and just need the program to abort.
+
+    """
+
+    pass
+
+
+# =============================================================================
 class AbortWithoutStackTrace(Exception):
     """
     Exception to be raised when the display of a stack trace is undesirable.

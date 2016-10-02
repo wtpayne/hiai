@@ -421,7 +421,39 @@ plans_for_performing_detailed_software_development_activities:
       divided into the following subparagraphs to describe the approach
       to be followed for software design.
     _txt: >
-      TBD
+      The system architecture is organised into two layers:
+      an application layer supported by a service layer.
+
+      The application layer implements system functions and behaviours.
+      It is described by a data flow graph and is for the most part
+      organised as an open-loop data processing pipeline.
+
+      The implementation of the application layer shall guarantee
+      deterministic reproduceability so that debugging, testing and
+      qualification activities can be carried out in simulation.
+
+      The service layer initialises and configures the application,
+      schedules its' execution, and handles low-level communication
+      across network interfaces and between hardware components.
+
+      The application layer facilitates the operation of the service
+      layer by providing a stable API through which it may be initialised,
+      configured, fed with data and its' step-by-step execution controlled.
+
+      Both the application layer and the service layer may be distributed
+      across a network of physical components. The service layer is not
+      a hardware abstraction layer, so both the application layer and
+      the service layer may require hardware specific adaptations.
+
+      Where hardware specific logic is required, an x86 compatible reference
+      implementation shall be maintained to support simulation based
+      qualification and testing in MIL and/or SIL.
+
+      At the application layer, the system architectural design consists
+      of the definition of the data flow graph; the allocation of data
+      flow vertices to hardware components; the allocation of functional
+      and nonfunctional requirements to data flow vertices and allocation
+      of memory, compute and power/thermal budgets to the same.
 
     overall_software_architecture:
       _num: "5.6.1"

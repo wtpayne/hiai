@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Unit tests for the da.vcs module.
+Unit tests for the da.commit_message module.
 
 ---
 type:

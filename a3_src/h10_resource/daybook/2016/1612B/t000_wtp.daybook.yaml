@@ -1,0 +1,30 @@
+agenda:
+
+  j0000040_simulation_framework:
+    - "Initial work towards a simulation framework."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20161212:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Add more support for multiple repos."
+
+  20161212:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Tests at the integrated vision system level."
+
+  20161213:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Tests at the integrated vision system level."
+
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Integrate MyPy type checking."

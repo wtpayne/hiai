@@ -39,10 +39,28 @@ class SpecifyLoad:
     """
 
     # -------------------------------------------------------------------------
-    def it_is_callable(self):
+    def it_loads_the_codeword_register(self):
         """
         The load() function is callable.
 
         """
-        import da.build
-        assert callable(da.register.load)
+        import da.register
+        codeword_register = da.register.load('codeword')
+        assert isinstance(codeword_register, dict)
+
+
+# =============================================================================
+class SpecifyUpdate:
+    """
+    Specify the da.register.update() function.
+
+    """
+
+    # -------------------------------------------------------------------------
+    def it_is_callable(self):
+        """
+        The update() function is callable.
+
+        """
+        import da.register
+        assert callable(da.register.update)

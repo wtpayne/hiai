@@ -31,30 +31,27 @@ license:
 """
 
 
+import da.check.constants
 import da.util
 
 
 # -----------------------------------------------------------------------------
 @da.util.coroutine
-def coro(error_handler):
+def coro(build_monitor):
     """
-    Send errors to error_handler if supplied files does not compile with clang.
+    Send errors to build_monitor if supplied files does not compile with clang.
 
     """
     while True:
 
-        build_element = (yield)
-        filepath      = build_element['filepath']
+        build_unit = (yield)
+        filepath   = build_unit['filepath']
 
         if not da.lwc.file.is_cpp_file(filepath):
             continue
 
-        error_handler.send({
-            'tool':   'clang',
-            'msg_id': 'C001',
-            'msg':    'Not implemented yet',
-            'file':   filepath,
-            'line':   1,
-            'col':    1,
-            'doc':    'Clang compilation not yet implemented.'
-        })
+        build_monitor.report_nonconformity(
+            tool   = 'da.compile.clang',
+            msg_id = da.check.constants.CLANG_UNKNOWN_ERROR,
+            msg    = 'Clang compilation not implemented yet',
+            path   = filepath)

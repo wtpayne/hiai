@@ -37,14 +37,79 @@ import pytest
 import da.lwc.discover
 
 
-# -----------------------------------------------------------------------------
-@pytest.fixture
-def dirpath_testdata():
+# =============================================================================
+class SpecifyGenProductDirs:
     """
-    Return the test data path.
+    Specify the da.lwc.discover.gen_product_dirs() function.
 
     """
-    return os.path.join(os.path.dirname(__file__), 'data')
+
+    def it_is_callable(self):
+        """
+        The gen_product_dirs() function is callable.
+
+        """
+        assert callable(da.lwc.discover.gen_product_dirs)
+
+
+# =============================================================================
+class SpecifyGenCounterpartyDirs:
+    """
+    Specify the da.lwc.discover.gen_counterparty_dirs() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The gen_counterparty_dirs() function is callable.
+
+        """
+        assert callable(da.lwc.discover.gen_counterparty_dirs)
+
+
+# =============================================================================
+class SpecifyGenProjectDirs:
+    """
+    Specify the da.lwc.discover.gen_project_dirs() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The gen_project_dirs() function is callable.
+
+        """
+        assert callable(da.lwc.discover.gen_project_dirs)
+
+
+# =============================================================================
+class SpecifyGenResearchDirs:
+    """
+    Specify the da.lwc.discover.gen_research_dirs() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The gen_research_dirs() function is callable.
+
+        """
+        assert callable(da.lwc.discover.gen_research_dirs)
+
+
+# =============================================================================
+class SpecifyGenDemoDirs:
+    """
+    Specify the da.lwc.discover.gen_demo_dirs() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The gen_demo_dirs() function is callable.
+
+        """
+        assert callable(da.lwc.discover.gen_demo_dirs)
 
 
 # =============================================================================
@@ -121,32 +186,11 @@ class SpecifyPath:
                                                     path = dirpath_internal)
 
 
-
-# =============================================================================
-class SpecifyGenCounterpartyDirs:
+# -----------------------------------------------------------------------------
+@pytest.fixture
+def dirpath_testdata():
     """
-    Specify the da.lwc.discover.gen_counterparty_dirs() function.
-
-    """
-
-    def it_is_callable(self):
-        """
-        The gen_counterparty_dirs() function is callable.
-
-        """
-        assert callable(da.lwc.discover.gen_counterparty_dirs)
-
-
-# =============================================================================
-class SpecifyGenProjectDirs:
-    """
-    Specify the da.lwc.discover.gen_project_dirs() function.
+    Return the test data path.
 
     """
-
-    def it_is_callable(self):
-        """
-        The gen_project_dirs() function is callable.
-
-        """
-        assert callable(da.lwc.discover.gen_project_dirs)
+    return os.path.join(os.path.dirname(__file__), 'data')

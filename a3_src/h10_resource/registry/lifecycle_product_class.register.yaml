@@ -1,0 +1,56 @@
+title:
+  "Lifecycle product class register."
+
+
+introduction:
+  "This registry defines a taxonomy of engineering lifecycle products. This
+  facilitates the systematic and universal application of class specific
+  registration, validation and tracking processes."
+
+
+register:
+
+  l00_record:
+    name:
+      "Record"
+    purpose:
+      "Records characterise the data an organisational entity retains."
+
+  l01_description:
+    name:
+      "Description"
+    purpose:
+      "Represent a planned or actual function, design or item."
+
+  l02_plan:
+    name:
+      "Plan"
+    purpose:
+      "Define when, how and by whom specific activities are to be performed."
+
+  l03_procedure:
+    name:
+      "Procedure"
+    purpose:
+      "Define in detail when and how to perform certain activities or tasks,
+      including the tools that are needed."
+
+  l04_report:
+    name:
+      "Report"
+    purpose:
+      "Describe the results of activities such as investigations, assessments
+      and tests."
+
+  l05_request:
+    name:
+      "Request"
+    purpose:
+      "Record information required to solicit a response."
+
+  l06_specification:
+    name:
+      "Specification"
+    purpose:
+      "Specify a required function, performance or process, such as a
+      requirements specification, standard or policy."

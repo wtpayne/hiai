@@ -3,88 +3,117 @@ title:
 
 
 introduction:
-  "Various classes of identifier string are registered in this document.
-  Identifier strings enable the identities and relationships between entities
-  to be recorded or inferred via string matching. This simple implementation
-  technique provides a flexible capability upon which numerous automated
-  engineering processes may be built."
+  "Various classes of identifier string are
+  registered in this document. Identifier strings
+  enable the identities and relationships between
+  entities to be recorded or inferred via string
+  matching. This simple implementation technique
+  provides a flexible capability upon which
+  numerous automated engineering processes may be
+  built."
 
 register:
   process_area:
     desc: "Build process area identifier."
     pfix: "a"
     dgts: 1
-    note: "Different areas of the repository are given over to different
-          stages of the build process. This makes it easier to check
-          that the process is being followed correctly, e.g. by setting
-          appropriate read/write flags."
+    note: "Different areas of the repository are
+          given over to different stages of the
+          build process. This makes it easier to
+          check that the process is being followed
+          correctly, e.g. by setting appropriate
+          read/write flags."
 
   branch:
     desc: "Branch or clone category id."
     pfix: "b"
     dgts: 1
-    note: "The flow of development bifuricates into branches for many reasons,
-          each with different life cycle. For example, feature branches will be
-          short lived, rapidly integrating back into mainline development,
-          whereas post-release maintenance branches may never be reintegrated.
-          We group branches into broad categories so that our scripts can
-          identify and manage the lifecycle in an appropriate manner."
+    note: "The flow of development bifuricates
+          into branches for many reasons, each
+          with different life cycle. For example,
+          feature branches will be short lived,
+          rapidly integrating back into mainline
+          development, whereas post-release
+          maintenance branches may never be
+          reintegrated. We group branches into
+          broad categories so that our scripts
+          can identify and manage the lifecycle
+          in an appropriate manner."
 
   counterparty:
     desc: "Counterparty identifier."
     pfix: "c"
     dgts: 3
-    note: "Obfuscated unique identifier for clients, suppliers and
-          project partners, enabling us to refer to clients from
-          within source documents without breaching expectations of
-          confidentiality."
+    note: "Obfuscated unique identifier for
+          clients, suppliers and project partners,
+          enabling us to refer to clients from
+          within source documents without breaching
+          expectations of confidentiality."
 
   design_element:
     desc: "Discipline identifier."
     pfix: "d"
     dgts: 5
-    note: "Systems development involves the coordination of work from
-          multiple distinct disciplines."
+    note: "Systems development involves the
+          coordination of work from multiple
+          distinct disciplines."
 
   environment:
     desc: "Runtime, build or development environment identifier."
     pfix: "e"
     dgts: 2
-    note: "This identifier is used to uniquely identify different
-          runtime environment configurations for build host and
-          build target. THe main identifier identifies architecture
-          and OS only. More detailed dependencies are captured as
-          different configurations of the main identifer."
+    note: "This identifier is used to uniquely
+          identify different runtime environment
+          configurations for build host and build
+          target. The main identifier identifies
+          architecture and OS only. More detailed
+          dependencies are captured as different
+          configurations of the main identifer."
 
   framework:
     desc: "Software framework identifier."
     pfix: "f"
     dgts: 2
-    note: "This identifier is used to uniquely identify different
-          modelling and software runtime frameworks for which
-          integration is required. (MATLAB, Simulink, LabView etc...)"
+    note: "This identifier is used to uniquely
+          identify different modelling and software
+          runtime frameworks for which integration
+          is required. (MATLAB, Simulink, LabView
+          etc...)"
+
+  recording:
+    desc: "Recording serial identifier."
+    pfix: "g"
+    dgts: 2
+    expr: "g[0-9]{3}_[0-9]{4}"
+    note: "This identifier is used to identify
+          individual recordings within a recording
+          session."
 
   ref_ctrl:
     desc: "Reference control hierarchy tier identifier."
     pfix: "h"
     dgts: 2
-    note: "We use an explicit hierarchy to reduce the formation of
-           cyclic dependencies and to encourage product line oriented
+    note: "We use an explicit hierarchy to reduce
+           the formation of cyclic dependencies
+           and to encourage product line oriented
            organisation."
 
   item:
     desc: "Item identifier."
     pfix: "i"
     dgts: 5
-    note: "Items are generic identifiers that can be used for any
-          thing that needs to be tracked. These are currently most
-          heavily used for requirements items."
+    note: "Items are generic identifiers that can
+          be used for any thing that needs to be
+          tracked. These are currently most heavily
+          used for requirements items."
 
   job:
     desc: "Job or task identifier."
     pfix: "j"
     dgts: 7
-    note: "We use jobs rather than tickets because t is used for team member."
+    note: "We use the term 'job' rather than 'ticket'
+          because the letter t is already used as
+          the team member id prefix."
 
   protection_level:
     desc: "Protection level identifier."
@@ -92,26 +121,113 @@ register:
     dgts: 2
     note: "The letter k is short for klassification."
 
+  lifecycle_product_class:
+    desc: "Lifecycle product class identifier."
+    pfix: "l"
+    dgts: 2
+    note: "Engineering lifecycle products are
+          grouped into a small number of classes.
+          This facilitates the systematic and
+          universal application of class specific
+          registration, validation and tracking
+          processes."
+
+  platform:
+    desc: "Platform identifier."
+    pfix: "m"
+    dgts: 2
+    note: "Identifier for all test and data
+          recording platforms."
+
+  stream:
+    desc: "Stream identifier."
+    pfix: "n"
+    dgts: 2
+    note: "Identifier for data streams on a
+          particular platform."
+
   project:
     desc: "Project identifier."
     pfix: "p"
     dgts: 4
-    note: "Projects are numbered and named in a global namespace."
+    note: "Projects are numbered and named in a
+          global namespace."
 
-  validation_level:
-    desc: "Document data validation level identifier."
-    pfix: "v"
+  process:
+    desc: "Process identifier."
+    pfix: "q"
+    dgts: 5
+    note: "Process identifiers begin with a q for
+          quality."
+
+  lifecycle_product:
+    desc: "Lifecycle product identifier."
+    pfix: "r"
+    dgts: 3
+    note: "Engineering lifecycle products are
+          registered here."
+
+  process_class:
+    desc: "Process class identifier."
+    pfix: "s"
     dgts: 2
-    note: "Documents can declare the stringency of their own validation."
+    note: "Process identifiers begin with an s for
+          no reason other than the word process
+          has two of them."
 
   team_member:
     desc: "Team member identifier."
     pfix: "t"
     dgts: 3
-    note: "I prefer calling people team members rather than users."
+    note: "I prefer calling people team members
+          rather than users."
+
+  timebox:
+    desc: "Time box identifier."
+    pfix: "u"
+    dgts: 2
+    expr: "u?[0-9]{4}[A-B]"
+    note: "The time box is the fundamental
+          time unit for project planning,
+          integration planning, and build &
+          release planning. Each time box is
+          two or three weeks in length, and
+          the sequence of time boxes follows
+          a rigid calendar/schedule. It is
+          roughly equivalent to the concept
+          of a sprint from the Scrum methodology.
+          Uniquely amongst identifiers, the
+          prefix can be omitted."
+
+  validation_level:
+    desc: "Document data validation level identifier."
+    pfix: "v"
+    dgts: 2
+    note: "Documents can declare the stringency of
+          their own validation."
+
+  coordinate_system:
+    desc: "Coordinate system type identifier."
+    pfix: "x"
+    dgts: 2
+    note: "We define several abstract coordinate
+          systems which exist independently of any
+          particular sensor or platform. Projects
+          may then use these abstract coordinate
+          systems as the basis for their own
+          concrete coordinate systems; defined
+          w.r.t specific platforms and sensors.
+          The prefix x is supposed to be
+          reminiscent of x-axis or aXis."
 
   machine:
     desc: "Machine identifier."
     pfix: "z"
     dgts: 4
-    note: "The prefix z is short for zoo."
+    note: "The machine identifier allows us to
+          identify and manage specific machines.
+          This is particularly useful for managing
+          high performance computing nodes and
+          machines controlling bench/integration
+          test equipment. The prefix z is short
+          for zoo."

@@ -55,83 +55,51 @@ class SpecifyFuzzyAliasGroup:
 
 
 # =============================================================================
-class SpecifyMain:
+class SpecifyExitWithCodeShow:
     """
-    Specify the da.cli.main() function.
+    Specify the da.cli.ExitWithCode.show() method.
 
     """
 
     def it_is_callable(self):
         """
-        The main() function is callable.
+        The show() method is callable.
 
         """
         import da.cli
-        assert callable(da.cli.main)
+        assert callable(da.cli.ExitWithCode.show)
 
 
 # =============================================================================
-class SpecifyBash:
+class SpecifyExplicitInfoNameCommandMakeContext:
     """
-    Specify the da.cli.bash() function.
+    Specify the da.cli.ExplicitInfoNameCommand.make_context() method.
 
     """
 
     def it_is_callable(self):
         """
-        The bash() function is callable.
+        The make_context() method is callable.
 
         """
         import da.cli
-        assert callable(da.cli.bash)
+        assert callable(da.cli.ExplicitInfoNameCommand.make_context)
 
 
 # =============================================================================
-class SpecifyRepl:
+class SpecifyFuzzyCommandAliasGroupGetCommand:
     """
-    Specify the da.cli.repl() function.
-
-    """
-
-    def it_is_callable(self):
-        """
-        The repl() function is callable.
-
-        """
-        import da.cli
-        assert callable(da.cli.repl)
-
-
-# =============================================================================
-class SpecifyPython:
-    """
-    Specify the da.cli.python() function.
+    Specify the da.cli.FuzzyCommandAliasGroup.get_command() method.
 
     """
 
     def it_is_callable(self):
         """
-        The python() function is callable.
+        The get_command() method is callable.
 
         """
         import da.cli
-        assert callable(da.cli.python)
-
-
-# =============================================================================
-class SpecifyBuild:
-    """
-    Specify the da.cli.build() function.
-
-    """
-
-    def it_is_callable(self):
-        """
-        The build() function is callable.
-
-        """
-        import da.cli
-        assert callable(da.cli.build)
+        assert callable(da.cli.FuzzyCommandAliasGroup.get_command)
 
 
 # =============================================================================
@@ -155,3 +123,131 @@ class SpecifyExitApplication:
                                     message   = test_exit_message)
             assert exc.exit_code == test_exit_code
             assert exc.message   == test_exit_message
+
+
+# =============================================================================
+class SpecifyMain:
+    """
+    Specify the da.cli.main() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The main() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli.main)
+
+
+# =============================================================================
+class SpecifyBuild:
+    """
+    Specify the da.cli.build() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The build() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli.build)
+
+
+# =============================================================================
+class SpecifyRun:
+    """
+    Specify the da.cli.run() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The run() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli.run)
+
+
+# =============================================================================
+class SpecifyRepl:
+    """
+    Specify the da.cli.repl() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The repl() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli.repl)
+
+
+# =============================================================================
+class SpecifySim:
+    """
+    Specify the da.cli.sim() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The sim() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli.sim)
+
+
+# =============================================================================
+class SpecifyVtx:
+    """
+    Specify the da.cli.vtx() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The vtx() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli.vtx)
+
+
+# =============================================================================
+class Specify_GenPluginSubgroups:
+    """
+    Specify the da.cli._gen_plugin_subgroups() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The _gen_plugin_subgroups() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli._gen_plugin_subgroups)
+
+
+# =============================================================================
+class Specify_LoadCliPluginGroup:
+    """
+    Specify the da.cli._load_cli_plugin_group() function.
+
+    """
+
+    def it_is_callable(self):
+        """
+        The _load_cli_plugin_group() function is callable.
+
+        """
+        import da.cli
+        assert callable(da.cli._load_cli_plugin_group)

@@ -125,25 +125,43 @@ def configure(dirpath_log, loglevel_overall, loglevel_console, loglevel_file):
     # Configure root logger so we can use logging-module-level log functions.
     logger = logging.getLogger()
     logger.setLevel(loglevel_overall)
+    logger.addHandler(_get_console_logger(loglevel_console))
+    logger.addHandler(_get_file_logger(loglevel_file, dirpath_log))
 
-    # TODO: NEED A CUSTOM LOG HANDLER TO USE CLICK ECHO INTERFACE ...
 
-    # Simple uncluttered logging to console ...
+# -----------------------------------------------------------------------------
+def _get_console_logger(loglevel_console):
+    """
+    Return a to-console log message handler.
+
+    This function supports simplified / de-cluttered logging to console.
+
+    """
     # (Consider adding custom handler for click CLI integration ...)
+    # TODO: NEED A CUSTOM LOG HANDLER TO USE CLICK ECHO INTERFACE ...
     logconsole = logging.StreamHandler(stream = sys.stderr)
     logconsole.setLevel(loglevel_console)
     logconsole.setFormatter(logging.Formatter(
                                         fmt     = '%(asctime)s - %(message)s',
                                         datefmt = '%H%M%S'))
-    logger.addHandler(logconsole)
+    return logconsole
 
-    # JSON-object-per-line logging to file for machine consumption
+
+# -----------------------------------------------------------------------------
+def _get_file_logger(loglevel_file, dirpath_log):
+    """
+    Return a to-file log message handler.
+
+    This function supports JSON-object-per-line
+    logging to file for machine consumption
+
+    """
     da.util.ensure_dir_exists(dirpath_log)
     filepath_jseq = os.path.join(dirpath_log, 'build.log.jseq')
     logjseq       = logging.FileHandler(
-        filename = filepath_jseq,
-        mode     = 'w',               # Clear log file before each build
-        encoding = 'utf-8')
+                            filename = filepath_jseq,
+                            mode     = 'w',  # Clear log file before each build
+                            encoding = 'utf-8')
     logjseq.setLevel(loglevel_file)
     logjseq.setFormatter(JseqFormatter())
-    logger.addHandler(logjseq)
+    return logjseq

@@ -32,11 +32,14 @@ license:
 
 
 import collections
+import contextlib
 import functools
+import hashlib
 import itertools
 import json
 import operator
 import os
+import sys
 
 
 # -----------------------------------------------------------------------------
@@ -401,22 +404,47 @@ def load(filepath):
     Load the specified file with the format determined by the file extension.
 
     """
-    # The yaml module is not part of the standard
-    # library. It is part of the configuration
-    # controlled runtime environment in a0_env.
-    # We import it in function scope because the
-    # util module is imported before a0_env is
-    # enabled in the bootstrap process.
-    #
-    import yaml
-
     if filepath.endswith('.yaml'):
-        with open(filepath, 'r') as file:
+        # The yaml module is not part of the standard
+        # library. It is part of the configuration
+        # controlled runtime environment in a0_env.
+        # We import it in function scope because the
+        # util module is imported before a0_env is
+        # enabled in the bootstrap process.
+        #
+        import yaml
+        with open(filepath, 'rt') as file:
             return yaml.safe_load(file)
 
     if filepath.endswith('.json'):
-        with open(filepath, 'r') as file:
+        with open(filepath, 'rt') as file:
             return json.load(file)
+
+    else:
+        raise RuntimeError('File format not supported: %s', filepath)
+
+
+# -----------------------------------------------------------------------------
+def save(filepath, data):
+    """
+    Save the specified file with the format determined by the file extension.
+
+    """
+    if filepath.endswith('.yaml'):
+        # The yaml module is not part of the standard
+        # library. It is part of the configuration
+        # controlled runtime environment in a0_env.
+        # We import it in function scope because the
+        # util module is imported before a0_env is
+        # enabled in the bootstrap process.
+        #
+        import yaml
+        with open(filepath, 'wt') as file:
+            yaml.safe_dump(data, file, default_flow_style=True)
+
+    if filepath.endswith('.json'):
+        with open(filepath, 'wt') as file:
+            json.dump(data, file, sort_keys=True, indent=4)
 
     else:
         raise RuntimeError('File format not supported: %s', filepath)
@@ -541,3 +569,45 @@ def iter_files(dirpath_root):
         if not os.path.isfile(path):
             continue
         yield (name, path)
+
+
+# -----------------------------------------------------------------------------
+def sha256(filepath,
+           blocksize = 65536):
+    """
+    Return the sha256 digest of the specified file.
+
+    """
+    hasher = hashlib.sha256()
+    with open(filepath, 'rb') as file:
+        block = file.read(blocksize)
+        while len(block) > 0:
+            hasher.update(block)
+            block = file.read(blocksize)
+    return hasher.hexdigest()
+
+
+# -----------------------------------------------------------------------------
+@contextlib.contextmanager
+def sys_path_context(path):
+    """
+    Context manager that extends sys.path temporarily.
+
+    """
+    sys.path.insert(0, path)
+    (yield)
+    popped = sys.path.pop(0)
+    assert popped == path
+
+
+# -----------------------------------------------------------------------------
+@contextlib.contextmanager
+def sys_argv_context(new_argv):
+    """
+    Context manager that replaces sys.argv temporarily.
+
+    """
+    old_argv = sys.argv
+    sys.argv = new_argv
+    (yield)
+    sys.argv = old_argv

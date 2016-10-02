@@ -1,0 +1,100 @@
+agenda:
+
+  j0000039_html_documentation_and_traceability:
+    - "Work towards HTML documentation and traceability."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000040_simulation_framework:
+    - "Initial work towards a simulation framework."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+  j0000041_dependency_registration_check:
+    - "Check that all items in the dependency folder have been registered."
+    - counterparty: c000_orion
+    - project:      p0000_da
+    - mandate:
+      - i00007_mandate
+      - i00008_development_automation
+
+chronicle:
+
+  20161003:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Work through errors; Get dependency registry
+        back up and running. Still need to refine
+        build monitor class so we get a UI display
+        back again. Also need to figure out how we
+        can test the build monitor class. Also
+        need to figure out a way of getting a more
+        readable and uniform error and nonconformity
+        report at the CLI."
+
+  20161004:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Work through errors."
+
+  20161005:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Work through errors."
+
+  20161006:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Improve build command line user interface."
+
+  20161007:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Improve build command line user interface."
+
+  20161008:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Improve build command line user interface."
+
+  20161009:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Improve build command line user interface."
+
+  20161009:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Start sketching out the interface to
+        individual nodes."
+
+  20161010:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Continue working on the INode interface
+        definition and utility functions."
+
+  20161011:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Continue working on the INode interface
+        definition and utility functions. Look at
+        third party libraries for inspiration."
+
+  20161012:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Investigate use of Cython and / or protobuf
+        for serialisation."
+
+  20161013:
+    - j0000040_simulation_framework:
+      - "Initial work towards a simulation framework."
+      - "Investigate Cython, Protobuf and Avro for
+        serialisation."

@@ -1,0 +1,21 @@
+title: Design Document Repository Register.
+introduction: This register holds a list of design document repositories.
+register:
+  a3_src/h50_research/t000_wtp:
+    configuration: 4841d10188e46e708ebd0d6cef44c879c37cd0f9
+  a3_src/h40_project/c000_orion:
+    configuration: 507e8813d3031701c0407cd32d0480f6ba77801e
+  a3_src/h40_project/c001_legend:
+    configuration: 1815da2d009499555ce2668e735daf1fd8ccd5ec
+  a3_src/h40_project/c002_chicago:
+    configuration: 808a9280f4160e7d8b53b7b45808b3e159b91f87
+  a3_src/h40_project/c006_griffin:
+    configuration: 4f67a7ff4f2b944227741cbb7700fd0dd3a522c3
+  a3_src/h40_project/c004_dragon:
+    configuration: 6ae86b7f9e0f949669767da393e2bc240ecd4713
+  a3_src/h40_project/c005_cipher:
+    configuration: 7fe22a0c0022ccf316f32eccd4ee0c586847c05a
+  a3_src/h40_project/c007_pinball:
+    configuration: e5db452501c497b16c82dce4dd540ca7ee32812b
+  a3_src/h40_project/c003_viking:
+    configuration: 830ff99b31ba7437405781101363de3b5e536ab7

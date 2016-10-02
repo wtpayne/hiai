@@ -45,38 +45,41 @@ import da.util
 @da.util.coroutine
 def coro(cfg):
     """
-    Generate design docs for each build element sent to this coroutine.
+    Generate design docs for each build unit sent to this coroutine.
 
     """
+    rootpath_log = cfg['paths']['dirpath_branch_log']
     while True:
 
-        build_element = (yield)
-        filepath      = build_element['filepath']
+        build_unit = (yield)
+        filepath   = build_unit['filepath']
 
         if not da.lwc.file.is_python_file(filepath):
             continue
 
-        html         = _render(build_element)
-
-        dirpath_doc  = os.path.join(cfg['paths']['dirpath_branch_log'],
-                                    build_element['relpath'])
-        filepath_doc = os.path.join(dirpath_doc, 'design.html')
+        (relpath_dir, filename) = os.path.split(build_unit['relpath'])
+        dirpath_doc             = os.path.join(
+                                            rootpath_log,
+                                            relpath_dir,
+                                            filename.replace('.', '_'))
+        filepath_doc        = os.path.join(dirpath_doc, 'design.html')
+        html                = _render(build_unit)
         da.util.ensure_dir_exists(dirpath_doc)
         with open(filepath_doc, 'wt') as file:
             file.write(html)
 
 
 # -----------------------------------------------------------------------------
-def _render(build_element):
+def _render(build_unit):
     """
-    Generate HTML for the specified build element.
+    Generate HTML for the specified build unit.
 
     """
-    filename  = os.path.basename(build_element['filepath'])
+    filename  = os.path.basename(build_unit['filepath'])
     lexer     = pygments.lexers.get_lexer_for_filename(filename)
     formatter = pygments.formatters.HtmlFormatter()     # pylint: disable=E1101
     html      = pygments.highlight(
-                    code      = build_element['content'],
+                    code      = build_unit['content'],
                     lexer     = lexer,
                     formatter = formatter)
 

@@ -45,12 +45,14 @@ def get():
 
     """
     common = da.check.schema.common
-
-    iface_type = Any('cli',
-                     'include',
-                     'lib_native',
-                     'lib_python2',
-                     'lib_python3')
+    api_iface_name = Any('include',
+                         'lib_native',
+                         'lib_javascript',
+                         'lib_python2',
+                         'lib_python3')
+    api_config = Any({}, {api_iface_name:        common.LOWERCASE_PATH})
+    cli_config = Any({}, {common.LOWERCASE_NAME: common.LOWERCASE_PATH})
+    gui_config = Any({}, {common.LOWERCASE_NAME: common.LOWERCASE_PATH})
 
     return Schema({
         'title':                        common.TITLE_TEXT,
@@ -64,27 +66,34 @@ def get():
                 'notes':                Any('TBD', common.PARAGRAPH_TEXT),
                 'dirname':              common.LOWERCASE_NAME,
                 'policy':               common.LOWERCASE_NAME,
-                'iface':                [iface_type],
-                'path': {
-                    iface_type:         common.LOWERCASE_PATH
-                },
+                'api':                  api_config,
+                'cli':                  cli_config,
+                'gui':                  gui_config,
                 'config': {
-                    'method':           Any('automatic', 'manual'),
+                    'method':           Any('automatic',
+                                            'manual',
+                                            'n/a'),
                     'tool':             Any('bzr',
                                             'git',
                                             'hg',
                                             'svn',
                                             'darcs',
                                             'ftp',
-                                            'manual'),
+                                            'manual',
+                                            'n/a',
+                                            'TBD'),
                     'url':              common.URL
                 },
                 'build': {
-                    'method':           Any('automatic', 'manual'),
-                    'tool':             Any('TBD',
+                    'method':           Any('automatic',
+                                            'manual',
+                                            'n/a'),
+                    'tool':             Any('n/a',
                                             'python_setuptools',
                                             'python_distutils',
-                                            'make')
+                                            'make',
+                                            'n/a',
+                                            'TBD')
                 }
             }
 
